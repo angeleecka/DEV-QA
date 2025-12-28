@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Home</title>
+    <link rel="stylesheet" href="css/home.css" />
+    <!-- <link rel="stylesheet" href="css/portfolio-projects.css" />-->
+    <link rel="stylesheet" href="css/modals.css" />
+    <!--    -->
+    <link rel="stylesheet" href="css/responsive.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <header class="topbar" aria-label="Top navigation">
+      <div class="topbar-inner">
+        <div class="brand" aria-label="Brand">
+          <a href="index.html" class="logo">
+            <img src="images/av_logo.jpg" alt="AV Logo" />
+          </a>
+
+          <div class="brand-tagline">
+            <span class="full-tagline"
+              >UX Architecture & Quality Assurance</span
+            >
+            <span class="short-tagline">UX & QA</span>
+          </div>
+        </div>
+
+        <button class="burger" id="burgerBtn" aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="nav" id="mainNav" aria-label="Site">
+          <a class="navlink is-active" href="index.html">HOME</a>
+          <a class="navlink" href="portfolio-projects.html">OUR WORKS</a>
+          <a class="navlink" href="#">ABOUT</a>
+          <a class="navlink" href="#">CONTACT</a>
+
+          <div class="lang" aria-label="Language">
+            <button class="lang-btn is-active" type="button">EN</button>
+            <button class="lang-btn" type="button">ES</button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!--  Slider-home -->
+    <main class="slider-home" aria-label="Home hero">
+      <section class="home-hero" id="top" aria-label="Services overview">
+        <div class="hero-tabs-content">
+          <button
+            class="hero-nav hero-nav--prev"
+            type="button"
+            aria-label="Previous (DEV)"
+          ></button>
+          <button
+            class="hero-nav hero-nav--next"
+            type="button"
+            aria-label="Next (QA)"
+          ></button>
+
+          <div class="hero-sides" tabindex="0" aria-label="Services slider">
+            <!-- LEFT: DEV -->
+            <div class="hero-col hero-col--left" aria-labelledby="heroDevTitle">
+              <h2 class="hero-title dev-left hero-title--chip hero-title--dev">
+                <a class="hero-chip hero-chip--dev" href="contact.html">HIRE</a>
+                <span class="hero-titleText">DEV</span>
+              </h2>
+
+              <div class="hero-accordion" aria-label="DEV services">
+                <details
+                  class="services-acc acc--dev svc-col svc-col--dev"
+                  open
+                >
+                  <summary>
+                    <span class="svc-name">Product & UX Architecture</span>
+                    <span class="svc-short">From idea to release</span>
+                  </summary>
+                  <div class="svc-body">
+                    <p>
+                      Turn a vague idea into a clear product plan: screens,
+                      navigation, priorities, and edge cases.
+                    </p>
+                  </div>
+                </details>
+
+                <details class="services-acc acc--dev svc-col svc-col--dev">
+                  <summary>
+                    <span class="svc-name">Interface Design & Prototyping</span>
+                    <span class="svc-short"
+                      >Clean UI and clickable prototypes.</span
+                    >
+                  </summary>
+                  <div class="svc-body">
+                    <p>
+                      Wireframes → polished UI → prototype for fast feedback and
+                      confident implementation.
+                    </p>
+                  </div>
+                </details>
+
+                <details class="services-acc acc--dev svc-col svc-col--dev">
+                  <summary>
+                    <span class="svc-name">Mini-CMS & Admin Panels</span>
+                    <span class="svc-short">Manage content yourself.</span>
+                  </summary>
+                  <div class="svc-body">
+                    <p>
+                      File managers, editors, safe delete/restore, workflows
+                      that feel like a native tool.
+                    </p>
+                  </div>
+                </details>
+              </div>
+            </div>
+
+            <!-- CENTER (ship gutter) -->
+            <div class="hero-center" aria-hidden="true"></div>
+
+            <!-- RIGHT: QA -->
+            <div class="hero-col hero-col--right" aria-labelledby="heroQaTitle">
+              <!-- RIGHT -->
+              <h2 class="hero-title qa-right hero-title--chip hero-title--qa">
+                <span class="hero-titleText">QA</span>
+                <a class="hero-chip hero-chip--qa" href="contact.html"
+                  >CONTACT</a
+                >
+              </h2>
+
+              <div class="hero-accordion" aria-label="QA services">
+                <details class="services-acc acc--qa svc-col svc-col--qa" open>
+                  <summary>
+                    <span class="svc-name"
+                      >Manual QA & Exploratory Testing</span
+                    >
+                    <span class="svc-short"
+                      >Real-user checks + bug reports.</span
+                    >
+                  </summary>
+                  <div class="svc-body">
+                    <p>
+                      Cross-device testing, exploratory sessions, structured bug
+                      reports with evidence.
+                    </p>
+                  </div>
+                </details>
+
+                <details class="services-acc acc--qa svc-col svc-col--qa">
+                  <summary>
+                    <span class="svc-name">QA Evidence Pack</span>
+                    <span class="svc-short"
+                      >Audit-style report for stakeholders.</span
+                    >
+                  </summary>
+                  <div class="svc-body">
+                    <p>
+                      Coverage checklist, prioritized findings, recommendations,
+                      and proof.
+                    </p>
+                  </div>
+                </details>
+
+                <details class="services-acc acc--qa svc-col svc-col--qa">
+                  <summary>
+                    <span class="svc-name">Automation Starter Pack</span>
+                    <span class="svc-short"
+                      >Minimal smoke/regression tests.</span
+                    >
+                  </summary>
+                  <div class="svc-body">
+                    <p>
+                      Small, maintainable suite for the most critical flows (no
+                      “framework monster”).
+                    </p>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!--  </div>-->
+
+    <!-- QA Pack overlay -->
+    <div class="overlay" id="qaOverlay" aria-hidden="true">
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="qaTitle"
+      >
+        <div class="modal-head">
+          <div class="modal-title">
+            <b id="qaTitle">Index</b>
+            <span class="muted"
+              >Open files in separate windows (the list stays usable).</span
+            >
+          </div>
+          <div class="modal-actions">
+            <button class="btn" id="closeAllWins" type="button">
+              Close all
+            </button>
+            <button
+              class="btn btn-primary"
+              id="closeQa"
+              type="button"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="doclist" id="docList"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/portfolio-projects.js"></script>
+    <!-- QA Pack overlay-->
+    <script src="js/script.js"></script>
+    <script>
+      const burgerBtn = document.getElementById("burgerBtn");
+      const mainNav = document.getElementById("mainNav");
+
+      burgerBtn.addEventListener("click", () => {
+        burgerBtn.classList.toggle("is-active");
+        mainNav.classList.toggle("is-open");
+
+        // Запрещаем скролл сайта, когда меню открыто
+        document.body.style.overflow = mainNav.classList.contains("is-open")
+          ? "hidden"
+          : "";
+      });
+
+      // Закрытие меню при клике на ссылку
+      document.querySelectorAll(".navlink").forEach((link) => {
+        link.addEventListener("click", () => {
+          burgerBtn.classList.remove("is-active");
+          mainNav.classList.remove("is-open");
+          document.body.style.overflow = "";
+        });
+      });
+
+      (() => {
+        const canHover = window.matchMedia(
+          "(hover: hover) and (pointer: fine)"
+        ).matches;
+
+        document.querySelectorAll(".hero-accordion").forEach((acc) => {
+          const items = Array.from(
+            acc.querySelectorAll("details.services-acc")
+          );
+          if (!items.length) return;
+
+          // Всегда 1 открыт на старте
+          const first = items.find((d) => d.open) || items[0];
+          items.forEach((d) => (d.open = d === first));
+
+          // Родной toggle: открыли один -> закрыли остальные
+          acc.addEventListener(
+            "toggle",
+            (e) => {
+              const t = e.target;
+              if (!(t instanceof HTMLDetailsElement)) return;
+
+              if (t.open) {
+                items.forEach((d) => {
+                  if (d !== t) d.open = false;
+                });
+              } else {
+                // не даём остаться "всё закрыто"
+                if (!items.some((d) => d.open)) first.open = true;
+              }
+            },
+            true
+          );
+
+          // Hover: открываем при наведении на summary (и НЕ закрываем при уходе)
+          if (canHover) {
+            items.forEach((d) => {
+              const s = d.querySelector("summary");
+              if (!s) return;
+              s.addEventListener("pointerenter", () => {
+                if (!d.open) d.open = true; // сработает toggle и закроет остальные
+              });
+            });
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

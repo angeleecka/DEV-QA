@@ -1,0 +1,768 @@
+/* ===================================================================
+   HOME PAGE — HERO WITH ACCORDION (CLEAN, MATCHES CURRENT HTML)
+   Markup reference:
+   - .home-hero
+   - .hero-col--left / .hero-col--right
+   - .hero-accordion
+   - details.services-acc.svc.svc-col--dev / details.services-acc.svc.svc-col--qa
+   - .svc-name / .svc-short / .svc-body
+   =================================================================== */
+
+/* ==================== 1. VARIABLES ==================== */
+:root {
+  --bg: #ffffff;
+  --text: #141416;
+  --muted: #6f7277;
+  --line: rgba(0, 0, 0, 0.1);
+  --accent: #a10f0f;
+  --accent2: #7b0b0b;
+  --accent3: #851d1d;
+  --accent3: #851d1d;
+
+  --headerH: 45px; /* 44px + 10px + 10px из .topbar-inner */
+  --shipH: 820px; /* подгони: 760–920 */
+
+  --font-ui: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Arial,
+    sans-serif;
+
+  /* --font-ui: Bahnschrift, "DIN Next", "DIN 2014", "Segoe UI", system-ui,
+    -apple-system, "Helvetica Neue", Arial, sans-serif;*/
+}
+
+/* ==================== 2. RESET & BASE ==================== */
+* {
+  box-sizing: border-box;
+}
+
+/* Для Chrome, Safari и Edge */
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  padding: 0;
+  overflow-x: hidden; /* Запрещаем горизонтальный скролл */
+
+  scrollbar-width: none;
+}
+
+/* === Fix: stop layout shift when scrollbar appears/disappears === */
+html {
+  scrollbar-gutter: stable; /* современные браузеры */
+}
+
+/* Для Internet Explorer и старого Edge */
+body {
+  -ms-overflow-style: none;
+}
+
+/* Фолбэк для тех, кто не поддерживает scrollbar-gutter */
+@supports not (scrollbar-gutter: stable) {
+  html {
+    overflow-y: scroll;
+  } /* всегда резервируем место под скроллбар */
+}
+
+/* ==================== 3. LAYOUT SHELL ==================== */
+
+body {
+  font-family: var(--font-ui);
+  font-weight: 400;
+  letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==================== 4. TOPBAR ==================== */
+.topbar {
+  width: 100%;
+
+  border-bottom: 1px solid var(--line);
+  background: rgba(250, 250, 250, 0.9);
+}
+.topbar-inner {
+  height: 44px;
+  display: flex;
+  max-width: 1200px; /* тот же предел, что у hero */
+  margin: 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 10px 24px; /* те же боковые отступы, что у home-hero */
+}
+
+.brand {
+  /* position: absolute;
+  left: 22px;*/
+  display: flex;
+  /*align-items: center;*/
+  gap: 10px;
+  min-width: 0; /* чтобы tagline мог ужиматься */
+}
+
+/* Стили для контейнера логотипа */
+.logo img {
+  height: 20px; /* Укажите нужную высоту вашего логотипа */
+  width: auto; /* Сохраняет пропорции */
+  display: block;
+}
+
+.brand-tagline {
+  font-size: 1.3rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+
+  line-height: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* лёгкий “воздух” от лого */
+  margin-top: 1px;
+}
+
+.short-tagline {
+  display: none; /* Скрываем сокращенный вариант на больших экранах */
+}
+
+/* Navigation */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+
+.navlink {
+  color: rgba(0, 0, 0, 0.5);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.6px;
+}
+
+.navlink.is-active {
+  color: var(--accent);
+}
+
+/* Language switcher */
+.lang {
+  margin-left: 10px;
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.lang-btn {
+  border: 0;
+  background: transparent;
+  padding: 4px 10px;
+  font-weight: 800;
+  font-size: 12px;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.lang-btn.is-active {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--accent);
+}
+
+/* Десктопная кнопка бургера всегда скрыта */
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 100;
+}
+
+.burger span {
+  width: 100%;
+  height: 2px;
+  background-color: var(--text);
+  transition: all 0.3s ease;
+}
+
+.short-tagline {
+  display: none; /* Короткий текст скрыт на десктопе */
+}
+
+/* 1) Растягиваем колонки по высоте (убираем "центровку по высоте") */
+.slider-home {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(
+    100vh - var(--headerH)
+  ); /* Убеждаемся, что main на весь экран */
+}
+
+.home-hero {
+  flex-grow: 1; /* Секция заполнит весь main до самого дна */
+  height: auto; /* Убираем фиксированную высоту */
+  min-height: calc(100vh - var(--headerH));
+  padding: 44px 24px 28px;
+  width: min(
+    1200px,
+    92vw
+  ); /* <-- ключ: начнёт сжиматься раньше, чем исчезнут поля */
+  margin: 0 auto;
+  max-width: none; /* необязательно, но чтобы не было “двойного ограничения” */
+  margin: 0 auto;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  display: grid;
+  grid-template-columns:
+    minmax(220px, 1fr)
+    minmax(240px, min(520px, 40vw))
+    minmax(220px, 1fr);
+  align-items: stretch;
+  gap: 26px;
+
+  --shipH: 820px; /* фикс высота корабля (поставь 760–880 по вкусу) */
+  --shipY: 100%; /* 100% = ближе к воде; 92–100% подстрой */
+}
+
+/* Ship background (PATH IMPORTANT: css/home.css -> ../images/home.jpg) */
+.home-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  background-image: url("../images/home.jpg");
+  background-repeat: no-repeat;
+
+  /* ВАЖНОЕ: фиксируем размер и привязываем к ВЕРХУ */
+  background-size: auto var(--shipH);
+  background-position: center top;
+
+  min-height: calc(100vh - var(--headerH));
+  /* align-items: center; -- вот это попытка поставить картинку по центру */
+}
+
+/* 2) Каждая колонка занимает всю высоту секции и имеет "зону" под CTA */
+
+.hero-col,
+.hero-center {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+
+  height: 100%;
+  justify-content: flex-start;
+
+  /* подгонишь по вкусу, но это ключ: */
+  padding-top: clamp(58px, 10vh, 100px); /* фиксируем линию старта заголовков */
+  padding-bottom: 20px; /* резерв под CTA (чтоб не толкался) */
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: stable; /* чтобы не было дёрганий от появления полосы */
+
+  /* Firefox */
+  scrollbar-width: none;
+
+  /* IE/старый Edge */
+  -ms-overflow-style: none;
+}
+
+/* Chrome/Opera/Safari */
+.hero-col::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.hero-col .cta {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: var(--cta-bottom);
+
+  margin-top: 0; /* чтобы не влиял gap */
+  align-self: auto; /* на всякий */
+}
+
+/* 2) КРИТИЧНО для Firefox/Opera: разрешаем grid-детям ужиматься */
+.home-hero > .hero-col,
+.home-hero > .hero-center {
+  min-height: 0;
+}
+
+/* ==================== TITLES ==================== */
+.hero-title {
+  margin: 0;
+  color: var(--accent);
+  font-family: var(--font-ui);
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  font-size: 78px;
+  line-height: 1;
+}
+
+/* Titles point toward the ship */
+.hero-col--left .hero-title {
+  text-align: right;
+  padding-right: 30px;
+}
+.hero-col--right .hero-title {
+  text-align: left;
+  padding-left: 30px;
+}
+
+/* Заголовок + чип в одну строку */
+.hero-title--chip {
+  display: flex;
+  align-items: flex-start;
+  /* gap: 6px;*/
+  line-height: 1;
+}
+
+/* DEV слева, QA справа (симметрия) */
+.hero-title--dev {
+  justify-content: flex-start;
+}
+.hero-title--qa {
+  justify-content: flex-end;
+}
+
+/* сам “чип-кнопка” */
+.hero-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 28px;
+  padding: 0 14px;
+
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+
+  color: var(--accent);
+  text-decoration: none;
+
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+
+  /* поднимаем чип к верхней линии букв DEV/QA */
+  transform: translateY(8px); /* было 10px — подгони 7–9px по пикселю */
+  background: transparent;
+}
+
+/* =========================
+   DEV: HIRE соединяется СПРАВА
+   - убираем правый бордер
+   - убираем правые скругления
+   - усик = по верхнему бордеру
+========================= */
+.hero-chip--dev {
+  border-right: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* “ус” линия от чипа к заголовку */
+.hero-chip--dev::after {
+  /* было: по центру — теперь по верхнему бордеру */
+  top: 0;
+  transform: none;
+
+  /* линия начинается ровно от края “капсулы” */
+  left: 100%;
+
+  /* сама линия */
+  height: 0;
+  border-top: 1px solid var(--accent);
+
+  /* длина линии */
+  width: clamp(46px, 6vw, 92px);
+}
+
+.hero-chip--dev::after,
+.hero-chip--qa::before {
+  content: "";
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+.hero-chip--dev::after {
+  top: -1px; /* линия по верхнему бордеру */
+  left: 100%;
+  width: clamp(46px, 6vw, 92px);
+  height: 0;
+  border-top: 1px solid var(--accent);
+}
+
+.hero-chip--qa::before {
+  top: -1px;
+  right: 100%;
+  width: clamp(46px, 6vw, 92px);
+  height: 0;
+  border-top: 1px solid var(--accent);
+}
+
+/* =========================
+   QA: CONTACT соединяется СЛЕВА
+   - убираем левый бордер
+   - убираем левые скругления
+   - усик = по верхнему бордеру
+========================= */
+.hero-chip--qa {
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.hero-chip--qa::before {
+  top: -1px;
+  transform: none;
+
+  right: 100%;
+
+  height: 0;
+  border-top: 1px solid var(--accent);
+  width: clamp(46px, 6vw, 92px);
+}
+
+/* “дороже”: hover/focus */
+.hero-chip:hover {
+  filter: brightness(0.95);
+}
+.hero-chip:focus-visible {
+  outline: 2px solid rgba(145, 0, 0, 0.25);
+  outline-offset: 3px;
+}
+
+/* ==================== ACCORDION BASE ==================== */
+.hero-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+}
+
+/* each item */
+.hero-accordion details.services-acc {
+  position: relative;
+  margin: 0 0 10px 0;
+  padding: 0;
+  border: 0;
+}
+
+/* SUMMARY: always visible row (title + subtitle stacked) */
+.hero-accordion details.services-acc > summary {
+  list-style: none;
+  cursor: pointer;
+  position: relative;
+
+  display: flex;
+  flex-direction: column; /* title above subtitle */
+  gap: 6px;
+
+  padding: 18px 0 18px 0; /* vertical breathing room */
+}
+
+.hero-accordion details.services-acc > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Title & subtitle */
+.hero-accordion .svc-name {
+  display: block;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text);
+}
+
+.hero-accordion .svc-short {
+  display: block;
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 200;
+  line-height: 1.35;
+}
+
+/* BODY: expandable content */
+.hero-accordion .svc-body {
+  position: relative; /* for line/dot pseudos */
+  padding: 14px 0 18px 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--text);
+  max-width: 44ch; /* keeps it within same visual “margins” as headers */
+}
+
+.hero-accordion .svc-body p {
+  margin: 0;
+}
+
+.hero-col--left p {
+  text-align: right;
+}
+
+/* ==================== LINES + DOTS (CLOSED + OPEN SPLIT) ==================== */
+/* The idea:
+   - Top line lives under SUMMARY (always)
+   - When OPEN: bottom line lives under BODY
+   - Dot sits on the ship-facing side (DEV: right, QA: left)
+*/
+
+/* ---------- DEV (LEFT COLUMN): dot on RIGHT, headers aligned right ---------- */
+details.services-acc.svc-col--dev > summary {
+  align-items: flex-end;
+  text-align: right;
+  padding-right: 36px; /* space for dot */
+}
+
+/* NOTE: explanatory body text should stay readable -> left aligned,
+   but the whole block can sit near ship side */
+details.services-acc.svc-col--dev .svc-body {
+  text-align: left; /* do NOT mirror like decorative text */
+  margin-left: auto; /* keep body closer to ship side */
+  margin-right: 16px; /* avoid dot */
+}
+
+/* top line under summary */
+details.services-acc.svc-col--dev > summary::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 18px; /* stop before dot */
+  bottom: 0;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.14);
+}
+
+/* top dot (always visible) */
+details.services-acc.svc-col--dev > summary::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -9px; /* center on line */
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  background: rgba(255, 255, 255, 0.85);
+  z-index: 2;
+}
+
+/* bottom line under body (only when open) */
+details.services-acc.svc-col--dev[open] .svc-body::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 18px;
+  bottom: 0;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.14);
+}
+
+/* ---------- QA (RIGHT COLUMN): dot on LEFT, headers aligned left ---------- */
+details.services-acc.svc-col--qa > summary {
+  align-items: flex-start;
+  text-align: left;
+  padding-left: 36px; /* space for dot */
+}
+
+details.services-acc.svc-col--qa .svc-body {
+  text-align: left;
+  margin-left: 16px; /* avoid dot */
+}
+
+/* top line under summary */
+details.services-acc.svc-col--qa > summary::after {
+  content: "";
+  position: absolute;
+  left: 18px; /* start after dot */
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.14);
+}
+
+/* top dot (always visible) */
+details.services-acc.svc-col--qa > summary::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -9px;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  background: rgba(255, 255, 255, 0.85);
+  z-index: 2;
+}
+
+/* bottom line under body (only when open) */
+details.services-acc.svc-col--qa[open] .svc-body::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.14);
+}
+
+/* ==================== CTA BUTTONS ==================== */
+.cta {
+  margin-top: 6px;
+  align-self: center;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 46px;
+
+  border-radius: 999px;
+  text-decoration: none;
+
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+
+  background: linear-gradient(180deg, var(--accent), var(--accent2));
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.14);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+
+  white-space: nowrap;
+  min-width: 240px; /* вернёт "нормальный" размер; можно 220–280 по вкусу */
+  padding: 0 26px; /* чуть шире, чтобы выглядело солидно */
+}
+
+.cta:hover {
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+  filter: brightness(1.03);
+  background: linear-gradient(180deg, var(--accent), var(--accent3));
+}
+
+/* ==================== OPEN BODY HIGHLIGHT ==================== */
+
+/* базовая подсветка (только когда открыт) */
+details.services-acc[open] .svc-body {
+  padding: 14px 12px 18px 12px; /* чуть больше воздуха по бокам */
+  border-radius: 0 0 12px 12px; /* верхние углы = 0, нижние = 12 */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.72) 0%,
+    rgba(255, 255, 255, 0.38) 100%
+  );
+  backdrop-filter: blur(6px);
+}
+
+/* DEV: подсветка “прилипает” к кораблю справа (акцент-кант справа) */
+details.services-acc.svc-col--dev[open] .svc-body {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 18px 0 32px rgba(0, 0, 0, 0.06);
+}
+
+/* QA: кант слева */
+details.services-acc.svc-col--qa[open] .svc-body {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: -18px 0 32px rgba(0, 0, 0, 0.06);
+}
+
+/* чтобы линии под body оставались видимыми на подложке */
+details.services-acc[open] .svc-body::after {
+  opacity: 0.85;
+}
+
+/*========= карточки ===================*/
+/* чтобы контент всегда был над фоном */
+/*
+.hero-tabs-content,
+.hero-col {
+  position: relative;
+  z-index: 1;
+}*/
+
+/* карточка-ячейка */
+/*
+.hero-col {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.62) 0%,
+    rgba(255, 255, 255, 0.38) 100%
+  );
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 18px;
+  backdrop-filter: blur(8px);
+
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.06);
+
+  padding: 26px 24px 20px;
+}
+*/
+/* чтобы аккордеон внутри не "прилипал" к краю карточки */
+/*
+.hero-accordion {
+  margin-top: 6px;
+}
+*/
+
+/* Говорим секции игнорировать обертку вкладок, чтобы сетка 1fr 520px 1fr увидела колонки */
+.hero-tabs-content {
+  display: contents;
+}
+
+/* === Prep for responsive: wrapper that does NOT affect desktop grid === */
+.hero-sides {
+  display: contents; /* дети продолжают участвовать в grid как раньше */
+}
+
+/* DESKTOP GUARD: выключаем слайдер-режим если он где-то "утёк" */
+@media (min-width: 901px) {
+  .hero-sides {
+    overflow: visible !important;
+    scroll-snap-type: none !important;
+    -webkit-overflow-scrolling: auto;
+  }
+
+  .hero-sides::-webkit-scrollbar {
+    width: auto;
+    height: auto;
+  }
+
+  .hero-sides > .hero-col {
+    flex: initial !important;
+    min-width: 0 !important;
+  }
+
+  .hero-center {
+    display: block !important;
+  }
+
+  /* стрелки/шевроны на десктопе не нужны */
+  .hero-nav {
+    display: none !important;
+  }
+}

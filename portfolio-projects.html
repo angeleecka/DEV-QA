@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Portfolio — Projects</title>
+
+    <link rel="stylesheet" href="css/home.css?v=1" />
+    <link rel="stylesheet" href="css/responsive.css?v=1" />
+
+    <link rel="stylesheet" href="css/modals.css?v=1" />
+    <link rel="stylesheet" href="css/portfolio-projects.css?v=1" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="pp">
+    <div class="wrap">
+      <!-- Topbar -->
+      <header class="topbar" aria-label="Top navigation">
+        <div class="topbar-inner">
+          <div class="brand" aria-label="Brand">
+            <a href="index.html" class="logo">
+              <img src="images/av_logo.jpg" alt="AV Logo" />
+            </a>
+
+            <div class="brand-tagline">
+              <span class="full-tagline"
+                >UX Architecture & Quality Assurance</span
+              >
+              <span class="short-tagline">UX & QA</span>
+            </div>
+          </div>
+
+          <button class="burger" id="burgerBtn" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+          <nav class="nav" id="mainNav" aria-label="Site">
+            <a class="navlink" href="index.html">HOME</a>
+            <a class="navlink is-active" href="portfolio-projects.html"
+              >OUR WORKS</a
+            >
+            <a class="navlink" href="#">ABOUT</a>
+            <a class="navlink" href="#">CONTACT</a>
+
+            <div class="lang" aria-label="Language">
+              <button class="lang-btn is-active" type="button">EN</button>
+              <button class="lang-btn" type="button">ES</button>
+            </div>
+          </nav>
+        </div>
+      </header>
+
+      <!-- Slider-portfolio -->
+      <main class="slider" aria-label="Projects slider">
+        <button
+          class="edge-arrow edge-arrow--left"
+          id="prevBtn"
+          type="button"
+          aria-label="Previous project"
+        ></button>
+        <button
+          class="edge-arrow edge-arrow--right"
+          id="nextBtn"
+          type="button"
+          aria-label="Next project"
+        ></button>
+
+        <div class="viewport" id="viewport">
+          <div class="track" id="track"></div>
+        </div>
+
+        <div class="dots" id="dots" aria-label="Slide dots"></div>
+      </main>
+    </div>
+
+    <!-- QA Pack overlay -->
+    <div class="overlay" id="qaOverlay" aria-hidden="true">
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="qaTitle"
+      >
+        <div class="modal-head">
+          <div class="modal-title">
+            <b id="qaTitle">Index</b>
+            <span class="muted"
+              >Open files in separate windows (the list stays usable).</span
+            >
+          </div>
+          <div class="modal-actions">
+            <button class="btn" id="closeAllWins" type="button">
+              Close all
+            </button>
+            <button
+              class="btn btn-primary"
+              id="closeQa"
+              type="button"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="doclist" id="docList"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/portfolio-projects.js"></script>
+  </body>
+</html>
