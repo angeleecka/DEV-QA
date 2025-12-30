@@ -18,6 +18,7 @@
   --accent2: #7b0b0b;
   --accent3: #851d1d;
   --accent3: #851d1d;
+  --accent4: #05435c;
 
   --headerH: 45px; /* 44px + 10px + 10px из .topbar-inner */
   --shipH: 820px; /* подгони: 760–920 */
@@ -204,15 +205,13 @@ body {
 .slider-home {
   display: flex;
   flex-direction: column;
-  min-height: calc(
-    100vh - var(--headerH)
-  ); /* Убеждаемся, что main на весь экран */
+  min-height: 0;
 }
 
 .home-hero {
-  flex-grow: 1; /* Секция заполнит весь main до самого дна */
+  flex-grow: 0; /* Секция заполнит весь main до самого дна */
   height: auto; /* Убираем фиксированную высоту */
-  min-height: calc(100vh - var(--headerH));
+  min-height: calc(var(--shipH) + 72px);
   padding: 44px 24px 28px;
   width: min(
     1200px,
@@ -696,39 +695,6 @@ details.services-acc[open] .svc-body::after {
   opacity: 0.85;
 }
 
-/*========= карточки ===================*/
-/* чтобы контент всегда был над фоном */
-/*
-.hero-tabs-content,
-.hero-col {
-  position: relative;
-  z-index: 1;
-}*/
-
-/* карточка-ячейка */
-/*
-.hero-col {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.62) 0%,
-    rgba(255, 255, 255, 0.38) 100%
-  );
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 18px;
-  backdrop-filter: blur(8px);
-
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.06);
-
-  padding: 26px 24px 20px;
-}
-*/
-/* чтобы аккордеон внутри не "прилипал" к краю карточки */
-/*
-.hero-accordion {
-  margin-top: 6px;
-}
-*/
-
 /* Говорим секции игнорировать обертку вкладок, чтобы сетка 1fr 520px 1fr увидела колонки */
 .hero-tabs-content {
   display: contents;
@@ -764,5 +730,128 @@ details.services-acc[open] .svc-body::after {
   /* стрелки/шевроны на десктопе не нужны */
   .hero-nav {
     display: none !important;
+  }
+}
+
+/* ===== Second screen: snapshot ===== */
+.home-snapshot {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  padding: clamp(32px, 6vh, 40px) clamp(16px, 4vw, 48px);
+}
+
+.snap-label {
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+.snap-h {
+  margin: 15px;
+}
+.snap-title {
+  margin: 10px 20px 8px;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+}
+
+.snap-lead {
+  max-width: 70ch;
+  opacity: 0.75;
+  margin: 0 0 24px;
+}
+
+.snap-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.snap-card {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  padding: 16px 16px 14px;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+.snap-tag {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  margin-bottom: 8px;
+}
+
+.snap-card h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.snap-card p {
+  margin: 0;
+  opacity: 0.75;
+  line-height: 1.35;
+}
+
+.snap-cta {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+  align-items: center;
+  flex-wrap: wrap;
+
+  justify-content: center;
+}
+
+.btn-ghost {
+  display: flex;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  width: auto; /* было min(520px, 100%) */
+  margin: 0; /* было 10px auto 0 */
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 6px 8px;
+  font-size: 14px;
+  color: #1b5c59;
+  text-decoration: none;
+}
+.btn-ghost:hover {
+  text-decoration: underline;
+}
+
+.btn-primary {
+  display: inline-flex; /* вместо flex */
+  align-items: stretch;
+  justify-content: center;
+  gap: 0;
+  background: transparent;
+  border-radius: 999px;
+  padding: 7px 16px;
+  text-decoration: none;
+  overflow: visible;
+  --cut: 18px;
+  background: linear-gradient(
+    90deg,
+    var(--accent, #a10f0f),
+    var(--accent2, #c24b4b)
+  );
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1) drop-shadow(0 24px 70px rgba(255, 255, 255, 0.28));
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .snap-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 520px) {
+  .snap-grid {
+    grid-template-columns: 1fr;
   }
 }

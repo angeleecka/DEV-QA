@@ -43,8 +43,8 @@
         <nav class="nav" id="mainNav" aria-label="Site">
           <a class="navlink is-active" href="index.html">HOME</a>
           <a class="navlink" href="portfolio-projects.html">OUR WORKS</a>
-          <a class="navlink" href="#">ABOUT</a>
-          <a class="navlink" href="#">CONTACT</a>
+          <a class="navlink" href="about.html">ABOUT</a>
+          <a class="navlink" href="about.html#contact">CONTACT</a>
 
           <div class="lang" aria-label="Language">
             <button class="lang-btn is-active" type="button">EN</button>
@@ -73,7 +73,14 @@
             <!-- LEFT: DEV -->
             <div class="hero-col hero-col--left" aria-labelledby="heroDevTitle">
               <h2 class="hero-title dev-left hero-title--chip hero-title--dev">
-                <a class="hero-chip hero-chip--dev" href="contact.html">HIRE</a>
+                <button
+                  class="hero-chip hero-chip--dev js-gmodal-open"
+                  type="button"
+                  data-gmodal="modalHireDev"
+                >
+                  HIRE
+                </button>
+
                 <span class="hero-titleText">DEV</span>
               </h2>
 
@@ -132,9 +139,13 @@
               <!-- RIGHT -->
               <h2 class="hero-title qa-right hero-title--chip hero-title--qa">
                 <span class="hero-titleText">QA</span>
-                <a class="hero-chip hero-chip--qa" href="contact.html"
-                  >CONTACT</a
+                <button
+                  class="hero-chip hero-chip--qa js-gmodal-open"
+                  type="button"
+                  data-gmodal="modalContactQA"
                 >
+                  CONTACT
+                </button>
               </h2>
 
               <div class="hero-accordion" aria-label="QA services">
@@ -192,6 +203,61 @@
     </main>
     <!--  </div>-->
 
+    <!-- SECOND SCREEN: Snapshot (short, not the full About) -->
+    <section id="why" class="home-snapshot" aria-label="Why this studio">
+      <div class="snap-h">
+        <div class="snap-label">Why this studio</div>
+        <h2 class="snap-title">What teams hire us for</h2>
+        <p class="snap-lead">
+          Fast, realistic QA that supports shipping. Clear scope, clean bug
+          reports, predictable communication.
+        </p>
+      </div>
+
+      <div class="snap-grid">
+        <article class="snap-card">
+          <div class="snap-tag">Structured QA</div>
+          <h3>Not “clicking around”</h3>
+          <p>
+            Risk-based scope, focused checks, and reports your devs can act on.
+          </p>
+        </article>
+
+        <article class="snap-card">
+          <div class="snap-tag">Communication bridge</div>
+          <h3>US management · EU dev teams</h3>
+          <p>
+            We help reproduce issues faster and reduce back-and-forth friction.
+          </p>
+        </article>
+
+        <article class="snap-card">
+          <div class="snap-tag">Cost-efficiency</div>
+          <h3>Senior-level QA at EU rates</h3>
+          <p>Flexible support during release peaks — no hiring overhead.</p>
+        </article>
+
+        <article class="snap-card">
+          <div class="snap-tag">Boutique studio</div>
+          <h3>Direct access</h3>
+          <p>
+            You talk to the person doing the testing — not layers of managers.
+          </p>
+        </article>
+      </div>
+
+      <div class="snap-cta">
+        <a class="btn-ghost" href="about.html">Read the full story</a>
+        <button
+          class="btn-primary js-gmodal-open"
+          type="button"
+          data-gmodal="modalAudit"
+        >
+          Book a free QA audit
+        </button>
+      </div>
+    </section>
+
     <!-- QA Pack overlay -->
     <div class="overlay" id="qaOverlay" aria-hidden="true">
       <div
@@ -224,6 +290,262 @@
 
         <div class="modal-body">
           <div class="doclist" id="docList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== -->
+    <!-- GLASS CONTACT MODALS  -->
+    <!-- ===================== -->
+
+    <div class="gmodal" id="modalHireDev" aria-hidden="true" hidden>
+      <div class="gmodal__backdrop" data-gmodal-close></div>
+
+      <div
+        class="gmodal__dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalHireDevTitle"
+      >
+        <header class="gmodal__head">
+          <div>
+            <div class="gmodal__kicker">DEV</div>
+            <h3 class="gmodal__title" id="modalHireDevTitle">
+              Hire a Developer / UX Architect
+            </h3>
+            <p class="gmodal__sub">
+              Prototype → build → ship. Clean UI, predictable scope.
+            </p>
+          </div>
+
+          <button
+            class="gmodal__x"
+            type="button"
+            data-gmodal-close
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </header>
+
+        <div class="gmodal__body">
+          <div class="gmodal__card">
+            <h4 class="gmodal__h">Best fit for</h4>
+            <ul class="gmodal__list">
+              <li>Landing pages and product-style one-pagers</li>
+              <li>Mini CMS / admin panels (Explorer-style UI)</li>
+              <li>UI prototyping + UX architecture for small apps</li>
+            </ul>
+
+            <div class="gmodal__actions">
+              <a
+                class="gmodal__btn"
+                href="mailto:info@alevito.es?subject=DEV%20request"
+                >Email</a
+              >
+              <button
+                class="gmodal__btn gmodal__btn--ghost js-gmodal-open"
+                type="button"
+                data-gmodal="modalAudit"
+              >
+                Need QA audit instead
+              </button>
+            </div>
+          </div>
+
+          <p class="gmodal__note">
+            Tell us your stack + deadline — we’ll reply with a tiny plan and
+            next steps.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="gmodal" id="modalContactQA" aria-hidden="true" hidden>
+      <div class="gmodal__backdrop" data-gmodal-close></div>
+
+      <div
+        class="gmodal__dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalContactQATitle"
+      >
+        <header class="gmodal__head">
+          <div>
+            <div class="gmodal__kicker">QA</div>
+            <h3 class="gmodal__title" id="modalContactQATitle">Talk to QA</h3>
+            <p class="gmodal__sub">
+              Manual checks, evidence pack, focused automation starter.
+            </p>
+          </div>
+
+          <button
+            class="gmodal__x"
+            type="button"
+            data-gmodal-close
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </header>
+
+        <div class="gmodal__body">
+          <div class="gmodal__card">
+            <h4 class="gmodal__h">Quick message</h4>
+            <p class="gmodal__p">
+              Share device targets, main user flow, and your release date —
+              we’ll suggest a scope.
+            </p>
+
+            <div class="gmodal__actions">
+              <a
+                class="gmodal__btn"
+                href="mailto:info@alevito.es?subject=QA%20request"
+                >Email</a
+              >
+              <button
+                class="gmodal__btn gmodal__btn--ghost js-gmodal-open"
+                type="button"
+                data-gmodal="modalAudit"
+              >
+                Order Audit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gmodal" id="modalAudit" aria-hidden="true" hidden>
+      <div class="gmodal__backdrop" data-gmodal-close></div>
+
+      <div
+        class="gmodal__dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalAuditTitle"
+      >
+        <header class="gmodal__head">
+          <div>
+            <div class="gmodal__kicker">AUDIT</div>
+            <h3 class="gmodal__title" id="modalAuditTitle">
+              QA Audit / Evidence Pack
+            </h3>
+            <p class="gmodal__sub">
+              A clear first step: risks, key issues, and next actions.
+            </p>
+          </div>
+
+          <button
+            class="gmodal__x"
+            type="button"
+            data-gmodal-close
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </header>
+
+        <div class="gmodal__body">
+          <!-- взято из index-QA.html (контактный блок + список) -->
+          <div class="gmodal__card">
+            <h4 class="gmodal__h">What you get in a free QA audit</h4>
+            <ul class="gmodal__list">
+              <li>
+                20–30 min intro call or async exchange about your product and
+                priorities.
+              </li>
+              <li>
+                A short, focused pass through your main user flow (about 1–2
+                hours of manual testing).
+              </li>
+              <li>
+                A brief written summary with key issues, risks and suggested
+                next steps.
+              </li>
+              <li>
+                No obligation to continue — you can use the notes with your
+                current team.
+              </li>
+            </ul>
+            <p class="gmodal__note">
+              Think of it as a low-pressure, clearly scoped way to start working
+              together and see if our style fits your product.
+            </p>
+          </div>
+
+          <div class="gmodal__card">
+            <div class="gmodal__contacts">
+              <div>
+                Email: <a href="mailto:info@alevito.es">info@alevito.es</a>
+              </div>
+              <div>
+                LinkedIn:
+                <a
+                  href="https://www.linkedin.com/in/viktoriia-bondarenko-mayboroda/"
+                  target="_blank"
+                  rel="noreferrer"
+                  >Viktoriia</a
+                >
+                ·
+                <a
+                  href="https://www.linkedin.com/in/aleksandr-bondarenko-alevito/"
+                  target="_blank"
+                  rel="noreferrer"
+                  >Alex</a
+                >
+              </div>
+            </div>
+
+            <!-- форма из index-QA.html -->
+            <form class="gmodal__form" action="#" method="post">
+              <div class="gmodal__field">
+                <label class="gmodal__label" for="auditName">Your name</label>
+                <input
+                  class="gmodal__input"
+                  type="text"
+                  id="auditName"
+                  name="name"
+                  placeholder="Name"
+                />
+              </div>
+
+              <div class="gmodal__field">
+                <label class="gmodal__label" for="auditEmail">Work email</label>
+                <input
+                  class="gmodal__input"
+                  type="email"
+                  id="auditEmail"
+                  name="email"
+                  placeholder="you@company.com"
+                />
+              </div>
+
+              <div class="gmodal__field">
+                <label class="gmodal__label" for="auditMsg"
+                  >What do you need help with?</label
+                >
+                <textarea
+                  class="gmodal__textarea"
+                  id="auditMsg"
+                  name="message"
+                  placeholder="Short description of your app, tech stack and release timeline"
+                ></textarea>
+              </div>
+
+              <button
+                class="btn-primary gmodal__btn gmodal__btn--primary"
+                type="submit"
+              >
+                Send message
+              </button>
+              <!--
+              <div class="gmodal__fineprint">
+                This form is a simple demo. For production we can wire it up to
+                your preferred tool (email, ticket system or CRM).
+              </div>-->
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -301,5 +623,6 @@
         });
       })();
     </script>
+    <script src="js/glass-modals.js"></script>
   </body>
 </html>

@@ -72,10 +72,105 @@
   .burger.is-active span:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
   }
+  .hero-nav:disabled {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    /* Убираем её из потока, чтобы текст не центрировался по фантомной кнопке */
+    max-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden;
+  }
 }
-/* =========================
-   900–480: hero becomes horizontal slider (DEV/QA)
-   ========================= */
+
+@media (max-width: 900px) and (min-width: 481px) {
+  /* 1. Состояние Disabled */
+  /* Полное исчезновение кнопки, когда она неактивна */
+
+  /* на всякий: если состояние выключения делается не disabled, а ARIA/классом */
+  .hero-nav[aria-disabled="true"],
+  .hero-nav[aria-hidden="true"],
+  .hero-nav.is-disabled {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+  }
+
+  .brand-tagline {
+    display: block; /* Убеждаемся, что контейнер ВИДЕН */
+  }
+  /* Прячем полную версию */
+  .full-tagline {
+    display: none;
+  }
+
+  /* Показываем сокращенную */
+  .short-tagline {
+    display: inline;
+    font-size: 1.1rem; /* Можно чуть уменьшить размер, чтобы точно влезло */
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  /* Чтобы лого и слоган не слипались на мобильных */
+  .brand {
+    gap: 8px;
+    align-items: center;
+  }
+
+  /* 2. Показываем бургер */
+  .burger {
+    display: flex;
+  }
+
+  /* 3. Превращаем навигацию в выпадающее меню */
+  .nav {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Прячем за край экрана */
+    width: 280px;
+    height: 100vh;
+    background: white;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 80px 40px;
+    gap: 30px;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 99;
+  }
+
+  /* Состояние при открытом меню */
+  .nav.is-open {
+    right: 0;
+  }
+
+  /* Стили ссылок в мобильном меню */
+  .navlink {
+    font-size: 18px;
+    width: 100%;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 10px;
+  }
+
+  /* Переключатель языков внизу меню */
+  .lang {
+    margin-left: 0;
+    margin-top: auto; /* Прижимаем к низу */
+  }
+
+  /* Анимация бургера в крестик */
+  .burger.is-active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .burger.is-active span:nth-child(2) {
+    opacity: 0;
+  }
+  .burger.is-active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+}
 @media (max-width: 900px) /*and (min-width: 480px) */ {
   /* ✅ корректный reset вместо box-sizing:none */
   *,
@@ -88,22 +183,18 @@
   #top.home-hero,
   .home-hero {
     width: 100%;
-    max-width: none;
     margin: 0;
     padding: 0;
-    min-height: calc(100vh - var(--headerH));
+    min-height: auto; /* или unset */
+    display: block; /* отключаем grid на этом диапазоне */
+    max-width: none; /* чтобы не было "рамки 1200" */
+
+    /* ship scales from width (vmin), not from height (svh) */
+    --shipH: max(620px, min(92vmin, 900px));
   }
 
   .hero-title {
-    margin: 60px;
-  }
-
-  /* 1) Секцию делаем одной колонкой */
-  .home-hero {
-    display: block; /* отключаем grid на этом диапазоне */
-    max-width: none; /* чтобы не было "рамки 1200" */
-    /*padding: 28px 0 18px; боковые отступы будут у слайдов */
-    padding-left: 0;
+    margin: clamp(18px, 4vh, 60px);
   }
 
   /* 0) Отключаем общий фон у сцены — дальше фон будет на каждом слайде */
@@ -118,7 +209,7 @@
 
   /* 4) Делаем 2 слайда на всю ширину */
   .hero-sides {
-    height: calc(100vh - var(--headerH));
+    height: auto;
     display: flex;
     gap: 0;
     overflow-x: auto;
@@ -162,27 +253,28 @@
       minmax(0, var(--contentW))
       minmax(0, var(--airR));
 
-    align-content: start;
+    align-content: center;
 
-    /* важно: на моб-диапазоне уменьшаем верхний отступ,
-         именно он чаще всего “прячет” заголовок внутрь */
+    /* (УБРАНО) padding-block: ...   — потому что ниже есть padding: ... !important */
     padding: clamp(22px, 5vh, 48px) 0 24px !important;
   }
 
   /* ✅ каждый слайд занимает всю “сцену” */
   .hero-col {
     flex: 0 0 100%;
-    height: 100%;
-    min-height: 100%;
-    /* твои паддинги оставь, если нужно */
-    padding-left: 24px;
-    padding-right: 24px;
+    height: auto;
+    min-height: 0;
 
     scroll-snap-align: start;
     scroll-snap-stop: always;
 
     position: relative;
     isolation: isolate;
+
+    overflow: visible;
+
+    /* (УБРАНО) padding-left/right/top — они тут не работают,
+       потому что .hero-sides > .hero-col задаёт padding: ... !important */
   }
 
   /* Все прямые дети слайда кладём в среднюю колонку */
@@ -205,16 +297,11 @@
     --airR: 1.05fr;
   }
 
-  /* Если стрелки у тебя позиционируются внутри .hero-tabs-content — ок.
-     Если вдруг они “участвуют” в потоке и ломают ширины — сделай так: */
   .hero-tabs-content {
     display: block; /* ВАЖНО: перебить display: contents */
     position: relative;
   }
 
-  /* если у тебя раньше были ограничения ширины типа width:min(...)
-     на .hero-title--chip / .hero-accordion — они мешают центровке,
-     поэтому здесь принудительно возвращаем 100% */
   .hero-col--left .hero-title--chip,
   .hero-col--left .hero-accordion,
   .hero-col--right .hero-title--chip,
@@ -222,7 +309,10 @@
     width: 100% !important;
   }
 
-  /* DEV slide: left half */
+  /* (УБРАНО) .hero-col::before {...}
+     — потому что фон задаётся на .hero-col--left/right::before, и это перекрывает общий ::before */
+
+  /* DEV slide + QA slide background halves */
   .hero-col--left::before,
   .hero-col--right::before {
     content: "";
@@ -236,44 +326,14 @@
     background-position: center top;
   }
 
-  /* ЛЕВАЯ ПОЛОВИНА */
   .hero-col--left::before {
     background-image: url("../images/home-left.jpg");
-    background-position: right top; /* “стыкуем” к центру */
+    background-position-x: right;
   }
 
-  /* ПРАВАЯ ПОЛОВИНА */
   .hero-col--right::before {
     background-image: url("../images/home-right.jpg");
-    background-position: left top; /* “стыкуем” к центру */
-  }
-
-  /* === 3-col grid: [fluid] [fixed content] [fluid] === */
-  .hero-col {
-    display: grid;
-
-    /* центральная колонка = "карточка контента" */
-    --contentW: min(420px, 76vw);
-
-    grid-template-columns: minmax(0, 1fr) var(--contentW) minmax(0, 1fr);
-    align-content: start;
-
-    /* чтобы поля вокруг “сцены” тоже уменьшались плавно */
-    padding-left: clamp(12px, 2.4vw, 24px);
-    padding-right: clamp(12px, 2.4vw, 24px);
-    padding-top: clamp(28px, 6vh, 54px);
-  }
-
-  /* кладём контент в СРЕДНЮЮ колонку */
-  .hero-col--left > .hero-title,
-  .hero-col--left > .hero-accordion,
-  .hero-col--left > .cta,
-  .hero-col--right > .hero-title,
-  .hero-col--right > .hero-accordion,
-  .hero-col--right > .cta {
-    grid-column: 2;
-    justify-self: center;
-    width: 100%;
+    background-position-x: left;
   }
 
   /* если нужно — убираем десктопные боковые паддинги у заголовков */
@@ -331,28 +391,27 @@
 
   /* заголовок DEV может занимать центр + правый "air" */
   .hero-col--left > .hero-title {
-    grid-column: 2 / 4; /* центр + правый воздух */
-    justify-self: start; /* не центрируем контейнер заголовка */
+    grid-column: 2 / 4;
+    justify-self: start;
   }
 
   /* заголовок QA может занимать левый "air" + центр */
   .hero-col--right > .hero-title {
-    grid-column: 1 / 3; /* левый воздух + центр */
+    grid-column: 1 / 3;
     justify-self: end;
   }
 
   /* Принудительно снимаем ВСЕ ограничения с заголовка */
   .hero-col--left > .hero-title,
   .hero-col--right > .hero-title {
-    position: relative; /* на всякий случай */
-    z-index: 10; /* чтобы был поверх */
+    position: relative;
+    z-index: 10;
   }
 
   /* Если grid всё равно режет — используем negative margin */
   .hero-col--left > .hero-title {
-    /* Компенсируем обрез справа */
-    margin-right: -20vw; /* "вылезаем" за grid-трек */
-    padding-right: 20vw; /* но оставляем место для содержимого */
+    margin-right: -20vw;
+    padding-right: 20vw;
   }
 
   .hero-col--right > .hero-title {
@@ -364,13 +423,6 @@
   /* ======= CLICK ZONES: “sea glass” always visible ======= */
   /* ======================================================== */
 
-  /* 1. Состояние Disabled */
-  .hero-nav:disabled {
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
-
-  /* 2. База панели */
   .hero-nav {
     position: absolute;
     top: 0;
@@ -381,7 +433,7 @@
     cursor: pointer;
     display: flex;
     align-items: flex-start;
-    padding: clamp(10px, 1.6vh, 18px) 0 22px 0; /* top | lr | bottom */
+    padding: clamp(10px, 1.6vh, 18px) 0 22px 0;
     gap: 0;
     background: linear-gradient(
       to left,
@@ -393,7 +445,6 @@
       0 12px 26px rgba(0, 0, 0, 0.1);
     transition: all 0.2s ease;
 
-    /* Переменные размеров */
     --navArrow: clamp(40px, 6vw, 70px);
     --navText: 1.6rem;
   }
@@ -405,7 +456,6 @@
   .hero-nav--prev {
     left: 0;
     justify-content: flex-start;
-    /* flex-direction: row-reverse;*/
   }
 
   .hero-nav:hover {
@@ -413,7 +463,6 @@
     box-shadow: 0 16px 34px rgba(0, 0, 0, 0.3);
   }
 
-  /* 3. Общие свойства для текста и стрелки */
   .hero-nav::before,
   .hero-nav::after {
     display: block;
@@ -422,16 +471,11 @@
     transition: opacity 0.2s ease;
   }
 
-  /* 4. Текст (DEV/QA) */
   .hero-nav::before {
     font-weight: 100;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    font-size: clamp(
-      1rem,
-      2vw,
-      1.4rem
-    ) !important; /* Чуть уменьшаем шрифт на малых экранах */
+    font-size: clamp(1rem, 2vw, 1.4rem) !important;
     white-space: nowrap;
     color: #a10f0f;
     height: var(--navArrow);
@@ -445,38 +489,29 @@
     content: "QA";
   }
 
-  /* 1. Общие настройки для DEV и QA / ТОНКАЯ КРАСНАЯ СТРЕЛКА */
   .hero-nav::after {
     content: "" !important;
     display: block !important;
-    /* Уменьшаем стрелку, чтобы она не выталкивала текст */
-
     width: var(--navArrow) !important;
     height: var(--navArrow) !important;
     flex: 0 0 var(--navArrow) !important;
-
     background-color: #a10f0f !important;
 
-    /* Единая маска для всех */
     -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 4l8 8-8 8' fill='none' stroke='black' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
       center / contain no-repeat !important;
     mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 4l8 8-8 8' fill='none' stroke='black' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
       center / contain no-repeat !important;
   }
 
-  /* 2. ПРАВАЯ стрелка (QA) */
   .hero-nav--next::after {
     animation: navBounceR 1.15s ease-in-out infinite;
   }
 
-  /* 3. ЛЕВАЯ стрелка (DEV) — чиним её появление */
   .hero-nav--prev::after {
-    /* Разворачиваем ТУ ЖЕ маску, чтобы она гарантированно была красной и тонкой */
     transform: scaleX(-1);
     animation: navBounceL 1.15s ease-in-out infinite;
   }
 
-  /* 5. Анимации (с учетом разворота) */
   @keyframes navBounceR {
     0%,
     100% {
@@ -488,7 +523,6 @@
   }
 
   @keyframes navBounceL {
-    /* Важно держать scaleX(-1) всегда, иначе стрелка будет дергаться */
     0%,
     100% {
       transform: scaleX(-1) translateX(0);
@@ -498,7 +532,6 @@
     }
   }
 
-  /* Скрываем при движении */
   .slider-home.is-moving .hero-nav {
     opacity: 0 !important;
     pointer-events: none !important;
@@ -506,134 +539,222 @@
 
   .hero-nav::before {
     order: 1;
-  } /* текст */
+  }
   .hero-nav::after {
     order: 2;
-  } /* стрелка */
+  }
 
   .hero-nav--prev::after {
     order: 1;
-  } /* стрелка слева */
+  }
   .hero-nav--prev::before {
     order: 2;
-  } /* текст справа от неё */
-
-  /*
-  * {
-    outline: 1px solid red;
-  }*/
+  }
 }
 
 @media (max-width: 480px) {
-  /* Убеждаемся, что колонка — это контейнер */
-  .hero-col {
-    position: relative !important;
-    isolation: isolate; /* Создаем чистый контекст */
+  /* ====== 1) Первый экран фиксированной высоты ====== */
+  #top.home-hero,
+  .home-hero {
+    height: calc(100svh - var(--headerH));
+    min-height: calc(100svh - var(--headerH));
+    overflow: hidden; /* чтобы следующий блок не “подлезал” на первый экран */
+
+    /* на планшетах можно чуть выше, чем на телефонах */
+    /* высота панели навигации (DEV / QA) */
+    --navH: 60px;
+    --shipH: clamp(620px, calc(100svh - var(--headerH)), 980px);
   }
 
-  /* Создаем вуаль через ::after */
+  .hero-sides {
+    height: calc(100svh - var(--headerH));
+  }
+
+  /* ====== 2) Слайды: 1 экран + внутренний скролл ====== */
+  .hero-sides > .hero-col {
+    min-height: calc(100svh - var(--headerH));
+  }
+
+  .hero-col {
+    height: 100%;
+    min-height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+
+    /* место под верхнюю панель nav */
+    /* синхронизируем “геометрию” карточки и контента */
+    --cardX: clamp(14px, 4.5vw, 42px);
+    --cardB: clamp(16px, 4.5vw, 42px);
+    --cardT: calc(var(--navH) + clamp(8px, 2vh, 14px));
+
+    /* контент всегда внутри “стекла” */
+    padding-top: calc(var(--cardT) + 14px) !important;
+    padding-right: calc(var(--cardX) + 10px) !important;
+    padding-left: calc(var(--cardX) + 10px) !important;
+    padding-bottom: calc(var(--cardB) + 18px) !important;
+
+    position: relative !important;
+    isolation: isolate;
+  }
+
+  .hero-col::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+  .hero-col {
+    scrollbar-width: none;
+  }
+
+  /* ====== 3) Корабль: по высоте первого экрана ====== */
+  .hero-col::before {
+    background-size: auto var(--shipH);
+    background-position-y: top;
+    z-index: 0; /* важно: фон ниже карточки */
+  }
+  .hero-col--left::before {
+    background-position-x: right;
+  }
+  .hero-col--right::before {
+    background-position-x: left;
+  }
+
+  /* ====== 4) Стеклянная карточка (вместо “вуали на весь экран”) ====== */
   .hero-col::after {
     content: "" !important;
     position: absolute !important;
-    inset: 0 !important;
 
-    /* Самое важное: вуаль должна быть НАД ::before (фоном), но ПОД контентом */
+    /* карточка занимает почти весь экран, но НЕ залезает под nav */
+    inset: var(--cardT) var(--cardX) var(--cardB) var(--cardX);
+
     z-index: 1 !important;
-
     pointer-events: none;
-
-    /* Используем плотный градиент для проверки */
-    background: linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.8) 0%,
-      rgba(255, 255, 255, 0.5) 50%,
-      rgba(255, 255, 255, 0.8) 100%
-    ) !important;
-
-    display: block !important;
+    background: transparent !important;
+    /* border: 1px solid rgba(0, 0, 0, 0.08);*/
+    border-radius: 18px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.06);
   }
 
-  /* Поднимаем контент НАД вуалью */
+  /* корабль справа → прозрачнее вправо */
+  .hero-col--left::after {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.92) 0%,
+      rgba(255, 255, 255, 0.74) 55%,
+      rgba(255, 255, 255, 0) 100%
+    ) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    /* гасим САМ эффект стекла к кораблю */
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      #000 0%,
+      #000 65%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(90deg, #000 0%, #000 65%, transparent 100%);
+  }
+
+  /* корабль слева → прозрачнее влево */
+  .hero-col--right::after {
+    background: linear-gradient(
+      270deg,
+      rgba(255, 255, 255, 0.92) 0%,
+      rgba(255, 255, 255, 0.74) 55%,
+      rgba(255, 255, 255, 0) 100%
+    ) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    -webkit-mask-image: linear-gradient(
+      270deg,
+      #000 0%,
+      #000 65%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(270deg, #000 0%, #000 65%, transparent 100%);
+  }
+
+  /* контент выше карточки */
   .hero-col > * {
     position: relative !important;
     z-index: 2 !important;
   }
 
-  /* Поднимаем заголовок еще выше, если он вылетает */
-  .hero-title {
-    z-index: 3 !important;
+  .hero-accordion {
+    margin-top: 6px;
   }
 
-  .hero-sides > .hero-col {
-    /* 1. Делаем боковые доли воздуха равными */
-    --airL: 1fr !important;
-    --airR: 1fr !important;
-
-    /* 2. Контролируем ширину контента */
-    /* 85vw даст достаточно места по бокам, чтобы не липло */
-    --contentW: 85vw !important;
-
-    /* 3. Убираем лишние паддинги, которые могли остаться от десктопа */
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-
-    /* Центрируем содержимое внутри грид-треков */
-    justify-items: center;
-  }
-
-  /* Сбрасываем негативные маргины, если они были у заголовков */
-  .hero-col--left > .hero-title,
-  .hero-col--right > .hero-title {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    grid-column: 2 !important; /* Строго в центральную колонку */
-  }
-  /* 1. Сбрасываем вертикальные панели и превращаем их в нижние кнопки */
+  /* ====== 5) Телефонная навигация DEV/QA сверху (две половины) ====== */
   .hero-nav {
-    top: 0 !important; /* Отлепляем от верха */
-    bottom: auto !important; /* Прижимаем к низу */
-    width: 100% !important; /* Каждая кнопка занимает половину ширины */
-    height: 60px !important; /* Фиксированная высота "футера" */
+    top: 0 !important;
+    bottom: auto !important;
 
-    flex-direction: row !important; /* Текст и стрелка в ряд */
+    height: var(--navH) !important;
+    width: 30% !important; /* ✅ половина экрана на кнопку */
+    max-width: none !important;
+
+    position: absolute !important;
+    z-index: 50 !important; /* ✅ выше стекла/фона */
+
+    padding: 0 5px !important;
+
+    display: flex !important;
+    flex-direction: row !important;
     align-items: center !important;
-    /* justify-content: center !important;*/
-    padding: 0 15px !important;
 
-    /* Делаем фон плотнее, чтобы кнопки выделялись как панель управления */
-    /* 2) Меньше “мути”, больше прозрачности */
-    backdrop-filter: blur(1px); /* было 6px */
+    background: none;
+    /*
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
     background: linear-gradient(
       to left,
       rgba(27, 92, 89, 0.2),
       rgba(27, 92, 89, 0.1)
-    );
-    box-shadow: inset 0 0 0 1px rgba(27, 92, 89, 0.1),
-      0 12px 26px rgba(0, 0, 0, 0.1); /* тень держит читаемость */
+    );*/
 
-    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
-    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05) !important;
-
-    /* размеры тизера */
-    --navArrow: clamp(64px, 8vw, 110px); /* ОГРОМНАЯ стрелка */
-    --navText: 1.6rem; /* твой текущий размер текста */
+    --navArrow: clamp(40px, 6vw, 70px);
+    --navText: 1.6rem;
   }
 
-  /* Левая кнопка (Назад к DEV) */
   .hero-nav--prev {
     left: 0 !important;
-    border-right: 1px solid rgba(0, 0, 0, 0.05) !important;
+    right: auto !important;
+    -webkit-mask-image: linear-gradient(to left, transparent 0%, #000 60%);
+    mask-image: linear-gradient(to left, transparent 0%, #000 60%);
   }
-
-  /* Правая кнопка (Вперед к QA) */
   .hero-nav--next {
     right: 0 !important;
+    left: auto !important;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 60%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 60%);
   }
 
-  /* 4. ВАЖНО: Даем контенту место, чтобы он не перекрывался этим футером */
-  .hero-col {
-    padding-top: 80px !important; /* Отступ снизу равен высоте кнопок + запас */
+  /* порядок “стрелка+текст” */
+  .hero-nav::before {
+    order: 1;
+  }
+  .hero-nav::after {
+    order: 2;
+  }
+
+  /* у prev — стрелка слева */
+  .hero-nav--prev::after {
+    order: 1;
+  }
+  .hero-nav--prev::before {
+    order: 2;
+  }
+  /* на всякий случай: если вдруг “disabled” не атрибутом */
+  .hero-nav[aria-disabled="true"],
+  .hero-nav.is-disabled {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* убираем пляску от vh-клампов маржинов на коротких высотах */
+  .hero-title {
+    margin-top: 0 !important;
   }
 }

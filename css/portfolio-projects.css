@@ -754,8 +754,7 @@ body.pp {
        12) DEBUG — DISABLED BY DEFAULT
        ============================================================ */
 
-/* Раскомментируй для дебага:
-  * {
-    outline: 1px solid red !important;
-  }
-  */
+/* Раскомментируй для дебага: 
+* {
+  outline: 1px solid red !important;
+}*/

@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>About</title>
+
+    <!-- базовые стили проекта -->
+    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/modals.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+
+    <!-- новые стили страницы -->
+    <link rel="stylesheet" href="css/about.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <header class="topbar" aria-label="Top navigation">
+      <div class="topbar-inner">
+        <div class="brand" aria-label="Brand">
+          <a href="index.html" class="logo">
+            <img src="images/av_logo.jpg" alt="AV Logo" />
+          </a>
+
+          <div class="brand-tagline">
+            <span class="full-tagline"
+              >UX Architecture & Quality Assurance</span
+            >
+            <span class="short-tagline">UX & QA</span>
+          </div>
+        </div>
+
+        <button class="burger" id="burgerBtn" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+
+        <nav class="nav" id="mainNav" aria-label="Site">
+          <a class="navlink" href="index.html">HOME</a>
+          <a class="navlink" href="portfolio-projects.html">OUR WORKS</a>
+          <a class="navlink is-active" href="about.html">ABOUT</a>
+          <a class="navlink" href="about.html#contact">CONTACT</a>
+
+          <div class="lang" aria-label="Language">
+            <button class="lang-btn is-active" type="button">EN</button>
+            <button class="lang-btn" type="button">ES</button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="about-page" aria-label="About page">
+      <!-- HERO -->
+      <section class="about-hero" aria-label="About intro">
+        <div class="about-hero-inner">
+          <div class="section-label">About</div>
+          <h1 class="about-title">Alevito QA Studio</h1>
+          <p class="about-lead">
+            Boutique QA & small product delivery. Clear scope, clean reporting,
+            predictable communication.
+          </p>
+
+          <div class="about-hero-cta">
+            <button
+              class="btn-primary js-gmodal-open"
+              type="button"
+              data-gmodal="modalAudit"
+            >
+              Book a free QA audit
+            </button>
+            <a class="btn-ghost" href="portfolio-projects.html">View work</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- VALUE (full version) -->
+      <section class="about-why">
+        <p class="section-label">WHY THIS STUDIO</p>
+        <h2 class="section-title">What US teams usually hire us for</h2>
+        <p class="section-lead">
+          We focus on realistic constraints: release dates, budgets and
+          communication between management and dev teams. Our goal is to ship,
+          not to flood you with abstract test documents.
+        </p>
+
+        <div class="about-why-grid">
+          <article class="about-why-card">
+            <p class="about-why-eyebrow">Silicon Valley methodology</p>
+            <h3 class="about-why-title">Structured, not “clicking around”</h3>
+            <p class="about-why-text">
+              Portnov Computer School background means we follow SDLC/STLC
+              principles and app store guidelines. We design test scopes that
+              match your risk areas, instead of randomly clicking through
+              screens.
+            </p>
+          </article>
+
+          <article class="about-why-card">
+            <p class="about-why-eyebrow">The communication bridge</p>
+            <h3 class="about-why-title">US management · EU dev teams</h3>
+            <p class="about-why-text">
+              Based in Spain, fluent in English, Russian, Ukrainian and Spanish.
+              We act as a bridge between US product owners and Eastern European
+              developers, so bugs are reproduced and fixed faster.
+            </p>
+          </article>
+
+          <article class="about-why-card">
+            <p class="about-why-eyebrow">Cost-efficiency</p>
+            <h3 class="about-why-title">Senior-level QA at European rates</h3>
+            <p class="about-why-text">
+              Get focused QA support starting at $35/hr.
+            </p>
+          </article>
+
+          <article class="about-why-card">
+            <p class="about-why-eyebrow">Boutique studio</p>
+            <h3 class="about-why-title">Direct access</h3>
+            <p class="about-why-text">
+              We are a specialized micro-studio. You work directly with the lead
+              QA engineer and delivery owner, not with anonymous ticket queues.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <div class="section-divider" aria-hidden="true"></div>
+
+      <!-- SERVICES -->
+
+      <section class="about-why" id="services" aria-label="Services">
+        <p class="section-label">SERVICES</p>
+        <h2 class="section-title">What we can help you with</h2>
+        <p class="section-lead">
+          We provide manual QA and light development for realistic apps and
+          sites. Bring your own product or ask us to build and test a small demo
+          end-to-end.
+        </p>
+
+        <div class="about-why-grid">
+          <article class="about-why-card">
+            <p class="about-why-eyebrow">Mobile apps</p>
+            <h3 class="about-why-title">Mobile app testing</h3>
+            <p class="about-why-text">
+              Manual testing on Android (real devices and emulators), basic iOS
+              simulator checks, UX verification against platform guidelines,
+              crash reporting and log collection for your dev team.
+            </p>
+          </article>
+
+          <article class="about-why-card">
+            <p class="about-why-eyebrow">Web & SaaS</p>
+            <h3 class="about-why-title">Manual functional testing</h3>
+            <p class="about-why-text">
+              Smoke, sanity and regression cycles for web apps, admin panels and
+              SaaS tools. Core flows, edge cases, negative scenarios, state
+              persistence and error handling.
+            </p>
+          </article>
+
+          <article class="about-why-card">
+            <p class="about-why-eyebrow">Languages & locales</p>
+            <h3 class="about-why-title">Localization testing (L10n)</h3>
+            <p class="about-why-text">
+              Visual and functional checks for English, Spanish and Cyrillic
+              locales. Text expansion/truncation, broken layouts, mixed
+              languages and encoding issues.
+            </p>
+          </article>
+
+          <article class="about-why-card">
+            <p class="about-why-eyebrow">Small products</p>
+            <h3 class="about-why-title">End-to-end for small apps</h3>
+            <p class="about-why-text">
+              For compact tools and marketing sites we can handle both
+              implementation and QA: from prototype to bug reports and
+              release-ready checklists.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <div class="section-divider" aria-hidden="true"></div>
+      <!-- PROCESS -->
+
+      <section class="about-why" id="process" aria-label="Process">
+        <p class="section-label">PROCESS</p>
+        <h2 class="section-title">How we work</h2>
+        <p class="section-lead">
+          We keep it simple. You always know what we’re testing, how long it
+          takes and how to read the results.
+        </p>
+
+        <div class="about-why-grid">
+          <article class="about-why-card">
+            <p class="about-why-eyebrow">Step 1</p>
+            <h3 class="about-why-title">Quick intro & scope</h3>
+            <p class="about-why-text">
+              Short call or async messages so we understand your app, release
+              schedule and priorities.
+            </p>
+          </article>
+
+          <article class="about-why-card">
+            <p class="about-why-eyebrow">Step 2</p>
+            <h3 class="about-why-title">Test plan & estimate</h3>
+            <p class="about-why-text">
+              We propose a concrete test scope (what we cover), time estimate
+              and a simple format for bug reports.
+            </p>
+          </article>
+
+          <article class="about-why-card">
+            <p class="about-why-eyebrow">Step 3</p>
+            <h3 class="about-why-title">Execution & reporting</h3>
+            <p class="about-why-text">
+              We run the agreed tests, log issues with clear steps to reproduce
+              and keep you updated on progress.
+            </p>
+          </article>
+
+          <article class="about-why-card">
+            <p class="about-why-eyebrow">Step 4</p>
+            <h3 class="about-why-title">Fix verification & summary</h3>
+            <p class="about-why-text">
+              After fixes we re-test the changed areas and send a short
+              release-ready summary for your team.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <div class="section-divider" aria-hidden="true"></div>
+      <!-- TOOLS -->
+
+      <section class="about-why" id="tools" aria-label="Tools">
+        <p class="section-label">TOOLS</p>
+        <h2 class="section-title">Tools & workflows</h2>
+
+        <p class="section-lead">
+          We quickly adapt to your workflow. If a familiar tool isn't already on
+          our list of daily tools, it will be there tomorrow.
+        </p>
+        <div class="about-us">
+          <article class="about-why-card">
+            <p class="about-why-eyebrow">DAILY WORK WITH:</p>
+            <p class="about-why-text">
+              Daily work with: Chrome DevTools, Android Studio, Postman, Slack,
+              Notion.
+            </p>
+          </article>
+
+          <article class="about-why-card">
+            <p class="about-why-eyebrow">READY TO ADAPT TO:</p>
+            <p class="about-why-text">
+              Jira, Linear, TestRail, Xcode or your in-house tools.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <div class="section-divider" aria-hidden="true"></div>
+      <!-- ABOUT + CONTACT (two-column like in the QA file) -->
+      <section
+        class="about-why about-section"
+        id="about"
+        aria-label="Team and contact"
+      >
+        <p class="section-label">TEAM & LEADERSHIP</p>
+        <h2 class="section-title">Who is behind Alevito QA Studio</h2>
+        <div class="about-us">
+          <article class="about-card">
+            <p>
+              We are a small boutique studio focused on manual QA and small
+              apps. Our lead engineer has a background in digital products and a
+              specialized QA education from Portnov Computer School
+              (California).
+            </p>
+
+            <ul class="about-list">
+              <li>
+                Manual QA for real-world apps, not abstract test examples.
+              </li>
+              <li>
+                Experience with responsive web, admin panels and mobile apps.
+              </li>
+              <li>Comfortable working async across US and EU time zones.</li>
+            </ul>
+          </article>
+
+          <article class="about-why-card">
+            <div class="team-mini">
+              <div class="team-item">
+                <div class="team-avatar">
+                  <img
+                    src="images/viktoriia.jpg"
+                    alt="Photo of Viktoriia Bondarenko"
+                  />
+                </div>
+                <div class="team-info">
+                  <div class="team-name">Viktoriia Bondarenko</div>
+                  <div class="team-role">Head of QA / Lead Engineer</div>
+                  <div class="team-text">
+                    Ensures your product is tested realistically and aligned
+                    with app store and platform expectations.
+                  </div>
+                </div>
+              </div>
+
+              <div class="team-item">
+                <div class="team-avatar">
+                  <img src="images/alex.jpg" alt="Photo of Alex Bondarenko" />
+                </div>
+                <div class="team-info">
+                  <div class="team-name">Alex Bondarenko</div>
+                  <div class="team-role">Account & Delivery Director</div>
+                  <div class="team-text">
+                    Keeps your project on time and within budget, and makes sure
+                    communication stays clear and predictable.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <div class="section-divider" aria-hidden="true"></div>
+
+      <section class="about-why" id="contact" aria-label="contact">
+        <p class="section-label">CONTACT</p>
+        <h2 class="section-title">Let’s talk</h2>
+
+        <div class="about-us contact-block">
+          <!-- RIGHT: CONTACT (единственный id contact) -->
+          <article class="contact-card">
+            <div class="section-label">FREE QA AUDIT</div>
+            <h2 class="section-title">Ready for a pilot project?</h2>
+            <p class="section-lead">
+              We currently have room for a pilot engagement. Tell us a bit about
+              your app, stack and release date.
+            </p>
+
+            <!-- Audit text -->
+            <div class="contact-audit">
+              <div class="contact-audit-title">
+                What you get in a free QA audit
+              </div>
+              <ul class="contact-audit-list">
+                <li>
+                  20–30 min intro call or async exchange about your product and
+                  priorities.
+                </li>
+                <li>
+                  A short, focused pass through your main user flow (about 1–2
+                  hours of manual testing).
+                </li>
+                <li>
+                  A brief written summary with key issues, risks and suggested
+                  next steps.
+                </li>
+                <li>
+                  No obligation to continue — you can use the notes with your
+                  current team.
+                </li>
+              </ul>
+
+              <div class="contact-audit-note">
+                Think of it as a low-pressure, clearly scoped way to start
+                working together and see if our style fits your product.
+              </div>
+            </div>
+
+            <!-- твои кнопки/контакты/форма -->
+            <div class="about-contact-actions">
+              <button
+                class="btn-primary js-gmodal-open"
+                type="button"
+                data-gmodal="modalAudit"
+              >
+                Book a free QA audit
+              </button>
+              <a class="btn btn-ghost" href="mailto:you@email.com">Email</a>
+            </div>
+          </article>
+
+          <article class="contact-card">
+            <div class="section-label">WRITE TO US</div>
+            <h2 class="section-title">DO YOU HAVE OTHER IDEAS?</h2>
+            <p class="section-lead">
+              If you wish, we can simply share ideas and advice as consultants.
+            </p>
+            <form class="gmodal__form" action="#" method="post">
+              <div class="gmodal__field">
+                <label class="gmodal__label" for="auditName">Your name</label>
+                <input
+                  class="gmodal__input"
+                  type="text"
+                  id="auditName"
+                  name="name"
+                  placeholder="Name"
+                />
+              </div>
+
+              <div class="gmodal__field">
+                <label class="gmodal__label" for="auditEmail">Work email</label>
+                <input
+                  class="gmodal__input"
+                  type="email"
+                  id="auditEmail"
+                  name="email"
+                  placeholder="you@company.com"
+                />
+              </div>
+
+              <div class="gmodal__field">
+                <label class="gmodal__label" for="auditMsg"
+                  >How can we help you?</label
+                >
+                <textarea
+                  class="gmodal__textarea"
+                  id="auditMsg"
+                  name="message"
+                  placeholder="Short description of your app, tech stack and release timeline"
+                ></textarea>
+              </div>
+
+              <button
+                class="btn-primary gmodal__btn gmodal__btn--primary"
+                type="submit"
+              >
+                Send message
+              </button>
+
+              <!-- <div class="gmodal__fineprint">
+              This form is a simple demo. For production we can wire it up to
+              your preferred tool (email, ticket system or CRM).
+            </div> -->
+            </form>
+          </article>
+        </div>
+      </section>
+
+      <footer class="about-footer" aria-label="Footer">
+        <div class="about-footer-inner">
+          <div>© Alevito QA Studio</div>
+          <div class="muted">Based in Spain · Working with US time zones</div>
+        </div>
+      </footer>
+    </main>
+    <div class="gmodal" id="modalAudit" aria-hidden="true" hidden>
+      <div class="gmodal__backdrop" data-gmodal-close></div>
+
+      <div
+        class="gmodal__dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalAuditTitle"
+      >
+        <header class="gmodal__head">
+          <div>
+            <div class="gmodal__kicker">AUDIT</div>
+            <h3 class="gmodal__title" id="modalAuditTitle">
+              QA Audit / Evidence Pack
+            </h3>
+            <p class="gmodal__sub">
+              A clear first step: risks, key issues, and next actions.
+            </p>
+          </div>
+
+          <button
+            class="gmodal__x"
+            type="button"
+            data-gmodal-close
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </header>
+
+        <div class="gmodal__body">
+          <!-- взято из index-QA.html (контактный блок + список) -->
+          <div class="gmodal__card">
+            <h4 class="gmodal__h">What you get in a free QA audit</h4>
+            <ul class="gmodal__list">
+              <li>
+                20–30 min intro call or async exchange about your product and
+                priorities.
+              </li>
+              <li>
+                A short, focused pass through your main user flow (about 1–2
+                hours of manual testing).
+              </li>
+              <li>
+                A brief written summary with key issues, risks and suggested
+                next steps.
+              </li>
+              <li>
+                No obligation to continue — you can use the notes with your
+                current team.
+              </li>
+            </ul>
+            <p class="gmodal__note">
+              Think of it as a low-pressure, clearly scoped way to start working
+              together and see if our style fits your product.
+            </p>
+          </div>
+
+          <div class="gmodal__card">
+            <div class="gmodal__contacts">
+              <div>
+                Email: <a href="mailto:info@alevito.es">info@alevito.es</a>
+              </div>
+              <div>
+                LinkedIn:
+                <a
+                  href="https://www.linkedin.com/in/viktoriia-bondarenko-mayboroda/"
+                  target="_blank"
+                  rel="noreferrer"
+                  >Viktoriia</a
+                >
+                ·
+                <a
+                  href="https://www.linkedin.com/in/aleksandr-bondarenko-alevito/"
+                  target="_blank"
+                  rel="noreferrer"
+                  >Alex</a
+                >
+              </div>
+            </div>
+
+            <!-- форма из index-QA.html -->
+            <form class="gmodal__form" action="#" method="post">
+              <div class="gmodal__field">
+                <label class="gmodal__label" for="auditName">Your name</label>
+                <input
+                  class="gmodal__input"
+                  type="text"
+                  id="auditName"
+                  name="name"
+                  placeholder="Name"
+                />
+              </div>
+
+              <div class="gmodal__field">
+                <label class="gmodal__label" for="auditEmail">Work email</label>
+                <input
+                  class="gmodal__input"
+                  type="email"
+                  id="auditEmail"
+                  name="email"
+                  placeholder="you@company.com"
+                />
+              </div>
+
+              <div class="gmodal__field">
+                <label class="gmodal__label" for="auditMsg"
+                  >What do you need help with?</label
+                >
+                <textarea
+                  class="gmodal__textarea"
+                  id="auditMsg"
+                  name="message"
+                  placeholder="Short description of your app, tech stack and release timeline"
+                ></textarea>
+              </div>
+
+              <button
+                class="btn-primary gmodal__btn gmodal__btn--primary"
+                type="submit"
+              >
+                Send message
+              </button>
+              <!--
+              <div class="gmodal__fineprint">
+                This form is a simple demo. For production we can wire it up to
+                your preferred tool (email, ticket system or CRM).
+              </div>-->
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="js/glass-modals.js"></script>
+    <script>
+      // burger menu (как на главной)
+      const burgerBtn = document.getElementById("burgerBtn");
+      const mainNav = document.getElementById("mainNav");
+
+      burgerBtn.addEventListener("click", () => {
+        burgerBtn.classList.toggle("is-active");
+        mainNav.classList.toggle("is-open");
+        document.body.style.overflow = mainNav.classList.contains("is-open")
+          ? "hidden"
+          : "";
+      });
+
+      document.querySelectorAll(".navlink").forEach((link) => {
+        link.addEventListener("click", () => {
+          burgerBtn.classList.remove("is-active");
+          mainNav.classList.remove("is-open");
+          document.body.style.overflow = "";
+        });
+      });
+    </script>
+    <script src="js/glass-modals.js"></script>
+  </body>
+</html>

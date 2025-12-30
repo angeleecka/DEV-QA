@@ -33,13 +33,21 @@
   function updateButtons() {
     const active = isActive();
 
-    if (btnPrev) btnPrev.hidden = !active;
-    if (btnNext) btnNext.hidden = !active;
-
-    if (!active) return;
-
-    if (btnPrev) btnPrev.disabled = index === 0;
-    if (btnNext) btnNext.disabled = index === slides.length - 1;
+    // Если слайдер активен (мобильный вид)
+    if (active) {
+      if (btnPrev) {
+        btnPrev.style.display = "flex"; // Показываем саму зону
+        btnPrev.disabled = index === 0; // ДЕВ скрыт, если мы на 1 слайде
+      }
+      if (btnNext) {
+        btnNext.style.display = "flex";
+        btnNext.disabled = index === slides.length - 1; // QA скрыт, если мы на последнем
+      }
+    } else {
+      // На десктопе просто прячем всё
+      if (btnPrev) btnPrev.style.display = "none";
+      if (btnNext) btnNext.style.display = "none";
+    }
   }
 
   // кнопки

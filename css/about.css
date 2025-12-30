@@ -1,0 +1,523 @@
+/* ABOUT PAGE — минималистично, в стилистике Home */
+
+.about-page {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 22px 40px 24px;
+}
+
+.about-hero {
+  padding: clamp(16px, 4vh, 40px) 0 clamp(18px, 4vh, 36px);
+}
+
+.about-hero-inner {
+  position: relative;
+  overflow: hidden; /* чтобы лого пряталось за края */
+  border-radius: 22px;
+  padding: clamp(18px, 3vw, 28px);
+
+  /* sea-glass */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.86) 0%,
+    rgba(255, 255, 255, 0.68) 100%
+  );
+  border: 1px solid rgba(27, 92, 89, 0.14);
+  backdrop-filter: blur(10px) saturate(1.08);
+
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.06),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+}
+
+/* 2) Лого-водяной знак */
+.about-hero-inner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  /* ВАЖНО: не shorthand с /cover, а явные свойства */
+  background-image: url("../images/av_logo-bg.png");
+  background-repeat: no-repeat;
+
+  /* размер “логотипа” — тут регулируешь масштаб, НЕ нужно менять файл */
+  background-size: 420px auto;
+
+  /* уводим за правый край на +120px */
+  background-position: calc(100% + 20px) 10%;
+
+  opacity: 0.3;
+}
+
+/* 3) Весь контент поверх watermark */
+.about-hero-inner > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* 4) На узких экранах делаем ещё прозрачнее (как ты и хотела) */
+/* Узкие экраны: больше уводим вправо и делаем прозрачнее */
+@media (max-width: 700px) {
+  .about-hero-inner::after {
+    opacity: 0.2;
+    background-size: clamp(320px, 160vw, 360px) auto;
+
+    /* ещё сильнее “прячем” вправо */
+    background-position: calc(100% + 0px) 2%;
+  }
+}
+
+.about-title {
+  margin: 10px 0 8px;
+  font-size: clamp(28px, 4.5vw, 46px);
+  letter-spacing: 0.02em;
+}
+
+.about-lead {
+  margin: 0;
+  max-width: 70ch;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.about-hero-cta {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.about-section {
+  padding: clamp(20px, 5vh, 34px) 0;
+}
+
+.about-contact {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(14px, 2.2vw, 26px);
+  align-items: start;
+}
+
+/* cards (team/contact) */
+.about-card,
+.contact-card {
+  border-radius: 22px;
+  padding: clamp(16px, 2.6vw, 22px);
+
+  /* sea-glass */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.84) 0%,
+    rgba(255, 255, 255, 0.66) 100%
+  );
+  border: 1px solid rgba(27, 92, 89, 0.14);
+  backdrop-filter: blur(10px) saturate(1.08);
+
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.06),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+}
+
+.about-list {
+  margin: 14px 0 18px;
+  padding-left: 18px;
+  color: var(--text);
+}
+
+.team-mini {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.team-item {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.team-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.team-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.team-name {
+  font-weight: 700;
+}
+
+.team-role {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.team-text {
+  font-size: 13px;
+  color: var(--text);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+/* Contact section bits */
+.contact-label {
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 6px 0 14px;
+}
+
+.contact-audit {
+  border-radius: 16px;
+  padding: 14px 14px 12px;
+  background: rgba(27, 92, 89, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(27, 92, 89, 0.08);
+  margin-bottom: 14px;
+}
+
+.contact-audit-title {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.contact-audit-list {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text);
+}
+
+.contact-audit-note {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.contact-links {
+  margin: 14px 0 12px;
+}
+
+.contact-links-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.contact-links-row {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.about-footer {
+  padding: 26px 0 10px;
+}
+
+.about-footer-inner {
+  border-radius: 18px;
+  padding: 14px 16px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(27, 92, 89, 0.1),
+    rgba(255, 255, 255, 0.7)
+  );
+  border: 1px solid rgba(27, 92, 89, 0.12);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.05);
+}
+
+.about-page {
+  position: relative;
+  isolation: isolate;
+}
+
+.about-page::before {
+  content: "";
+  position: absolute;
+  inset: -40px -60px -60px -60px;
+  z-index: -1;
+  pointer-events: none;
+
+  /* мягкие морские пятна + диагональ, как стекло/вода */
+  background: radial-gradient(
+      900px 420px at 18% 12%,
+      rgba(27, 92, 89, 0.1),
+      transparent 62%
+    ),
+    radial-gradient(
+      700px 360px at 78% 22%,
+      rgba(27, 92, 89, 0.08),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 520px at 45% 78%,
+      rgba(27, 92, 89, 0.06),
+      transparent 62%
+    ),
+    linear-gradient(135deg, rgba(27, 92, 89, 0.06), transparent 55%);
+}
+
+.about-page .section-title {
+  position: relative;
+  padding-bottom: 26px;
+  padding-left: 26px;
+}
+/*
+.about-page .section-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+
+  background: rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}*/
+
+.about-page .section-title::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 0;
+  bottom: 11px;
+  height: 1px;
+
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.14),
+    rgba(0, 0, 0, 0.05),
+    transparent
+  );
+}
+
+.about-page .services-grid .service-card,
+.about-page .process-grid .process-step {
+  border-radius: 18px;
+  border: 1px solid rgba(27, 92, 89, 0.1);
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(8px) saturate(1.06);
+
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.05),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+
+  transition: transform 0.18s ease, box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+/* =========================================================
+   ABOUT — “WHY” grid (как Home 2nd screen, но 2 колонки)
+   Добавить В КОНЕЦ about.css
+========================================================= */
+
+.about-why {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(28px, 5vw, 56px) clamp(16px, 4vw, 28px);
+}
+
+.about-us,
+.about-why-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 2.2vw, 22px);
+  margin-top: clamp(18px, 2.6vw, 28px);
+}
+
+.about-us {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 2.2vw, 22px);
+  margin-top: clamp(18px, 2.6vw, 28px);
+}
+
+/* На очень широких — можно 4, как на Home */
+@media (min-width: 1200px) {
+  .about-why-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .about-us {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .contact-block {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* На телефонах — 1 колонка */
+@media (max-width: 640px) {
+  .about-page {
+    padding: 22px 10px 24px;
+  }
+
+  .about-why-grid {
+    grid-template-columns: 1fr;
+  }
+  .about-us {
+    grid-template-columns: 1fr;
+  }
+}
+
+.about-why-card {
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 18px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.06);
+  padding: clamp(16px, 2vw, 22px);
+}
+
+.about-why-eyebrow {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  margin: 0 0 10px;
+}
+
+.about-why-title {
+  font-size: clamp(1.05rem, 1.2vw, 1.25rem);
+  margin: 0 0 10px;
+}
+
+.about-why-text {
+  margin: 0;
+  opacity: 0.85;
+  line-height: 1.45;
+}
+
+/* =========================================================
+     ABOUT — Contact block (стеклянная “модалка”)
+  ========================================================= */
+
+.about-contact {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(28px, 5vw, 56px) clamp(16px, 4vw, 28px);
+}
+
+.about-contact-card {
+  border-radius: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.1);
+
+  /* “морское стекло”, близко к твоим click-zones */
+  background: linear-gradient(
+    135deg,
+    rgba(27, 92, 89, 0.18),
+    rgba(27, 92, 89, 0.08)
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  padding: clamp(18px, 2.4vw, 28px);
+}
+
+.about-contact-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+/* Инпуты белые (как ты просила), даже если форма уже есть */
+.about-contact-card input,
+.about-contact-card textarea,
+.about-contact-card select {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 12px;
+  padding: 12px 14px;
+  outline: none;
+}
+
+.about-contact-card textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Небольшой hover, чтобы выглядело “живее” */
+.about-why-card:hover,
+.about-contact-card:hover {
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== Dividers (About / Sea style) ===== */
+
+/* 1) Между секциями: линия + кружок */
+.section-divider {
+  position: relative;
+  height: 1px;
+  margin: 16px;
+  /* слева линия “нормальная”, вправо растворяется */
+  background: linear-gradient(
+    90deg,
+    rgba(27, 92, 89, 0.22) 0%,
+    rgba(27, 92, 89, 0.22) 55%,
+    rgba(27, 92, 89, 0.12) 78%,
+    rgba(27, 92, 89, 0) 100%
+  );
+}
+
+.section-divider::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(137, 170, 168, 0.9);
+  /*  border: 1px solid rgba(27, 92, 89, 0.25);
+ box-shadow: 0 10px 26px rgba(0, 0, 0, 0.1), 0 0 0 6px rgba(27, 92, 89, 0.06);*/
+}
+
+/* 2) Под заголовками: линия без кружка */
+.heading-divider {
+  height: 1px;
+  margin: 14px 0 22px;
+  background: linear-gradient(
+    90deg,
+    rgba(27, 92, 89, 0),
+    rgba(27, 92, 89, 0.18) 14%,
+    rgba(27, 92, 89, 0.18) 86%,
+    rgba(27, 92, 89, 0)
+  );
+}
+
+@media (hover: hover) {
+  .about-page .services-grid .service-card:hover,
+  .about-page .process-grid .process-step:hover {
+    transform: translateY(-2px);
+    border-color: rgba(27, 92, 89, 0.18);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.08),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+  }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .about-page {
+    padding: 18px 14px 44px;
+  }
+
+  .about-contact {
+    grid-template-columns: 1fr;
+  }
+}
