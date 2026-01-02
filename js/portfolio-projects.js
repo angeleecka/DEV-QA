@@ -16,13 +16,16 @@
   const docList = document.getElementById("docList");
 
   // ✅ если хоть чего-то из основного слайдера нет — тихо выходим
-  if (!track || !dots || !prevBtn || !nextBtn) return;
+  if (!track || !dots) return;
 
   const PROJECTS = [
     {
       id: "portfolio-filemanager",
       title:
         "Portfolio website with built-in file manager for content management",
+
+      teaserTitle: "Portfolio + MiniCMS", // ✅ коротко для тизера
+
       links: {
         demo: "https://portfolio-with-filemanager.onrender.com/",
         admin: "https://portfolio-with-filemanager.onrender.com/admin",
@@ -49,12 +52,12 @@
       },
 
       callouts: {
-        leftTitle: "A webpage\nwith its own mini—CMS",
+        leftTitle: "A webpage with its own mini—CMS",
         leftText:
-          "You can throw inside your media,\nand it will immediately appear\non your public Portfolio page.",
+          "You can throw inside your media, and it will immediately appear on your public Portfolio page.",
         rightTitle: "Take a look inside now",
         rightText:
-          "In this demo version, you can try\nhow easy it is to manage as\nin your device's folders.",
+          "In this demo version, you can try how easy it is to manage as in your device's folders.",
       },
       qaDocs: [
         {
@@ -88,6 +91,8 @@
     {
       id: "tab-harbor",
       title: "Tab Harbor — link manager",
+      teaserTitle: "Tab Harbor", // ✅ коротко для тизера
+
       links: { demo: "#", admin: "#" },
       images: {
         desktop: "assets/tabHarbor/desktop.png",
@@ -121,6 +126,10 @@
     window.open(url, "_blank", "noopener,noreferrer");
   }
 
+  function mod(n, m) {
+    return ((n % m) + m) % m;
+  }
+
   /* -------------------- Build slides -------------------- */
   function buildSlides() {
     track.innerHTML = "";
@@ -130,6 +139,12 @@
       const slide = document.createElement("section");
       slide.className = "slide";
       slide.dataset.index = String(i);
+
+      const prevP = PROJECTS[mod(i - 1, PROJECTS.length)];
+      const nextP = PROJECTS[mod(i + 1, PROJECTS.length)];
+
+      const prevTeaser = safeText(prevP.teaserTitle || prevP.title || "—");
+      const nextTeaser = safeText(nextP.teaserTitle || nextP.title || "—");
 
       const desktopMedia = p.media?.desktopVideo
         ? `<video class="shot" muted playsinline preload="metadata" data-preview="desktop">
@@ -147,88 +162,136 @@
             p.images?.laptop
           )}" alt="Laptop preview" />`;
 
+      // В buildSlides() внутри PROJECTS.forEach(...) замени slide.innerHTML целиком на это:
+
+      const demoUrl = safeText(p.links?.demo ?? "#");
+      const adminUrl = safeText(p.links?.admin ?? "#");
+
       slide.innerHTML = `
-      <div class="slide-title">
-        <h2>${safeText(p.title)}</h2>
+  <div class="slide-title">
+    <h2>${safeText(p.title)}</h2>
+
+    <div class="mini-links">
+      <button type="button" data-cta="qa-pack">QA Evidence Pack</button>
+      <button type="button" data-cta="demo">Demo try</button>
+    </div>
+
+    <button class="next-teaser" type="button" data-nav="prev" aria-label="Previous project">
+      <span class="label">PREV:</span>
+      <span class="title" data-prev-title>—</span>
+    </button>
+
+    <button class="next-teaser" type="button" data-nav="next" aria-label="Next project">
+      <span class="label">NEXT:</span>
+      <span class="title" data-next-title>—</span>
+    </button>
+  </div>
+
+  <div class="stage" aria-label="Project stage">
+    <div class="stage-content">
+
+      
+
+
+
+      <!-- DEVICES STACK (центр) -->
+      <div class="devices-stack" aria-label="Devices stack">
+      <!-- LEFT CALLOUT -->
+      <div class="callout callout--left" aria-hidden="true">
+        <h4>${safeText(p.callouts?.leftTitle ?? "").replaceAll(
+          "\n",
+          "<br>"
+        )}</h4>
+        <p>${safeText(p.callouts?.leftText ?? "").replaceAll("\n", "<br>")}</p>
+      </div>
+       <!-- RIGHT CALLOUT -->
+      <div class="callout callout--right" aria-hidden="true">
+        <h4>${safeText(p.callouts?.rightTitle ?? "")}</h4>
+        <p>${safeText(p.callouts?.rightText ?? "").replaceAll("\n", "<br>")}</p>
       </div>
 
-      <div class="stage" aria-label="Project stage">
-        <div class="stage-content">
-        <div class="callout callout--left" aria-hidden="true">
-          <h4>${safeText(p.callouts?.leftTitle ?? "").replaceAll(
-            "\n",
-            "<br>"
-          )}</h4>
-          <p>${safeText(p.callouts?.leftText ?? "").replaceAll(
-            "\n",
-            "<br>"
-          )}</p>
-        </div>
-
-        <div class="callout callout--right" aria-hidden="true">
-          <h4>${safeText(p.callouts?.rightTitle ?? "")}</h4>
-          <p>${safeText(p.callouts?.rightText ?? "").replaceAll(
-            "\n",
-            "<br>"
-          )}</p>
-        </div>
-
-        <!-- Clickable hotspots (media only for now; frames come next) -->
-
-	        <button class="device device--desktop" data-url="https://portfolio-with-filemanager.onrender.com/" type="button" data-open="demo" aria-label="Open demo">
-	          <span class="device-addon device-addon--monitor-stand" aria-hidden="true"></span>
-
-          <div class="screen">
-	            ${desktopMedia}
-	          </div>
-	        </button>
-
-	        <button class="device device--admin" data-url="https://portfolio-with-filemanager.onrender.com/admin-portfolio.html" type="button" data-open="admin" aria-label="Open admin">
-	          <div class="screen">
-	            <img class="shot" src="${safeText(
-                p.images?.admin
-              )}" alt="Admin preview" />
-	          </div>
-	        </button>
-
-	        <button class="device device--laptop" data-url="https://portfolio-with-filemanager.onrender.com/services.html" type="button" data-open="demo" aria-label="Open demo (laptop)">
-	        <span class="device-addon device-addon--laptop-base" aria-hidden="true"></span>
- 
-          <div class="screen">
-	            ${laptopMedia}
-	          </div>
-	        </button>
-
-	        <button class="device device--phone" data-url="https://portfolio-with-filemanager.onrender.com/portfolio.html" type="button" data-open="demo" aria-label="Open demo (phone)">
-	          <div class="screen">
-	            <img class="shot" src="${safeText(
-                p.images?.phone
-              )}" alt="Phone preview" />
-	          </div>
-	        </button>
-
-        </div>
-      </div>
-
-      <div class="bottom">
-        <div></div>
-
-        <div class="cta-pill" aria-label="Main call to action">
-          <button type="button" data-cta="qa">Collaborate with QA</button>
-          <button type="button" data-cta="website">I want a website</button>
-        </div>
-
-        <button class="next-teaser" type="button" data-nav="next" aria-label="Next project">
-          <span class="label">NEXT PROJECT:</span>
-          <span class="title" data-next-title>—</span>
+        <button
+          class="device device--desktop"
+          data-url="${demoUrl}"
+          type="button"
+          data-open="demo"
+          aria-label="Open demo"
+        >
+          <span class="device-addon device-addon--monitor-stand" aria-hidden="true"></span>
+          <div class="screen">${desktopMedia}</div>
         </button>
 
-        <div class="mini-links" style="grid-column:1 / -1; justify-self:center;">
-          <button type="button" data-cta="qa-pack">QA Evidence Pack</button>
-          <button type="button" data-cta="demo">Demo try</button>
-        </div>
+        <button
+          class="device device--admin"
+          data-url="${adminUrl}"
+          type="button"
+          data-open="admin"
+          aria-label="Open admin"
+        >
+          <div class="screen">
+            <img class="shot" src="${safeText(
+              p.images?.admin
+            )}" alt="Admin preview" />
+          </div>
+        </button>
+
+        <button
+          class="device device--laptop"
+          data-url="${demoUrl}"
+          type="button"
+          data-open="demo"
+          aria-label="Open demo (laptop)"
+        >
+          <span class="device-addon device-addon--laptop-base" aria-hidden="true"></span>
+          <div class="screen">${laptopMedia}</div>
+        </button>
+
+        <button
+          class="device device--phone"
+          data-url="${demoUrl}"
+          type="button"
+          data-open="demo"
+          aria-label="Open demo (phone)"
+        >
+          <div class="screen">
+            <img class="shot" src="${safeText(
+              p.images?.phone
+            )}" alt="Phone preview" />
+          </div>
+        </button>
       </div>
-    `;
+
+     
+
+    </div>
+  </div>
+
+  
+`;
+
+      const prevTitleNode = slide.querySelector("[data-prev-title]");
+      const nextTitleNode = slide.querySelector("[data-next-title]");
+      if (prevTitleNode) prevTitleNode.textContent = prevTeaser;
+      if (nextTitleNode) nextTitleNode.textContent = nextTeaser;
+
+      const prevTeaserBtn = slide.querySelector(
+        '.next-teaser[data-nav="prev"]'
+      );
+      const nextTeaserBtn = slide.querySelector(
+        '.next-teaser[data-nav="next"]'
+      );
+
+      prevTeaserBtn?.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        goTo(index - 1);
+      });
+
+      nextTeaserBtn?.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        goTo(index + 1);
+      });
 
       track.appendChild(slide);
       setupPreviewVideosForSlide(slide, p);
@@ -456,7 +519,8 @@
 
   /* -------------------- Slider navigation -------------------- */
   function goTo(i) {
-    index = clamp(i, 0, PROJECTS.length - 1);
+    index = mod(i, PROJECTS.length);
+    track.style.transform = `translateX(${-index * 100}%)`;
     updateUI();
   }
 
@@ -485,14 +549,33 @@
       d.classList.toggle("is-active", i === index);
     });
 
-    prevBtn.disabled = index === 0;
-    nextBtn.disabled = index === PROJECTS.length - 1;
+    // prevBtn.disabled = index === 0;
+    //  nextBtn.disabled = index === PROJECTS.length - 1;
 
-    const nextIndex = (index + 1) % PROJECTS.length;
-    const nextTitle = PROJECTS[nextIndex]?.title || "—";
+    /* const nextIndex = (index + 1) % PROJECTS.length;
+    const nextTitle =
+      PROJECTS[nextIndex]?.teaserTitle || PROJECTS[nextIndex]?.title || "—";
+
     const activeSlide = track.children[index];
     const node = activeSlide?.querySelector("[data-next-title]");
-    if (node) node.textContent = nextTitle;
+    if (node) node.textContent = nextTitle;*/
+
+    const activeSlide = track.children[index];
+    if (activeSlide) {
+      const prevIndex = mod(index - 1, PROJECTS.length);
+      const nextIndex = mod(index + 1, PROJECTS.length);
+
+      const prevTitle =
+        PROJECTS[prevIndex]?.teaserTitle || PROJECTS[prevIndex]?.title || "—";
+      const nextTitle =
+        PROJECTS[nextIndex]?.teaserTitle || PROJECTS[nextIndex]?.title || "—";
+
+      const prevNode = activeSlide.querySelector("[data-prev-title]");
+      const nextNode = activeSlide.querySelector("[data-next-title]");
+
+      if (prevNode) prevNode.textContent = prevTitle;
+      if (nextNode) nextNode.textContent = nextTitle;
+    }
   }
 
   /* -------------------- Keyboard -------------------- */

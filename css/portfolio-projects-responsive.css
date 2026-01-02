@@ -1,0 +1,417 @@
+/* 1199–900 */
+@media (max-width: 1199px) {
+  .slide {
+    --devS: 0.92;
+    --devX: 0px;
+    --devY: 20px;
+  }
+}
+
+@media (max-width: 980px) {
+  .services-container {
+    grid-template-columns: 1fr; /* Резко переходим в одну колонку */
+    gap: calc(80 * var(--u));
+    max-width: 700px; /* Чтобы строки не были слишком длинными и читались легко */
+  }
+
+  .service-card {
+    text-align: center; /* Опционально: в колонке центр смотрится эффектнее */
+    align-items: center;
+  }
+
+  .service-card h3 {
+    /* Делаем заголовок крупнее, когда он один в ряду */
+    font-size: clamp(24px, calc(32 * var(--u)), 40px);
+  }
+
+  .service-card p {
+    /* Текст тоже делаем солиднее */
+    font-size: clamp(16px, calc(20 * var(--u)), 24px);
+    max-width: 100%;
+  }
+
+  /* Перестраиваем нижнюю панель в колонку */
+  .footer-bottom-row {
+    flex-direction: column;
+    gap: 15px; /* Увеличиваем зазор между строками для "воздуха" */
+    align-items: flex-start; /* Оставляем выравнивание по левому краю (к якорю) */
+    text-align: left;
+  }
+
+  /* Строка 1: Название + слоган */
+  .footer-info {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+  }
+
+  .footer-brand {
+    font-size: 18px;
+  }
+
+  .footer-role {
+    font-size: 18px;
+  }
+
+  /* Строка 2: Соц иконки */
+  .footer-socials {
+    order: 2; /* Явно задаем порядок */
+    gap: 30px; /* Делаем иконки чуть свободнее для удобства нажатия пальцем */
+  }
+
+  .social-link svg {
+    width: 24px; /* Немного увеличиваем для мобильности */
+    height: 24px;
+  }
+
+  /* Строка 3: Копирайт */
+  .copyright {
+    order: 3;
+    opacity: 0.6;
+    margin-top: 2px;
+  }
+
+  /* Дополнительно: уменьшаем отступ футера от контента на планшетах */
+  .site-footer {
+    padding: 40px 0;
+    margin-top: 40px;
+  }
+
+  /* Уплотняем сетку, чтобы якорь и текст не разъезжались слишком сильно */
+  .footer-wide-content {
+    max-width: 980px; /* Ограничиваем ширину, чтобы контент не разлетался */
+    margin: 0 auto; /* Это самое важное: центрируем весь блок по горизонтали */
+    display: grid;
+    /* Ставим auto для якоря, чтобы он не занимал лишние 350px, и 1fr для текста */
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: calc(40 * var(--u));
+    padding: 0 100px;
+  }
+
+  .footer-visual {
+    /* Убери здесь фиксированную ширину, если она была (на скрине видно 350px) */
+    width: auto;
+    display: flex;
+    justify-content: flex-end; /* Якорь тянется к тексту */
+  }
+
+  .footer-body {
+    /* Убеждаемся, что текстовый блок не растягивается на всю оставшуюся пустоту справа */
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+/* 900–768 */
+@media (max-width: 900px) {
+  .slide {
+    --devS: 0.85;
+    --devX: 0px;
+    --devY: 40px;
+  }
+  .stage-content {
+    --w: 900px;
+    --h: 620px;
+    --scale: 0.92;
+    --dx: 40px; /* увод вправо */
+    --dy: -20px; /* чуть вверх */
+  }
+
+  .footer-wide-content {
+    max-width: 900px; /* Ограничиваем ширину, чтобы контент не разлетался */
+
+    padding: 0 50px;
+  }
+  /*.footer-body {
+    margin: 0 auto;
+  }*/
+  .footer-bottom-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .gift-text {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 900px) and (min-width: 601px) {
+  /* 1. Баланс всей композиции по центру */
+  .footer-wide-content {
+    /* 1. Вместо фиксированной ширины даем гибкую, но с лимитом */
+    width: fit-content;
+    max-width: 95%;
+
+    /* 2. Центрируем сам контейнер на странице */
+    margin: 0 auto !important;
+
+    /* 3. Оставляем две колонки, но сжимаем их до размера контента */
+    display: grid;
+    grid-template-columns: auto auto;
+
+    /* 4. Обнуляем лишние паддинги, которые могут давать перекос */
+    padding: 0;
+    gap: 40px; /* Расстояние между якорем и текстом */
+  }
+
+  .footer-visual {
+    width: auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .footer-body {
+    /* Чтобы текст не "убегал", ограничиваем его ширину */
+    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* 2. Твои настройки для слайдов и якоря */
+  .slide {
+    --devS: 0.78;
+    --devY: 60px;
+  }
+
+  .anchor-img {
+    max-width: 130px;
+  }
+
+  /* 3. Гифт-блок: возвращаем твой перенос строки */
+  .gift-chip {
+    flex-wrap: wrap; /* Разрешаем кнопке падать вниз, если текст широкий */
+    justify-content: flex-start;
+    gap: 12px;
+  }
+
+  .mobile-br {
+    display: block; /* Включаем твой принудительный разрыв фразы */
+  }
+
+  .gift-text {
+    white-space: normal;
+    text-align: left;
+    line-height: 1.4;
+  }
+
+  .gift-btn {
+    white-space: nowrap; /* Кнопка не ломается внутри себя */
+  }
+
+  /* 4. Твоя настройка перестроения нижней строки (Название + Слоган) */
+  .footer-bottom-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    border-top: 1px solid rgba(27, 92, 89, 0.1);
+    padding-top: 10px;
+  }
+
+  .footer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .footer-brand {
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .footer-role {
+    font-size: 13px;
+    display: block;
+  }
+
+  .footer-socials {
+    order: 2;
+    margin: 5px 0;
+  }
+
+  .copyright {
+    order: 3;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  /* ===================================================================== */
+  /* ============== Слайдер ============================================*/
+  /* ===================================================================== */
+
+  /* Заголовок с тизерами */
+  .pp .slide-title {
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+
+  .slide-title h2 {
+    font-size: 18px;
+  }
+
+  /* 1. ТИЗЕРЫ: Превращаем в компактные кнопки со стрелками */
+  .next-teaser {
+    width: 44px; /* Фиксированная ширина */
+    height: 44px; /* Фиксированная высота */
+    padding: 0; /* Обнуляем паддинги, чтобы стрелка была по центру */
+    border-radius: 50%; /* Делаем их круглыми */
+    overflow: hidden;
+  }
+
+  /* Скрываем текстовые подписи внутри тизеров */
+  .next-teaser .label,
+  .next-teaser .title {
+    display: none !important;
+  }
+
+  /* Центрируем иконку-стрелку внутри круглой кнопки */
+  .next-teaser::after {
+    width: 24px; /* Уменьшаем размер иконки */
+    height: 24px;
+    left: 50% !important;
+    right: auto !important;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Убираем лишние отступы, которые были для текста */
+  .next-teaser[data-nav="next"],
+  .next-teaser[data-nav="prev"] {
+    padding: 0;
+    right: 5px; /* Прижимаем чуть ближе к краю экрана */
+  }
+
+  .next-teaser[data-nav="prev"] {
+    left: 5px;
+  }
+
+  /* 2. ЛИНКИ: Перестраиваем из строки в колонку */
+  .mini-links {
+    /* grid-template-columns: 1fr; /* Одна колонка */
+    gap: 4px; /* Уплотняем расстояние */
+    margin-top: 12px;
+  }
+
+  .mini-links button {
+    padding: 10px 0; /* Увеличиваем область клика для пальца */
+    font-size: 14px; /* Чуть крупнее для читаемости */
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Опционально: можно добавить легкий разделитель между кнопками */
+  .mini-links button:not(:last-child) {
+    border-bottom: 1px solid rgba(27, 92, 89, 0.05);
+  }
+
+  /* ===================================================================== */
+  /* ============== Футер =================================================*/
+  /* ===================================================================== */
+  /* 1. Главный контейнер: превращаем в одну колонку и центрируем */
+  .footer-wide-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Центрируем якорь и блок текста относительно экрана */
+    gap: 30px;
+    padding: 0 20px;
+    max-width: 100%;
+  }
+
+  /* 2. Блок с текстом: тоже колонка, выровненная по центру экрана */
+  .footer-body {
+    align-items: center;
+    width: 100%;
+    padding: 0;
+  }
+
+  /* 3. ГИФТ-ЧИП: перестраиваем кнопку ПОД текст */
+  .gift-chip {
+    flex-direction: column; /* Кнопка падает под текст */
+    align-items: center;
+    padding: 20px;
+    gap: 15px;
+    width: 100%;
+    max-width: 340px; /* Чтобы чип не растягивался на весь экран */
+    border-radius: 20px;
+    text-align: center; /* Текст подарка лучше центрировать, когда он в стеке */
+  }
+
+  .gift-text {
+    white-space: normal;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  /* Чтобы кнопка не "ломалась" и была удобной для пальца */
+  .gift-btn {
+    width: 100%;
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  /* 4. НИЖНЯЯ ИНФО-СТРОКА: выравниваем элементы */
+  .footer-bottom-row {
+    flex-direction: column;
+    align-items: center; /* Все тексты и иконки по центру */
+    gap: 15px;
+    width: 100%;
+    border-top: 1px solid rgba(27, 92, 89, 0.1);
+    padding-top: 20px;
+    text-align: center;
+  }
+
+  /* Название и роль — в столбик */
+  .footer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .footer-brand {
+    font-size: 18px;
+    margin: 0;
+  }
+
+  /* Иконки соцсетей: делаем чуть крупнее и свободнее */
+  .footer-socials {
+    order: 2;
+    gap: 25px;
+    margin: 10px 0;
+  }
+
+  .social-link svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .copyright {
+    order: 3;
+    margin-top: 5px;
+    font-size: 11px;
+  }
+
+  /* Якорь: чуть уменьшаем, чтобы не доминировал на мобилке */
+  .anchor-img {
+    max-width: 120px;
+    margin: 0;
+  }
+
+  .mobile-br {
+    display: block;
+  }
+
+  .footer-visual {
+    justify-content: center;
+  }
+}
+
+/* 460–344 */
+@media (max-width: 460px) {
+  .slide {
+    --devS: 0.7;
+    --devX: 0px;
+    --devY: 80px;
+  }
+}

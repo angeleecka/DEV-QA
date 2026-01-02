@@ -1,5 +1,5 @@
 /* ===================================================================
-   PORTFOLIO PROJECTS — FIXED POSITIONING
+   PORTFOLIO PROJECTS – FIXED POSITIONING
    =================================================================== */
 
 /* ============================================================
@@ -16,14 +16,19 @@
   --accent2: #7b0b0b;
   --accent3: #851d1d;
 
-  --headerH: 45px; /* 44px + 10px + 10px из .topbar-inner */
-  --shipH: 820px; /* подгони: 760–920 */
+  --headerH: 45px;
+  --shipH: 820px;
 
   --font-ui: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Arial,
     sans-serif;
 
-  /* --font-ui: Bahnschrift, "DIN Next", "DIN 2014", "Segoe UI", system-ui,
-    -apple-system, "Helvetica Neue", Arial, sans-serif;*/
+  /* debug outlines */
+  --stage-content: none;
+  --devices-stack: none;
+
+  /* Базовый юнит: на 1600px 1unit = 1px. 
+   На меньших экранах всё будет плавно сжиматься. */
+  --u: clamp(0.45px, 100vw / 1600, 1px);
 }
 
 /* ============================================================
@@ -45,8 +50,27 @@ body.pp {
 }
 
 /* ============================================================
-       2) TRACK (slider internals)
+       2) TRACK (slider internals), SLIDE LAYOUT
        ============================================================ */
+
+.viewport {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#viewport.viewport {
+  position: relative;
+  width: 100%;
+  /* Убираем высоту во весь экран полностью */
+  height: auto !important;
+  min-height: 0 !important;
+  display: block;
+  overflow: visible;
+}
 
 .track {
   height: 100%;
@@ -55,38 +79,49 @@ body.pp {
   will-change: transform;
 }
 
-/* ============================================================
-       3) SLIDE LAYOUT
-       ============================================================ */
-
 .slide {
-  min-width: 100%;
+  position: relative;
+  overflow: visible !important;
+  flex: 0 0 100%;
+  width: 100%;
+  max-width: 100%;
   height: 100%;
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: 14px;
   padding-top: 28px;
+
+  --devS: 1;
+  --devX: 0px;
+  --devY: 0px;
+}
+.slider {
+  height: auto !important;
+  min-height: 0 !important;
+  display: block;
+  overflow: visible !important;
 }
 
 .pp .slide-title {
+  position: relative;
   align-self: start;
-}
-
-/* ============================================================
-       4) SLIDE TITLE
-       ============================================================ */
-
-.slide-title {
   text-align: center;
   padding-top: 6px;
+  padding-left: 160px;
+  padding-right: 160px;
+}
+
+.slide-title {
+  position: relative;
 }
 
 .slide-title h2 {
   margin: 0;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.55);
-  font-size: 34px;
+  font-size: calc(36 * var(--u));
   line-height: 1.2;
+  overflow-wrap: anywhere;
 }
 
 /* ============================================================
@@ -95,56 +130,53 @@ body.pp {
 
 .stage {
   position: relative;
-
   align-self: center;
-  height: min(560px, 58vh);
+  /* Убираем жесткую привязку к vh, оставляем только через юниты */
+  height: calc(560 * var(--u));
+  margin-bottom: 0;
+  position: relative;
+  /* Добавляем отступ снизу, чтобы туман успел плавно исчезнуть до края блока */
+  padding-bottom: calc(50 * var(--u));
+  margin-bottom: 0;
+  display: block;
+  justify-content: center;
+  align-items: center;
+
+  overflow: visible !important;
 }
 
-/* Stage background fog */
 .stage::before {
   content: "";
   position: absolute;
   left: 50%;
-  bottom: 20px;
+  bottom: calc(-50 * var(--u)); /* Выталкиваем туман НИЖЕ границы контейнера */
   transform: translateX(-50%);
-  width: min(1400px, 80%);
-  height: 220px;
+  width: calc(1400 * var(--u));
+  height: calc(250 * var(--u));
   background: radial-gradient(
-      1100px 520px at 50% 12%,
-      rgba(0, 0, 0, 0.1),
-      rgba(0, 0, 0, 0) 70%
-    ),
-    radial-gradient(
-      1200px 600px at 50% 92%,
-      rgba(0, 0, 0, 0.08),
-      rgba(0, 0, 0, 0) 72%
-    );
-  filter: blur(26px);
-  opacity: 1;
-  pointer-events: none;
+    ellipse at center,
+    rgba(0, 0, 0, 0.1) 0%,
+    rgba(225, 225, 225, 0.05) 40%,
+    rgba(255, 255, 255, 0) 80%
+  );
+  filter: blur(calc(30 * var(--u)));
   z-index: -1;
-  -webkit-mask-image: radial-gradient(
-    72% 85% at 50% 50%,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 1) 58%,
-    rgba(0, 0, 0, 0) 100%
-  );
-  mask-image: radial-gradient(
-    72% 85% at 50% 50%,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 1) 58%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  pointer-events: none;
+
+  /* УДАЛЯЕМ МАСКУ ПОЛНОСТЬЮ */
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
 }
 
-/* Soft bottom edge fade */
 .stage::after {
   content: "";
   position: absolute;
   left: -14%;
   right: -14%;
-  bottom: -100px;
-  height: 260px;
+  bottom: calc(
+    -100 * var(--u)
+  ); /* Теперь он всегда будет под девайсами, на сколько бы они ни сжались */
+  height: calc(400 * var(--u));
   background: radial-gradient(
     ellipse at center,
     rgba(225, 225, 225, 0.95) 0%,
@@ -156,40 +188,103 @@ body.pp {
   z-index: -1;
 }
 
+.stage-content {
+  position: relative;
+  width: 100%;
+  max-width: 1600px; /* Это наш предел */
+  height: 520px;
+  display: block;
+  overflow: visible; /* Чтобы тени и аддоны не резались */
+  margin: 0 auto;
+  padding: 0;
+  /* Удалили transform-origin */
+}
+
+.stage-content .devices-stack,
+.stage-content .callout {
+  position: absolute;
+}
+
+.devices-stack {
+  position: absolute;
+  left: 50%;
+  top: 0;
+
+  /* Теперь ширина и высота тоже зависят от юнита */
+  width: calc(1300 * var(--u));
+  height: calc(520 * var(--u));
+
+  translate: -50% 0;
+
+  /* УДАЛИЛИ scale: var(--devices-scale) и transition */
+
+  pointer-events: none;
+  z-index: 2;
+  overflow: visible;
+}
+
+.devices-stack .device {
+  pointer-events: auto;
+}
+
 /* ============================================================
        6) CALLOUTS (side text blocks)
        ============================================================ */
 
 .callout {
   position: absolute;
-  top: 70px;
-  width: 260px;
+  /* Текст тоже должен немного уменьшаться, чтобы не вылезать */
+  width: calc(300 * var(--u));
   color: rgba(0, 0, 0, 0.8);
   z-index: 10;
   pointer-events: none;
+
+  /* Новые рычаги для коллаутов */
+  --tx: 0;
+  --ty: 0;
+
+  /* Формула движения: база (от краев монитора) + наши рычаги */
+  transform: translate(calc(var(--tx) * var(--u)), calc(var(--ty) * var(--u)));
+
+  transition: transform 0.3s ease; /* Для плавности при переключении слайдов */
+
+  top: calc(140 * var(--u));
 }
 
 .callout h4 {
-  margin: 0 0 6px;
-  font-size: 1.3rem;
-  font-weight: 900;
+  margin: 0 0 calc(6 * var(--u));
+  /* Был 1.3rem (~21px). Делаем адаптивным */
+  font-size: calc(26 * var(--u));
+  font-weight: 700;
 }
 
 .callout p {
   margin: 0;
-  font-size: 1rem;
+
+  font-size: calc(20 * var(--u));
   line-height: 1.35;
   color: rgba(0, 0, 0, 0.62);
 }
 
 .callout--left {
-  left: 110px;
   text-align: right;
+  /* Ставим якорь в точку "центр монитора" */
+  /* top: calc(140 * var(--u));*/
+  left: calc(50% - calc(320 * var(--u))); /* левый край монитора */
+
+  /* А теперь двигаем влево от края монитора и настраиваем высоту */
+  --tx: -320; /* отошли влево на ширину коллаута + зазор */
+  --ty: -70; /* крути это число в DevTools, чтобы поднять/опустить */
 }
 
 .callout--right {
-  right: 110px;
   text-align: left;
+  /* top: calc(140 * var(--u));*/
+  left: calc(50% + calc(320 * var(--u))); /* правый край монитора */
+
+  /* Двигаем вправо от края монитора */
+  --tx: 40; /* зазор от монитора */
+  --ty: -70; /* крути это число в DevTools */
 }
 
 /* ============================================================
@@ -205,21 +300,46 @@ body.pp {
   overflow: visible;
   z-index: 2;
 
-  /* Frame settings */
-  --frame-w: 2px;
-  --outer-w: 2px;
-  --gap: 12px;
-  --dr: 0px;
+  /* Обновляем переменные рамок и отступов */
+  --frame-w: calc(2 * var(--u));
+  --outer-w: calc(2 * var(--u));
+  --gap: calc(12 * var(--u));
+  --dr: 0px; /* Скругление переопределим ниже для каждого типа */
+
+  /* Теперь все тени тоже масштабируются! */
+  filter: drop-shadow(
+      0 calc(10 * var(--u)) calc(24 * var(--u)) rgba(0, 0, 0, 0.1)
+    )
+    drop-shadow(0 calc(26 * var(--u)) calc(70 * var(--u)) rgba(0, 0, 0, 0.12));
+
+  /* Переменные теперь — это просто числа-множители */
+  --base-x-val: 0;
+  --base-y-val: 0;
+  --tx: 0;
+  --ty: 0;
+  --lift: 0;
+
+  /* Эта формула говорит: 
+     "Возьми % (для центра) и прибавь к нему сдвиг, умноженный на наш юнит" */
+  transform: translate(
+    calc((var(--base-x-val) * 1%) + (var(--tx) * var(--u))),
+    calc((var(--ty) + var(--lift)) * var(--u))
+  );
 
   transition: transform 0.22s ease, filter 0.22s ease;
-  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.1))
-    drop-shadow(0 26px 70px rgba(0, 0, 0, 0.12));
   will-change: transform;
 }
 
 .device:hover {
-  filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.12))
-    drop-shadow(0 36px 90px rgba(0, 0, 0, 0.14));
+  /* Тени тоже через юниты */
+  filter: drop-shadow(
+      0 calc(14 * var(--u)) calc(30 * var(--u)) rgba(0, 0, 0, 0.12)
+    )
+    drop-shadow(0 calc(36 * var(--u)) calc(90 * var(--u)) rgba(0, 0, 0, 0.14));
+  --lift: -10; /* Убираем px, так как в translate мы уже умножаем на var(--u) */
+}
+.device:active {
+  --lift: -6; /* Убираем px */
 }
 
 .device:focus {
@@ -227,7 +347,6 @@ body.pp {
   outline-offset: 3px;
 }
 
-/* Inner frame (glass effect) */
 .device::before {
   content: "";
   position: absolute;
@@ -250,7 +369,6 @@ body.pp {
     inset 0 1px 0 rgba(255, 255, 255, 0.55), inset 0 -1px 0 rgba(0, 0, 0, 0.12);
 }
 
-/* Outer frame (glass belt) */
 .device::after {
   content: "";
   position: absolute;
@@ -283,13 +401,14 @@ body.pp {
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   z-index: 2;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.14),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.16),
-    inset 0 10px 18px rgba(255, 255, 255, 0.12),
-    inset 0 -10px 18px rgba(0, 0, 0, 0.1), 0 30px 90px rgba(0, 0, 0, 0.12);
+  /* Обновляем тени внутри рамки */
+  box-shadow: 0 0 0 calc(1 * var(--u)) rgba(0, 0, 0, 0.14),
+    inset 0 0 0 calc(1 * var(--u)) rgba(255, 255, 255, 0.16),
+    inset 0 calc(10 * var(--u)) calc(18 * var(--u)) rgba(255, 255, 255, 0.12),
+    inset 0 calc(-10 * var(--u)) calc(18 * var(--u)) rgba(0, 0, 0, 0.1),
+    0 calc(30 * var(--u)) calc(90 * var(--u)) rgba(0, 0, 0, 0.12);
 }
 
-/* Screen (media container) */
 .device .screen {
   position: absolute;
   left: 0;
@@ -321,14 +440,15 @@ body.pp {
   z-index: 0;
 }
 
-/* Monitor stand */
 .device-addon--monitor-stand {
   left: 50%;
+  width: calc(220 * var(--u));
+  height: calc(100 * var(--u));
   top: calc(100% + var(--gap));
-  width: clamp(160px, 32%, 240px);
-  height: clamp(80px, 16%, 120px);
   transform: translateX(-50%);
-  filter: drop-shadow(0 22px 40px rgba(0, 0, 0, 0.12));
+  filter: drop-shadow(
+    0 calc(22 * var(--u)) calc(40 * var(--u)) rgba(0, 0, 0, 0.12)
+  );
 }
 
 .device-addon--monitor-stand::before {
@@ -366,14 +486,16 @@ body.pp {
   backdrop-filter: blur(12px) saturate(140%);
 }
 
-/* Laptop base */
 .device-addon--laptop-base {
   left: 50%;
-  top: calc(100% + 10px);
+  top: calc(100% + calc(10 * var(--u)));
+  height: calc(14 * var(--u));
   width: 120%;
-  height: clamp(12px, 11%, 14px);
+
   transform: translateX(-50%);
-  filter: drop-shadow(0 22px 40px rgba(0, 0, 0, 0.12));
+  filter: drop-shadow(
+    0 calc(22 * var(--u)) calc(40 * var(--u)) rgba(0, 0, 0, 0.12)
+  );
 }
 
 .device-addon--laptop-base::before {
@@ -403,216 +525,158 @@ body.pp {
 }
 
 /* ============================================================
-       9) DEVICE POSITIONS — FIXED!
+       9) DEVICE POSITIONS – SCALABLE VERSION
        ============================================================ */
 
 .device--desktop {
-  width: 640px;
-  height: 360px;
+  width: calc(640 * var(--u));
+  height: calc(360 * var(--u));
   left: 50%;
-  top: 46px;
-  transform: translate(-50%, 0);
+  top: calc(46 * var(--u));
 
-  --dr: 0px;
-  --frame-w: 2px;
-  --outer-w: 1px;
-  --gap: 16px;
-
-  z-index: 3;
-  filter: drop-shadow(0 0 0.8px rgba(0, 0, 0, 0.22))
-    drop-shadow(0 26px 68px rgba(0, 0, 0, 0.18));
-}
-
-.device--desktop:hover {
-  transform: translate(-50%, -10px);
-}
-
-.device--desktop:active {
-  transform: translate(-50%, -6px);
+  /* Мы не пишем тут transform! Только меняем значения "рычагов" */
+  --base-x-val: -50; /* Это число, которое заменит 0 в формуле выше */
+  --tx: 10;
+  --ty: 0;
+  z-index: 1;
 }
 
 .device--admin {
-  width: 420px;
-  height: 292px;
-  left: 120px;
-  top: 260px;
-  transform: translate(0, 0);
-  opacity: 0.92;
-  z-index: 3;
-  --dr: 8px;
-}
-
-.device--admin:hover {
-  transform: translate(0, -10px);
-}
-
-.device--admin:active {
-  transform: translate(0, -6px);
+  width: calc(420 * var(--u));
+  height: calc(292 * var(--u));
+  left: 50%;
+  top: 0;
+  --tx: -680; /* Просто крути это число в DevTools */
+  --ty: 260;
+  z-index: 2;
 }
 
 .device--laptop {
-  width: 500px;
-  height: 280px;
-  left: 70%;
-  top: 260px;
-  transform: translate(-34%, 0);
+  width: calc(500 * var(--u));
+  height: calc(280 * var(--u));
+  left: 50%;
+  top: 0;
+  --tx: 180;
+  --ty: 260;
   z-index: 4;
 }
 
-.device--laptop:hover {
-  transform: translate(-34%, -10px);
-}
-
-.device--laptop:active {
-  transform: translate(-34%, -6px);
-}
-
 .device--phone {
-  width: 120px;
-  height: 260px;
-  left: 560px;
-  top: 300px;
-  transform: translate(0, 0);
+  width: calc(120 * var(--u));
+  height: calc(268 * var(--u));
+  left: 50%;
+  top: 0;
+  --base-x-val: 0;
+  --tx: -230;
+  --ty: 300;
   z-index: 6;
-  --frame-w: 1px;
-  --outer-w: 2px;
-  --gap: 4px;
+
+  /* Индивидуальные настройки "стекла" */
+  --dr: calc(2 * var(--u)); /* Скругление побольше, как у смартфона */
+  --frame-w: calc(1 * var(--u)); /* Тонкая внутренняя рамка */
+  --outer-w: calc(2 * var(--u)); /* Внешняя рамка */
+  --gap: calc(5 * var(--u)); /* Узкий стеклянный пояс — вернет форму девайса */
 }
 
-.device--phone:hover {
-  transform: translate(0, -10px);
-}
-
-.device--phone:active {
-  transform: translate(0, -6px);
-}
-
-/* Phone details (speaker/indicator) */
-.device--phone .screen::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 6px;
-  transform: translateX(-50%);
-  width: 44%;
-  height: 2px;
-  border-radius: 1px;
-  background: rgba(0, 0, 0, 0.18);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.22);
-  z-index: 3;
-  pointer-events: none;
-}
-
-.device--phone .screen::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 6px;
-  transform: translateX(-50%);
-  width: 46%;
-  height: 4px;
-  border-radius: 1px;
-  background: rgba(255, 255, 255, 0.22);
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
-  z-index: 3;
-  pointer-events: none;
-}
-
-.device--phone .shot {
-  position: absolute;
-  inset: 0;
-  z-index: 10;
-  image-rendering: -webkit-optimize-contrast;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-/* ============================================================
-       10) BOTTOM RAIL (CTA + links)
-       ============================================================ */
-
+/* Контейнер теперь статический, под слайдером */
 .bottom {
-  width: min(1280px, 100%);
+  width: 100%;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr;
-  align-items: center;
-  gap: 16px;
-  padding: 50px 0 0 0;
-  justify-items: center;
+  display: flex; /* Меняем grid на flex для центровки */
+  justify-content: center;
+  padding: calc(80 * var(--u)) 0 calc(80 * var(--u));
   position: relative;
-  align-self: end;
   z-index: 50;
 }
 
-/* CTA pill (split button) */
 .cta-pill {
   display: flex;
   align-items: stretch;
   justify-content: center;
   gap: 0;
   background: transparent;
-  border-radius: 999px;
-  overflow: visible;
-  --cut: 18px;
-}
-
-.pp .cta-pill button {
-  background: linear-gradient(
-    90deg,
-    var(--accent, #a10f0f),
-    var(--accent2, #c24b4b)
-  );
+  --cut: 20px;
+  --sea: rgba(27, 92, 89, 0.2); /* Твой морской цвет */
 }
 
 .cta-pill button {
   border: 0;
   cursor: pointer;
-  color: #fff;
-  font-weight: 800;
-  font-size: 16px;
-  padding: 14px 26px;
-  min-width: 260px;
-  background: linear-gradient(
-    90deg,
-    var(--accent, #a10f0f),
-    var(--accent2, #c24b4b)
-  );
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.26);
-  background-clip: padding-box;
-  box-shadow: none;
-  filter: brightness(1);
-  transition: transform 0.18s ease, filter 0.18s ease;
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: clamp(13px, calc(15 * var(--u)), 17px);
+  padding: clamp(12px, calc(16 * var(--u)), 22px)
+    clamp(25px, calc(35 * var(--u)), 50px);
+  min-width: calc(235 * var(--u));
+  transition: all 0.3s ease;
+  position: relative;
 }
 
-.cta-pill button:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.1) drop-shadow(0 24px 70px rgba(255, 255, 255, 0.28));
-}
+/* ЛЕВАЯ КНОПКА: Морская штриховка + красный контур */
+.cta-pill button[data-cta="website"] {
+  /* Морская штриховка и градиент вместо красного */
+  background: linear-gradient(to right, transparent 99%, var(--sea) 100%),
+    repeating-linear-gradient(
+      45deg,
+      rgba(27, 92, 89, 0.08),
+      rgba(27, 92, 89, 0.08) 1px,
+      transparent 1px,
+      transparent 6px
+    ),
+    rgba(255, 255, 255, 0.5); /* Фон кальки */
 
-.cta-pill button:active {
-  transform: translateY(-1px);
-  filter: brightness(1.04);
-}
+  color: var(--accent); /* Текст красный, как на навигации */
 
-.cta-pill button:focus-visible {
-  outline: 2px solid rgba(161, 15, 15, 0.35);
-  outline-offset: 2px;
-}
-
-.cta-pill button[data-cta="qa"] {
+  /* Наши "чертежные" границы */
+  border-left: 1.5px solid var(--accent);
+  border-top: 1.5px dashed var(--accent);
+  border-bottom: 1.5px solid var(--accent);
+  border-right: none; /* Источник блика в покое */
+  z-index: 1;
+  margin-right: calc(-1 * var(--cut));
   border-radius: 999px 0 0 999px;
   clip-path: polygon(0 0, 100% 0, calc(100% - var(--cut)) 100%, 0 100%);
+
+  /* Блик теперь более мягкий и морской */
+  box-shadow: 15px 0 30px -5px rgba(27, 92, 89, 0.2);
 }
 
-.cta-pill button[data-cta="website"] {
+/* ПРАВАЯ КНОПКА: Чистое морское стекло */
+.cta-pill button[data-cta="qa"] {
+  /* Твой стиль морского стекла из навигации */
+  background: linear-gradient(
+    to left,
+    rgba(27, 92, 89, 0.15),
+    rgba(27, 92, 89, 0.05)
+  );
+  backdrop-filter: blur(15px) saturate(120%);
+  -webkit-backdrop-filter: blur(15px) saturate(120%);
+
+  color: var(--text);
+  border: 1px solid rgba(27, 92, 89, 0.2);
   border-radius: 0 999px 999px 0;
-  background: linear-gradient(90deg, var(--accent2), var(--accent));
   clip-path: polygon(var(--cut) 0, 100% 0, 100% 100%, 0 100%);
+
+  z-index: 2;
+  box-shadow: inset 0 0 0 1px rgba(27, 92, 89, 0.1);
 }
 
-/* Mini links */
+/* Ховеры */
+.cta-pill button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+.cta-pill button[data-cta="website"]:hover {
+  background: linear-gradient(to right, transparent 40%, var(--sea) 100%),
+    repeating-linear-gradient(
+      45deg,
+      rgba(27, 92, 89, 0.12) 0 1px,
+      transparent 1px 4px
+    ),
+    rgba(255, 255, 255, 0.7);
+}
+
 .mini-links {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -634,26 +698,32 @@ body.pp {
   text-decoration: underline;
 }
 
-/* Next project teaser */
+/* =========================
+   TEASERS (prev / next)
+   ========================= */
+
+.pp .slide-title {
+  position: relative;
+}
+
 .next-teaser {
   position: absolute;
-  right: 18px;
-  bottom: 54px;
+  top: 50%;
+  transform: translateY(-50%);
   border: 1px solid rgba(0, 0, 0, 0.08);
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(6px);
   cursor: pointer;
-  text-align: left;
-  color: rgba(0, 0, 0, 0.55);
-  max-width: 120px;
-  padding: 10px 14px;
+  padding: 10px 28px;
   border-radius: 16px;
+  max-width: 150px;
+  z-index: 10;
 }
 
 .next-teaser .label {
   display: block;
   font-size: 10px;
-  font-weight: 900;
+  font-weight: 100;
   letter-spacing: 0.8px;
   color: rgba(0, 0, 0, 0.45);
 }
@@ -661,100 +731,321 @@ body.pp {
 .next-teaser .title {
   display: block;
   font-size: 13px;
-  font-weight: 900;
+  font-weight: 700;
   color: var(--accent);
   line-height: 1.15;
 }
 
-.next-teaser::before {
-  content: "";
-  position: absolute;
-  inset: -12px -34px -12px -18px;
-  background: rgba(0, 0, 0, 0.06);
-  clip-path: polygon(0 50%, 100% 0, 100% 100%);
-  z-index: -1;
-  border-radius: 12px;
+.next-teaser[data-nav="next"] {
+  right: 8px;
+  text-align: right;
+  padding-right: 50px;
+}
+
+.next-teaser[data-nav="prev"] {
+  left: 8px;
+  right: auto;
+  text-align: left;
+  padding-left: 50px;
 }
 
 .next-teaser::after {
-  content: "›";
-  position: absolute;
-  right: -18px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--accent);
-  font-weight: 900;
-  font-size: 30px;
-}
-
-/* ============================================================
-       11) EDGE ARROWS
-       ============================================================ */
-
-.edge-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 60px;
-  height: 200px;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-  z-index: 50;
-  opacity: 1;
-  transition: transform 0.15s ease, filter 0.15s ease;
-  margin: 5px;
-}
-
-.edge-arrow--left {
-  left: 0;
-}
-
-.edge-arrow--right {
-  right: 0;
-}
-
-.edge-arrow::before {
   content: "";
   position: absolute;
-  inset: 0;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  opacity: 0.9;
-  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.1))
-    drop-shadow(0 26px 70px rgba(0, 0, 0, 0.12));
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 82px;
+  background-color: var(--accent);
+  opacity: 0.95;
   pointer-events: none;
 }
 
-.edge-arrow--left::before {
-  background-image: url("../images/arrow-left.png");
+.next-teaser[data-nav="next"]::after {
+  right: 12px;
+  left: auto;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpolyline points='9 4 17 12 9 20' fill='none' stroke='%23000' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpolyline points='9 4 17 12 9 20' fill='none' stroke='%23000' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    center / contain no-repeat;
 }
 
-.edge-arrow--right::before {
-  background-image: url("../images/arrow-right.png");
+.next-teaser[data-nav="prev"]::after {
+  left: 12px;
+  right: auto;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpolyline points='15 4 7 12 15 20' fill='none' stroke='%23000' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpolyline points='15 4 7 12 15 20' fill='none' stroke='%23000' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    center / contain no-repeat;
 }
 
-.edge-arrow:hover {
-  transform: translateY(-50%) translateY(-2px);
+.dots,
+#dots,
+.edge-arrow {
+  display: none !important;
 }
 
-.edge-arrow:hover::before {
+/* Контейнер для кнопок, который теперь живет ПОД слайдером в HTML */
+.bottom-static {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  /* Небольшой отрицательный маржин, чтобы "наехать" на шлейф тумана */
+  margin-top: calc(-30 * var(--u));
+  padding-bottom: calc(80 * var(--u));
+  position: relative;
+  z-index: 20;
+}
+.services-details {
+  background-color: #ffffff;
+  padding: calc(80 * var(--u)) 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin-top: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.03); /* Едва заметная граница для чистоты */
+  z-index: 100; /* Чтобы блок перекрывал серый туман слайдера, если они пересекутся */
+}
+
+.services-container {
+  max-width: 1200px;
+  width: 85%;
+  display: grid;
+  /* На десктопе 3 колонки, на всем что меньше 1024px — 1 колонка */
+  grid-template-columns: repeat(3, 1fr);
+  gap: calc(60 * var(--u));
+}
+
+.service-card {
+  padding: calc(20 * var(--u));
+  display: flex;
+  flex-direction: column;
+  gap: calc(15 * var(--u));
+}
+
+.service-icon {
+  font-family: serif;
+  font-style: italic;
+  font-size: clamp(34px, calc(40 * var(--u)), 50px);
+  color: var(--accent);
+  opacity: 0.3;
+  margin-bottom: calc(-20 * var(--u));
+}
+
+.service-card h3 {
+  font-size: clamp(18px, calc(24 * var(--u)), 28px);
+  margin-bottom: calc(10 * var(--u));
+  font-weight: 700;
+  color: #333;
+}
+
+.service-card p {
+  font-size: clamp(14px, calc(20 * var(--u)), 18px);
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0;
+}
+
+.personal-credo {
+  padding: calc(100 * var(--u)) 0;
+  background: var(--bg);
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid var(--line);
+}
+
+.credo-content {
+  max-width: calc(800 * var(--u));
+  text-align: center;
+  padding: 0 20px;
+}
+
+.credo-label {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 20px;
+}
+
+.credo-content blockquote {
+  font-family: serif;
+  font-style: italic;
+  font-size: clamp(20px, calc(32 * var(--u)), 40px);
+  line-height: 1.3;
+  color: var(--text);
+  margin: 0 0 30px 0;
+}
+
+.credo-signature {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.site-footer {
+  width: 100%;
+  /* Бесконечный стеклянный фон как у хедера */
+  background: linear-gradient(
+    to bottom,
+    rgba(27, 92, 89, 0.12),
+    rgba(27, 92, 89, 0.05)
+  );
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: calc(30 * var(--u)) 0; /* Было 60, стало 30 */
+  margin-top: calc(60 * var(--u));
+}
+
+.footer-wide-content {
+  max-width: 1200px; /* Немного сузим общую область, чтобы контент не разъезжался */
+  margin: 0 auto;
+  padding: 0 5%;
+  display: grid;
+  /* Ставим левую колонку по размеру контента (auto), а не жесткие 350px */
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  /* Сокращаем расстояние между якорем и текстом */
+  gap: calc(30 * var(--u));
+}
+
+.footer-visual {
+  display: flex;
+  justify-content: flex-end; /* Прижимаем якорь вплотную к тексту */
+  min-width: 150px; /* Минимальное пространство, чтобы не зажать картинку */
+}
+
+/* Якорь */
+.anchor-img {
+  height: auto;
+  max-width: 140px;
+  filter: drop-shadow(0 10px 20px rgba(27, 92, 89, 0.15));
+  transition: transform 0.6s ease;
+  margin-right: 10px;
+}
+
+.site-footer:hover .anchor-img {
+  transform: translateY(-8px) rotate(1deg);
+}
+
+/* Правая часть контента */
+.footer-body {
+  display: flex;
+  padding-left: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: calc(20 * var(--u));
+  align-items: flex-start; /* Выравниваем всё по левому краю внутри колонки */
+}
+
+/* СТИЛЬ ЧИПА (возвращаем твой вариант) */
+.gift-wrap-left {
+  display: flex;
+  justify-content: flex-start;
+
+  margin-left: -5px;
+}
+
+.gift-chip {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  padding: 5px 5px 5px 18px;
+  /* Добавляем внутреннее свечение и более светлый фон */
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4),
+    inset 0 0 10px rgba(27, 92, 89, 0.05);
+  border: 1px dashed var(--accent);
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+
+.gift-chip:hover {
+  background: #fff;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+  border-style: solid; /* При наведении линия становится четкой */
+}
+
+.gift-text {
+  font-size: 14px;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.gift-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.gift-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(161, 15, 15, 0.3);
+}
+.mobile-br {
+  display: none;
+}
+/* НИЖНЯЯ СТРОКА */
+.footer-bottom-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(27, 92, 89, 0.1);
+  padding-top: calc(25 * var(--u));
+}
+
+.footer-brand {
+  font-weight: 700;
+  font-size: 16px;
+  margin-right: 15px;
+}
+
+.footer-role {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.social-link {
+  color: var(--text);
+  opacity: 0.6;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-link svg {
+  /* Мы используем stroke-width: 1.2 для того самого "тонкого" стиля */
+  width: 22px;
+  height: 22px;
+}
+.social-link:hover {
   opacity: 1;
-  filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.12))
-    drop-shadow(0 36px 90px rgba(0, 0, 0, 0.14));
+  color: var(--accent); /* Твой красный акцент */
+  transform: translateY(-3px);
 }
-
-.edge-arrow:focus-visible {
-  outline: 2px solid rgba(161, 15, 15, 0.35);
-  outline-offset: 4px;
+.copyright {
+  font-size: 14px;
+  color: var(--muted);
 }
-
-/* ============================================================
-       12) DEBUG — DISABLED BY DEFAULT
-       ============================================================ */
-
-/* Раскомментируй для дебага: 
-* {
-  outline: 1px solid red !important;
-}*/
