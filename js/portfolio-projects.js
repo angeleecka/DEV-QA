@@ -52,13 +52,18 @@
       },
 
       callouts: {
-        leftTitle: "A webpage with its own mini—CMS",
+        leftTitle: "Built-in mini CMS",
         leftText:
-          "You can throw inside your media, and it will immediately appear on your public Portfolio page.",
-        rightTitle: "Take a look inside now",
-        rightText:
-          "In this demo version, you can try how easy it is to manage as in your device's folders.",
+          "Upload media in admin — it appears on the public portfolio instantly.",
+
+        midTitle: "Full control",
+        midText:
+          "You manage content yourself.\nNo builders. No code. No third-party help.",
+
+        rightTitle: "Try it like a file manager",
+        rightText: "Folders feel familiar.\nFast actions.\nClean workflow.",
       },
+
       qaDocs: [
         {
           title: "Test_Summary_Report.en.md",
@@ -93,7 +98,11 @@
       title: "Tab Harbor — link manager",
       teaserTitle: "Tab Harbor", // ✅ коротко для тизера
 
-      links: { demo: "#", admin: "#" },
+      links: {
+        demo: "#",
+        admin: "#",
+        download: "https://spaceharbor.online/",
+      },
       images: {
         desktop: "assets/tabHarbor/desktop.png",
         admin: "assets/tabHarbor/tablet.png",
@@ -101,11 +110,20 @@
         phone: "assets/tabHarbor/phone.png",
       },
       callouts: {
-        leftTitle: "Organize links",
-        leftText: "Pages → Sections → Buttons.\nFast access to your resources.",
-        rightTitle: "Two views",
-        rightText: "Tiles / Rows.\nDrag & drop.\nOffline JSON storage.",
+        leftTitle: "Organize your web",
+        leftText:
+          "Save links into Pages → Sections → Buttons.\nKeep resources structured and easy to revisit.",
+
+        // показываем на планшете/мобиле, скрываем на десктопе CSS-ом (или не рендерим — как решишь)
+        midTitle: "Browser, relax.",
+        midText:
+          "Stop keeping dozens of tabs open “just in case”.\nSave everything in Tab Harbor — and come back anytime.",
+
+        rightTitle: "Offline-first workflow",
+        rightText:
+          "Tiles / Rows.\nDrag & drop.\nLocal JSON storage.\nFast search & navigation.",
       },
+
       qaDocs: [{ title: "Architecture Notes", url: "docs/qa/architecture.md" }],
     },
   ];
@@ -166,6 +184,20 @@
 
       const demoUrl = safeText(p.links?.demo ?? "#");
       const adminUrl = safeText(p.links?.admin ?? "#");
+      // считаем "download" включённым, если ключ вообще есть (даже если ссылка пока "#")
+      const hasDownloadKey = Object.prototype.hasOwnProperty.call(
+        p.links ?? {},
+        "download"
+      );
+      const downloadUrl = safeText(p.links?.download ?? "#");
+      const hasDownload = !!downloadUrl && downloadUrl !== "#";
+
+      const secondCtaKey = hasDownload ? "download" : "demo";
+      const secondCtaLabel = hasDownload ? "Download app" : "Demo try";
+
+      // если download пока "#", кнопку делаем disabled (чтобы не было пустого клика)
+      const secondCtaDisabled =
+        hasDownloadKey && (!downloadUrl || downloadUrl === "#");
 
       slide.innerHTML = `
   <div class="slide-title">
@@ -173,7 +205,13 @@
 
     <div class="mini-links">
       <button type="button" data-cta="qa-pack">QA Evidence Pack</button>
-      <button type="button" data-cta="demo">Demo try</button>
+      <button
+  type="button"
+  data-cta="${secondCtaKey}"
+  ${secondCtaDisabled ? 'disabled aria-disabled="true"' : ""}
+>
+  ${secondCtaLabel}
+</button>
     </div>
 
     <button class="next-teaser" type="button" data-nav="prev" aria-label="Previous project">
@@ -190,10 +228,6 @@
   <div class="stage" aria-label="Project stage">
     <div class="stage-content">
 
-      
-
-
-
       <!-- DEVICES STACK (центр) -->
       <div class="devices-stack" aria-label="Devices stack">
       <!-- LEFT CALLOUT -->
@@ -204,6 +238,25 @@
         )}</h4>
         <p>${safeText(p.callouts?.leftText ?? "").replaceAll("\n", "<br>")}</p>
       </div>
+
+      ${
+        p.callouts?.midTitle || p.callouts?.midText
+          ? `
+            <div class="callout callout--mid" aria-hidden="true">
+              <h4>${safeText(p.callouts?.midTitle ?? "").replaceAll(
+                "\n",
+                "<br>"
+              )}</h4>
+              <p>${safeText(p.callouts?.midText ?? "").replaceAll(
+                "\n",
+                "<br>"
+              )}</p>
+            </div>
+          `
+          : ""
+      }
+      
+
        <!-- RIGHT CALLOUT -->
       <div class="callout callout--right" aria-hidden="true">
         <h4>${safeText(p.callouts?.rightTitle ?? "")}</h4>
@@ -246,27 +299,30 @@
           <div class="screen">${laptopMedia}</div>
         </button>
 
-        <button
-          class="device device--phone"
-          data-url="${demoUrl}"
-          type="button"
-          data-open="demo"
-          aria-label="Open demo (phone)"
-        >
-          <div class="screen">
-            <img class="shot" src="${safeText(
-              p.images?.phone
-            )}" alt="Phone preview" />
-          </div>
-        </button>
-      </div>
+        <div class="phone-wrap" aria-hidden="false">
+  <span class="phone-plaque" aria-hidden="true"></span>
+  <span class="phone-occlusion" aria-hidden="true"></span>
 
-     
+  <button
+    class="device device--phone"
+    data-url="${demoUrl}"
+    type="button"
+    data-open="demo"
+    aria-label="Open demo (phone)"
+  >
+    <div class="screen">
+      <img class="shot" src="${safeText(
+        p.images?.phone
+      )}" alt="Phone preview" />
+    </div>
+  </button>
+</div>
+
+      </div>
 
     </div>
   </div>
 
-  
 `;
 
       const prevTitleNode = slide.querySelector("[data-prev-title]");
@@ -496,6 +552,17 @@
 
     if (t.dataset.nav === "next") {
       next();
+      return;
+    }
+
+    // мини-линки можно менять в зависимости от проекта - посмотреть/загрузить
+    /**Что получится
+На всех проектах кнопка остаётся Demo try, пока нет links.download.
+На Tab Harbor (и любом будущем проекте, где добавишь links.download) кнопка станет Download app и будет открывать p.links.download.
+Средний коллаут больше не захардкожен: у каждого проекта может быть свой midTitle/midText, а если не задан — блока просто нет.*/
+
+    if (t.dataset.cta === "download") {
+      openUrl(p.links?.download || "#");
       return;
     }
 

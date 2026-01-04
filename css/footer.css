@@ -1,0 +1,507 @@
+/* footer.css */
+
+:root {
+  --u: 1px;
+}
+
+body.pp .site-footer .anchor-img {
+  width: clamp(50px, 10vw, 100px);
+  height: auto;
+  display: block;
+}
+.site-footer {
+  width: 100%;
+  /* Бесконечный стеклянный фон как у хедера */
+  background: linear-gradient(
+    to bottom,
+    rgba(27, 92, 89, 0.12),
+    rgba(27, 92, 89, 0.05)
+  );
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: calc(30 * var(--u, 1px)) 0;
+  margin-top: calc(60 * var(--u, 1px));
+}
+
+.footer-wide-content {
+  max-width: 1200px; /* Немного сузим общую область, чтобы контент не разъезжался */
+  margin: 0 auto;
+  padding: 0 5%;
+  display: grid;
+  /* Ставим левую колонку по размеру контента (auto), а не жесткие 350px */
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  /* Сокращаем расстояние между якорем и текстом */
+  gap: calc(30 * var(--u));
+}
+
+.footer-visual {
+  display: flex;
+  justify-content: flex-end; /* Прижимаем якорь вплотную к тексту */
+  min-width: 150px; /* Минимальное пространство, чтобы не зажать картинку */
+}
+
+/* Якорь */
+.anchor-img {
+  height: auto;
+  max-width: 140px;
+  filter: drop-shadow(0 10px 20px rgba(27, 92, 89, 0.15));
+  transition: transform 0.6s ease;
+  margin-right: 10px;
+}
+
+.site-footer:hover .anchor-img {
+  transform: translateY(-8px) rotate(1deg);
+}
+
+.anchor-link {
+  display: inline-block;
+  text-decoration: none;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.anchor-link .anchor-img {
+  display: block; /* убирает лишние пробелы снизу у img */
+}
+
+.anchor-link:focus-visible {
+  outline: 2px solid rgba(27, 92, 89, 0.35);
+  outline-offset: 6px;
+  border-radius: 14px; /* подстрой под форму */
+}
+
+.anchor-link:hover .anchor-img {
+  transform: translateY(-2px);
+}
+
+.anchor-link .anchor-img {
+  transition: transform 0.15s ease;
+}
+
+/* Правая часть контента */
+.footer-body {
+  display: flex;
+  padding-left: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: calc(20 * var(--u));
+  align-items: flex-start; /* Выравниваем всё по левому краю внутри колонки */
+}
+
+/* СТИЛЬ ЧИПА (возвращаем твой вариант) */
+.gift-wrap-left {
+  display: flex;
+  justify-content: flex-start;
+
+  margin-left: -5px;
+}
+
+.gift-chip {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  padding: 5px 5px 5px 18px;
+  /* Добавляем внутреннее свечение и более светлый фон */
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4),
+    inset 0 0 10px rgba(27, 92, 89, 0.05);
+  border: 1px dashed var(--accent);
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+
+.gift-chip:hover {
+  background: #fff;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+  border-style: solid; /* При наведении линия становится четкой */
+}
+
+.gift-text {
+  font-size: 14px;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.gift-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.gift-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(161, 15, 15, 0.3);
+}
+.mobile-br {
+  display: none;
+}
+/* НИЖНЯЯ СТРОКА */
+.footer-bottom-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(27, 92, 89, 0.1);
+  padding-top: calc(25 * var(--u));
+}
+
+.footer-brand {
+  font-weight: 700;
+  font-size: 16px;
+  margin-right: 15px;
+}
+
+.footer-role {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.social-link {
+  color: var(--text);
+  opacity: 0.6;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-link svg {
+  /* Мы используем stroke-width: 1.2 для того самого "тонкого" стиля */
+  width: 22px;
+  height: 22px;
+}
+.social-link:hover {
+  opacity: 1;
+  color: var(--accent); /* Твой красный акцент */
+  transform: translateY(-3px);
+}
+.copyright {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* якорь меньше + без лишних "inline" отступов */
+body.home .site-footer .anchor-img,
+body.about .site-footer .anchor-img {
+  width: clamp(40px, 10vw, 90px);
+  height: auto;
+  display: block;
+}
+
+/* чуть компактнее сам футер (если кажется высоким) */
+body.home .site-footer {
+  padding-block: 18px;
+}
+
+@media (max-width: 980px) {
+  /* Перестраиваем нижнюю панель в колонку */
+  .footer-bottom-row {
+    flex-direction: column;
+    gap: 15px; /* Увеличиваем зазор между строками для "воздуха" */
+    align-items: flex-start; /* Оставляем выравнивание по левому краю (к якорю) */
+    text-align: left;
+  }
+
+  /* Строка 1: Название + слоган */
+  .footer-info {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+  }
+
+  .footer-brand {
+    font-size: 18px;
+  }
+
+  .footer-role {
+    font-size: 18px;
+  }
+
+  /* Строка 2: Соц иконки */
+  .footer-socials {
+    order: 2; /* Явно задаем порядок */
+    gap: 30px; /* Делаем иконки чуть свободнее для удобства нажатия пальцем */
+  }
+
+  .social-link svg {
+    width: 24px; /* Немного увеличиваем для мобильности */
+    height: 24px;
+  }
+
+  /* Строка 3: Копирайт */
+  .copyright {
+    order: 3;
+    opacity: 0.6;
+    margin-top: 2px;
+  }
+
+  /* Дополнительно: уменьшаем отступ футера от контента на планшетах */
+  .site-footer {
+    padding: 40px 0;
+    margin-top: 40px;
+  }
+
+  /* Уплотняем сетку, чтобы якорь и текст не разъезжались слишком сильно */
+  .footer-wide-content {
+    max-width: 980px; /* Ограничиваем ширину, чтобы контент не разлетался */
+    margin: 0 auto; /* Это самое важное: центрируем весь блок по горизонтали */
+    display: grid;
+    /* Ставим auto для якоря, чтобы он не занимал лишние 350px, и 1fr для текста */
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: calc(40 * var(--u));
+    padding: 0 100px;
+  }
+
+  .footer-visual {
+    /* Убери здесь фиксированную ширину, если она была (на скрине видно 350px) */
+    width: auto;
+    display: flex;
+    justify-content: flex-end; /* Якорь тянется к тексту */
+  }
+
+  .footer-body {
+    /* Убеждаемся, что текстовый блок не растягивается на всю оставшуюся пустоту справа */
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 900px) {
+  .footer-wide-content {
+    max-width: 900px; /* Ограничиваем ширину, чтобы контент не разлетался */
+
+    padding: 0 50px;
+  }
+  /*.footer-body {
+        margin: 0 auto;
+      }*/
+  .footer-bottom-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .gift-text {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 900px) and (min-width: 601px) {
+  /* 1. Баланс всей композиции по центру */
+  .footer-wide-content {
+    /* 1. Вместо фиксированной ширины даем гибкую, но с лимитом */
+    width: fit-content;
+    max-width: 95%;
+
+    /* 2. Центрируем сам контейнер на странице */
+    margin: 0 auto !important;
+
+    /* 3. Оставляем две колонки, но сжимаем их до размера контента */
+    display: grid;
+    grid-template-columns: auto auto;
+
+    /* 4. Обнуляем лишние паддинги, которые могут давать перекос */
+    padding: 0;
+    gap: 40px; /* Расстояние между якорем и текстом */
+  }
+
+  .footer-visual {
+    width: auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .footer-body {
+    /* Чтобы текст не "убегал", ограничиваем его ширину */
+    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .anchor-img {
+    max-width: 130px;
+  }
+
+  /* 3. Гифт-блок: возвращаем твой перенос строки */
+  .gift-chip {
+    flex-wrap: wrap; /* Разрешаем кнопке падать вниз, если текст широкий */
+    justify-content: flex-start;
+    gap: 12px;
+  }
+
+  .mobile-br {
+    display: block; /* Включаем твой принудительный разрыв фразы */
+  }
+
+  .gift-text {
+    white-space: normal;
+    text-align: left;
+    line-height: 1.4;
+  }
+
+  .gift-btn {
+    white-space: nowrap; /* Кнопка не ломается внутри себя */
+  }
+
+  /* 4. Твоя настройка перестроения нижней строки (Название + Слоган) */
+  .footer-bottom-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    border-top: 1px solid rgba(27, 92, 89, 0.1);
+    padding-top: 10px;
+  }
+
+  .footer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .footer-brand {
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .footer-role {
+    font-size: 13px;
+    display: block;
+  }
+
+  .footer-socials {
+    order: 2;
+    margin: 5px 0;
+  }
+
+  .copyright {
+    order: 3;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .site-footer {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  /* 1. Главный контейнер: превращаем в одну колонку и центрируем */
+  .footer-wide-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Центрируем якорь и блок текста относительно экрана */
+    gap: 30px;
+    padding: 0 20px;
+    max-width: 100%;
+  }
+
+  /* 2. Блок с текстом: тоже колонка, выровненная по центру экрана */
+  .footer-body {
+    align-items: center;
+    width: 100%;
+    padding: 0;
+  }
+
+  /* 3. ГИФТ-ЧИП: перестраиваем кнопку ПОД текст */
+  .gift-chip {
+    flex-direction: column; /* Кнопка падает под текст */
+    align-items: center;
+    padding: 20px;
+    gap: 15px;
+    width: 100%;
+    max-width: 340px; /* Чтобы чип не растягивался на весь экран */
+    border-radius: 20px;
+    text-align: center; /* Текст подарка лучше центрировать, когда он в стеке */
+  }
+
+  .gift-text {
+    white-space: normal;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  /* Чтобы кнопка не "ломалась" и была удобной для пальца */
+  .gift-btn {
+    width: 100%;
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  /* 4. НИЖНЯЯ ИНФО-СТРОКА: выравниваем элементы */
+  .footer-bottom-row {
+    flex-direction: column;
+    align-items: center; /* Все тексты и иконки по центру */
+    gap: 15px;
+    width: 100%;
+    border-top: 1px solid rgba(27, 92, 89, 0.1);
+    padding-top: 20px;
+    text-align: center;
+  }
+
+  /* Название и роль — в столбик */
+  .footer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .footer-brand {
+    font-size: 18px;
+    margin: 0;
+  }
+
+  /* Иконки соцсетей: делаем чуть крупнее и свободнее */
+  .footer-socials {
+    order: 2;
+    gap: 25px;
+    margin: 10px 0;
+  }
+
+  .social-link svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .copyright {
+    order: 3;
+    margin-top: 5px;
+    font-size: 11px;
+  }
+
+  /* Якорь: чуть уменьшаем, чтобы не доминировал на мобилке */
+  .anchor-img {
+    max-width: 120px;
+    margin: 0;
+  }
+
+  .mobile-br {
+    display: block;
+  }
+
+  .footer-visual {
+    justify-content: center;
+  }
+}

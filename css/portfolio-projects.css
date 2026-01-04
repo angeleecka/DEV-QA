@@ -197,7 +197,7 @@ body.pp {
   overflow: visible; /* Чтобы тени и аддоны не резались */
   margin: 0 auto;
   padding: 0;
-  /* Удалили transform-origin */
+  isolation: isolate; /* ключ: всё внутри сравнивается честно по z-index */
 }
 
 .stage-content .devices-stack,
@@ -275,6 +275,10 @@ body.pp {
   /* А теперь двигаем влево от края монитора и настраиваем высоту */
   --tx: -320; /* отошли влево на ширину коллаута + зазор */
   --ty: -70; /* крути это число в DevTools, чтобы поднять/опустить */
+}
+
+.pp .callout--mid {
+  display: none;
 }
 
 .callout--right {
@@ -883,169 +887,4 @@ body.pp {
   display: flex;
   flex-direction: column;
   gap: 5px;
-}
-
-.site-footer {
-  width: 100%;
-  /* Бесконечный стеклянный фон как у хедера */
-  background: linear-gradient(
-    to bottom,
-    rgba(27, 92, 89, 0.12),
-    rgba(27, 92, 89, 0.05)
-  );
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding: calc(30 * var(--u)) 0; /* Было 60, стало 30 */
-  margin-top: calc(60 * var(--u));
-}
-
-.footer-wide-content {
-  max-width: 1200px; /* Немного сузим общую область, чтобы контент не разъезжался */
-  margin: 0 auto;
-  padding: 0 5%;
-  display: grid;
-  /* Ставим левую колонку по размеру контента (auto), а не жесткие 350px */
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  /* Сокращаем расстояние между якорем и текстом */
-  gap: calc(30 * var(--u));
-}
-
-.footer-visual {
-  display: flex;
-  justify-content: flex-end; /* Прижимаем якорь вплотную к тексту */
-  min-width: 150px; /* Минимальное пространство, чтобы не зажать картинку */
-}
-
-/* Якорь */
-.anchor-img {
-  height: auto;
-  max-width: 140px;
-  filter: drop-shadow(0 10px 20px rgba(27, 92, 89, 0.15));
-  transition: transform 0.6s ease;
-  margin-right: 10px;
-}
-
-.site-footer:hover .anchor-img {
-  transform: translateY(-8px) rotate(1deg);
-}
-
-/* Правая часть контента */
-.footer-body {
-  display: flex;
-  padding-left: 40px;
-  display: flex;
-  flex-direction: column;
-  gap: calc(20 * var(--u));
-  align-items: flex-start; /* Выравниваем всё по левому краю внутри колонки */
-}
-
-/* СТИЛЬ ЧИПА (возвращаем твой вариант) */
-.gift-wrap-left {
-  display: flex;
-  justify-content: flex-start;
-
-  margin-left: -5px;
-}
-
-.gift-chip {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-
-  padding: 5px 5px 5px 18px;
-  /* Добавляем внутреннее свечение и более светлый фон */
-  background: rgba(255, 255, 255, 0.85);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4),
-    inset 0 0 10px rgba(27, 92, 89, 0.05);
-  border: 1px dashed var(--accent);
-  border-radius: 999px;
-  backdrop-filter: blur(8px);
-  transition: all 0.3s ease;
-}
-
-.gift-chip:hover {
-  background: #fff;
-  box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
-  border-style: solid; /* При наведении линия становится четкой */
-}
-
-.gift-text {
-  font-size: 14px;
-  color: var(--text);
-  white-space: nowrap;
-}
-
-.gift-btn {
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  padding: 10px 22px;
-  border-radius: 999px;
-  cursor: pointer;
-  font-family: var(--font-ui);
-  font-weight: 600;
-  font-size: 13px;
-  transition: all 0.2s ease;
-}
-
-.gift-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 5px 15px rgba(161, 15, 15, 0.3);
-}
-.mobile-br {
-  display: none;
-}
-/* НИЖНЯЯ СТРОКА */
-.footer-bottom-row {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid rgba(27, 92, 89, 0.1);
-  padding-top: calc(25 * var(--u));
-}
-
-.footer-brand {
-  font-weight: 700;
-  font-size: 16px;
-  margin-right: 15px;
-}
-
-.footer-role {
-  font-size: 11px;
-  text-transform: uppercase;
-  color: var(--muted);
-  letter-spacing: 1px;
-}
-
-.footer-socials {
-  display: flex;
-  gap: 18px;
-  align-items: center;
-}
-
-.social-link {
-  color: var(--text);
-  opacity: 0.6;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.social-link svg {
-  /* Мы используем stroke-width: 1.2 для того самого "тонкого" стиля */
-  width: 22px;
-  height: 22px;
-}
-.social-link:hover {
-  opacity: 1;
-  color: var(--accent); /* Твой красный акцент */
-  transform: translateY(-3px);
-}
-.copyright {
-  font-size: 14px;
-  color: var(--muted);
 }

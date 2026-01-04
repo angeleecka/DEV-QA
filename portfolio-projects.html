@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" href="css/home.css?v=1" />
     <link rel="stylesheet" href="css/responsive.css?v=1" />
-
+    <link rel="stylesheet" href="css/footer.css" />
     <link rel="stylesheet" href="css/modals.css?v=1" />
     <link rel="stylesheet" href="css/portfolio-projects.css?v=1" />
     <link rel="stylesheet" href="css/portfolio-projects-responsive.css?v=1" />
@@ -39,7 +39,9 @@
           </div>
 
           <button class="burger" id="burgerBtn" aria-label="Menu">
-            <span></span><span></span><span></span>
+            <span></span>
+            <span></span>
+            <span></span>
           </button>
 
           <nav class="nav" id="mainNav" aria-label="Site">
@@ -60,6 +62,7 @@
 
       <!-- Slider-portfolio -->
       <main class="slider" aria-label="Projects slider">
+        <div class="dots" id="dots" aria-label="Slide dots"></div>
         <button
           class="edge-arrow edge-arrow--left"
           id="prevBtn"
@@ -76,17 +79,25 @@
         <div class="viewport" id="viewport">
           <div class="track" id="track"></div>
         </div>
-
-        <div class="dots" id="dots" aria-label="Slide dots"></div>
       </main>
 
       <div class="bottom">
         <div class="cta-pill">
-          <button data-cta="website" onclick="window.location.href='#contact'">
+          <button
+            class="js-gmodal-open"
+            type="button"
+            data-cta="website"
+            data-gmodal="modalHireDev"
+          >
             Start Project / Hire
           </button>
 
-          <button data-cta="qa" onclick="window.location.href='#contact'">
+          <button
+            class="js-gmodal-open"
+            type="button"
+            data-cta="qa"
+            data-gmodal="modalContactQA"
+          >
             QA Engineering
           </button>
         </div>
@@ -176,15 +187,270 @@
         </div>
       </div>
     </div>
+
+    <!-- ===================== -->
+    <!-- GLASS CONTACT MODALS  -->
+    <!-- ===================== -->
+
+    <div class="gmodal" id="modalHireDev" aria-hidden="true" hidden>
+      <div class="gmodal__backdrop" data-gmodal-close></div>
+
+      <div
+        class="gmodal__dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalHireDevTitle"
+      >
+        <header class="gmodal__head">
+          <div>
+            <div class="gmodal__kicker">DEV</div>
+            <h3 class="gmodal__title" id="modalHireDevTitle">
+              Hire a Developer / UX Architect
+            </h3>
+            <p class="gmodal__sub">
+              Prototype → build → ship. Clean UI, predictable scope.
+            </p>
+          </div>
+
+          <button
+            class="gmodal__x"
+            type="button"
+            data-gmodal-close
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </header>
+
+        <div class="gmodal__body">
+          <div class="gmodal__card">
+            <h4 class="gmodal__h">Best fit for</h4>
+            <ul class="gmodal__list">
+              <li>Landing pages and product-style one-pagers</li>
+              <li>Mini CMS / admin panels (Explorer-style UI)</li>
+              <li>UI prototyping + UX architecture for small apps</li>
+            </ul>
+
+            <div class="gmodal__actions">
+              <a
+                class="gmodal__btn"
+                href="mailto:info@alevito.es?subject=DEV%20request"
+                >Email</a
+              >
+              <button
+                class="gmodal__btn gmodal__btn--ghost js-gmodal-open"
+                type="button"
+                data-gmodal="modalAudit"
+              >
+                Need QA audit instead
+              </button>
+            </div>
+          </div>
+
+          <p class="gmodal__note">
+            Tell us your stack + deadline — we’ll reply with a tiny plan and
+            next steps.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="gmodal" id="modalContactQA" aria-hidden="true" hidden>
+      <div class="gmodal__backdrop" data-gmodal-close></div>
+
+      <div
+        class="gmodal__dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalContactQATitle"
+      >
+        <header class="gmodal__head">
+          <div>
+            <div class="gmodal__kicker">QA</div>
+            <h3 class="gmodal__title" id="modalContactQATitle">Talk to QA</h3>
+            <p class="gmodal__sub">
+              Manual checks, evidence pack, focused automation starter.
+            </p>
+          </div>
+
+          <button
+            class="gmodal__x"
+            type="button"
+            data-gmodal-close
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </header>
+
+        <div class="gmodal__body">
+          <div class="gmodal__card">
+            <h4 class="gmodal__h">Quick message</h4>
+            <p class="gmodal__p">
+              Share device targets, main user flow, and your release date —
+              we’ll suggest a scope.
+            </p>
+
+            <div class="gmodal__actions">
+              <a
+                class="gmodal__btn"
+                href="mailto:info@alevito.es?subject=QA%20request"
+                >Email</a
+              >
+              <button
+                class="gmodal__btn gmodal__btn--ghost js-gmodal-open"
+                type="button"
+                data-gmodal="modalAudit"
+              >
+                Order Audit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gmodal" id="modalAudit" aria-hidden="true" hidden>
+      <div class="gmodal__backdrop" data-gmodal-close></div>
+
+      <div
+        class="gmodal__dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalAuditTitle"
+      >
+        <header class="gmodal__head">
+          <div>
+            <div class="gmodal__kicker">AUDIT</div>
+            <h3 class="gmodal__title" id="modalAuditTitle">
+              QA Audit / Evidence Pack
+            </h3>
+            <p class="gmodal__sub">
+              A clear first step: risks, key issues, and next actions.
+            </p>
+          </div>
+
+          <button
+            class="gmodal__x"
+            type="button"
+            data-gmodal-close
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </header>
+
+        <div class="gmodal__body">
+          <!-- взято из index-QA.html (контактный блок + список) -->
+          <div class="gmodal__card">
+            <h4 class="gmodal__h">What you get in a free QA audit</h4>
+            <ul class="gmodal__list">
+              <li>
+                20–30 min intro call or async exchange about your product and
+                priorities.
+              </li>
+              <li>
+                A short, focused pass through your main user flow (about 1–2
+                hours of manual testing).
+              </li>
+              <li>
+                A brief written summary with key issues, risks and suggested
+                next steps.
+              </li>
+              <li>
+                No obligation to continue — you can use the notes with your
+                current team.
+              </li>
+            </ul>
+            <p class="gmodal__note">
+              Think of it as a low-pressure, clearly scoped way to start working
+              together and see if our style fits your product.
+            </p>
+          </div>
+
+          <div class="gmodal__card">
+            <div class="gmodal__contacts">
+              <div>
+                Email: <a href="mailto:info@alevito.es">info@alevito.es</a>
+              </div>
+              <div>
+                LinkedIn:
+                <a
+                  href="https://www.linkedin.com/in/viktoriia-bondarenko-mayboroda/"
+                  target="_blank"
+                  rel="noreferrer"
+                  >Viktoriia</a
+                >
+                ·
+                <a
+                  href="https://www.linkedin.com/in/aleksandr-bondarenko-alevito/"
+                  target="_blank"
+                  rel="noreferrer"
+                  >Alex</a
+                >
+              </div>
+            </div>
+
+            <!-- форма из index-QA.html -->
+            <form class="gmodal__form" action="#" method="post">
+              <div class="gmodal__field">
+                <label class="gmodal__label" for="auditName">Your name</label>
+                <input
+                  class="gmodal__input"
+                  type="text"
+                  id="auditName"
+                  name="name"
+                  placeholder="Name"
+                />
+              </div>
+
+              <div class="gmodal__field">
+                <label class="gmodal__label" for="auditEmail">Work email</label>
+                <input
+                  class="gmodal__input"
+                  type="email"
+                  id="auditEmail"
+                  name="email"
+                  placeholder="you@company.com"
+                />
+              </div>
+
+              <div class="gmodal__field">
+                <label class="gmodal__label" for="auditMsg"
+                  >What do you need help with?</label
+                >
+                <textarea
+                  class="gmodal__textarea"
+                  id="auditMsg"
+                  name="message"
+                  placeholder="Short description of your app, tech stack and release timeline"
+                ></textarea>
+              </div>
+
+              <button
+                class="btn-primary gmodal__btn gmodal__btn--primary"
+                type="submit"
+              >
+                Send message
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
     <footer class="site-footer">
       <div class="footer-wide-content">
-        <div class="footer-visual">
+        <a
+          class="footer-visual anchor-link"
+          href="index.html"
+          aria-label="Go to Home"
+        >
           <img
             src="images/anchor-glass.png"
             alt="QA Anchor"
             class="anchor-img"
           />
-        </div>
+        </a>
 
         <div class="footer-body">
           <div class="gift-wrap-left">
@@ -193,7 +459,9 @@
                 >Not ready to hire yet? <br class="mobile-br" />Get a
                 <strong>Free UX & QA Audit</strong></span
               >
-              <button class="gift-btn">Claim Audit</button>
+              <button class="gift-btn js-gmodal-open" data-gmodal="modalAudit">
+                Claim Audit
+              </button>
             </div>
           </div>
 
@@ -267,5 +535,7 @@
       </div>
     </footer>
     <script src="js/portfolio-projects.js"></script>
+    <script src="js/topbar-burger.js" defer></script>
+    <script src="js/glass-modals.js"></script>
   </body>
 </html>

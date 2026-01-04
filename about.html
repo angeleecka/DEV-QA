@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="css/modals.css" />
     <link rel="stylesheet" href="css/responsive.css" />
+    <link rel="stylesheet" href="css/footer.css" />
 
     <!-- новые стили страницы -->
     <link rel="stylesheet" href="css/about.css" />
@@ -21,7 +22,7 @@
     />
   </head>
 
-  <body>
+  <body class="about">
     <header class="topbar" aria-label="Top navigation">
       <div class="topbar-inner">
         <div class="brand" aria-label="Brand">
@@ -446,14 +447,109 @@
           </article>
         </div>
       </section>
-
-      <footer class="about-footer" aria-label="Footer">
-        <div class="about-footer-inner">
-          <div>© Alevito QA Studio</div>
-          <div class="muted">Based in Spain · Working with US time zones</div>
-        </div>
-      </footer>
     </main>
+
+    <footer class="site-footer">
+      <div class="footer-wide-content">
+        <a
+          class="footer-visual anchor-link"
+          href="index.html"
+          aria-label="Go to Home"
+        >
+          <img
+            src="images/anchor-glass.png"
+            alt="QA Anchor"
+            class="anchor-img"
+          />
+        </a>
+
+        <div class="footer-body">
+          <div class="gift-wrap-left">
+            <div class="gift-chip">
+              <span class="gift-text"
+                >Not ready to hire yet? <br class="mobile-br" />Get a
+                <strong>Free UX & QA Audit</strong></span
+              >
+              <button
+                class="gift-btn js-gmodal-open"
+                type="button"
+                data-gmodal="modalAudit"
+              >
+                Claim Audit
+              </button>
+            </div>
+          </div>
+
+          <div class="footer-bottom-row">
+            <div class="footer-info">
+              <span class="footer-brand">Alevito QA Studio</span>
+              <span class="footer-role">QA Architect & Developer</span>
+            </div>
+
+            <div class="footer-socials">
+              <a href="#" class="social-link" aria-label="LinkedIn">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"
+                  />
+                  <path d="M8 11l0 5" />
+                  <path d="M8 8l0 .01" />
+                  <path d="M12 16l0 -5" />
+                  <path d="M16 16v-3a2 2 0 0 0 -4 0" />
+                </svg>
+              </a>
+
+              <a href="#" class="social-link" aria-label="GitHub">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"
+                  />
+                </svg>
+              </a>
+
+              <a href="#" class="social-link" aria-label="Telegram">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4" />
+                </svg>
+              </a>
+            </div>
+
+            <p class="copyright">© 2025. Safe Harbor for your project.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
     <div class="gmodal" id="modalAudit" aria-hidden="true" hidden>
       <div class="gmodal__backdrop" data-gmodal-close></div>
 
@@ -588,27 +684,7 @@
       </div>
     </div>
     <script src="js/glass-modals.js"></script>
-    <script>
-      // burger menu (как на главной)
-      const burgerBtn = document.getElementById("burgerBtn");
-      const mainNav = document.getElementById("mainNav");
 
-      burgerBtn.addEventListener("click", () => {
-        burgerBtn.classList.toggle("is-active");
-        mainNav.classList.toggle("is-open");
-        document.body.style.overflow = mainNav.classList.contains("is-open")
-          ? "hidden"
-          : "";
-      });
-
-      document.querySelectorAll(".navlink").forEach((link) => {
-        link.addEventListener("click", () => {
-          burgerBtn.classList.remove("is-active");
-          mainNav.classList.remove("is-open");
-          document.body.style.overflow = "";
-        });
-      });
-    </script>
-    <script src="js/glass-modals.js"></script>
+    <script src="js/topbar-burger.js" defer></script>
   </body>
 </html>

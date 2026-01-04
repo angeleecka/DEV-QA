@@ -1,10 +1,36 @@
 /* ABOUT PAGE — минималистично, в стилистике Home */
 
+/* ABOUT — tighter footer spacing (только для about.html) */
+body.about .site-footer {
+  margin-top: 24px !important; /* если сверху слишком пусто */
+  padding-top: 0 !important;
+}
+
+/* если у футера есть внутренняя широкая подложка */
+body.about .site-footer .footer-wide,
+body.about .site-footer .footer-wide-content {
+  padding-top: 14px !important;
+  padding-bottom: 14px !important;
+  min-height: 0 !important; /* на случай если был min-height */
+}
+
+/* якорь — контролируемо меньше, без “растягивания” футера */
+body.about .site-footer .anchor-img {
+  width: 90px; /* подстрой: 90–140 */
+  height: auto;
+  max-width: 28vw;
+}
+
+/* если картинка вдруг раздувает строку */
+body.about .site-footer .footer-visual {
+  align-self: center;
+}
+
 .about-page {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 22px 40px 24px;
+  padding: 0;
 }
 
 .about-hero {
@@ -216,24 +242,6 @@
   font-size: 14px;
 }
 
-.about-footer {
-  padding: 26px 0 10px;
-}
-
-.about-footer-inner {
-  border-radius: 18px;
-  padding: 14px 16px;
-
-  background: linear-gradient(
-    90deg,
-    rgba(27, 92, 89, 0.1),
-    rgba(255, 255, 255, 0.7)
-  );
-  border: 1px solid rgba(27, 92, 89, 0.12);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.05);
-}
-
 .about-page {
   position: relative;
   isolation: isolate;
@@ -270,20 +278,6 @@
   padding-bottom: 26px;
   padding-left: 26px;
 }
-/*
-.about-page .section-title::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 6px;
-  width: 12px;
-  height: 12px;
-  border-radius: 999px;
-
-  background: rgba(0, 0, 0, 0.12);
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
-}*/
 
 .about-page .section-title::after {
   content: "";

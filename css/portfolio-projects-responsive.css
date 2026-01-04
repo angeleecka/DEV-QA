@@ -29,80 +29,6 @@
     font-size: clamp(16px, calc(20 * var(--u)), 24px);
     max-width: 100%;
   }
-
-  /* Перестраиваем нижнюю панель в колонку */
-  .footer-bottom-row {
-    flex-direction: column;
-    gap: 15px; /* Увеличиваем зазор между строками для "воздуха" */
-    align-items: flex-start; /* Оставляем выравнивание по левому краю (к якорю) */
-    text-align: left;
-  }
-
-  /* Строка 1: Название + слоган */
-  .footer-info {
-    display: flex;
-    flex-direction: row;
-    gap: 5px;
-  }
-
-  .footer-brand {
-    font-size: 18px;
-  }
-
-  .footer-role {
-    font-size: 18px;
-  }
-
-  /* Строка 2: Соц иконки */
-  .footer-socials {
-    order: 2; /* Явно задаем порядок */
-    gap: 30px; /* Делаем иконки чуть свободнее для удобства нажатия пальцем */
-  }
-
-  .social-link svg {
-    width: 24px; /* Немного увеличиваем для мобильности */
-    height: 24px;
-  }
-
-  /* Строка 3: Копирайт */
-  .copyright {
-    order: 3;
-    opacity: 0.6;
-    margin-top: 2px;
-  }
-
-  /* Дополнительно: уменьшаем отступ футера от контента на планшетах */
-  .site-footer {
-    padding: 40px 0;
-    margin-top: 40px;
-  }
-
-  /* Уплотняем сетку, чтобы якорь и текст не разъезжались слишком сильно */
-  .footer-wide-content {
-    max-width: 980px; /* Ограничиваем ширину, чтобы контент не разлетался */
-    margin: 0 auto; /* Это самое важное: центрируем весь блок по горизонтали */
-    display: grid;
-    /* Ставим auto для якоря, чтобы он не занимал лишние 350px, и 1fr для текста */
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    gap: calc(40 * var(--u));
-    padding: 0 100px;
-  }
-
-  .footer-visual {
-    /* Убери здесь фиксированную ширину, если она была (на скрине видно 350px) */
-    width: auto;
-    display: flex;
-    justify-content: flex-end; /* Якорь тянется к тексту */
-  }
-
-  .footer-body {
-    /* Убеждаемся, что текстовый блок не растягивается на всю оставшуюся пустоту справа */
-    max-width: 800px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
 }
 
 /* 900–768 */
@@ -119,121 +45,563 @@
     --dx: 40px; /* увод вправо */
     --dy: -20px; /* чуть вверх */
   }
-
-  .footer-wide-content {
-    max-width: 900px; /* Ограничиваем ширину, чтобы контент не разлетался */
-
-    padding: 0 50px;
-  }
-  /*.footer-body {
-    margin: 0 auto;
-  }*/
-  .footer-bottom-row {
-    flex-direction: column;
-    gap: 20px;
-  }
-  .gift-text {
-    white-space: normal;
-  }
 }
 
 @media (max-width: 900px) and (min-width: 601px) {
-  /* 1. Баланс всей композиции по центру */
-  .footer-wide-content {
-    /* 1. Вместо фиксированной ширины даем гибкую, но с лимитом */
-    width: fit-content;
-    max-width: 95%;
-
-    /* 2. Центрируем сам контейнер на странице */
-    margin: 0 auto !important;
-
-    /* 3. Оставляем две колонки, но сжимаем их до размера контента */
-    display: grid;
-    grid-template-columns: auto auto;
-
-    /* 4. Обнуляем лишние паддинги, которые могут давать перекос */
-    padding: 0;
-    gap: 40px; /* Расстояние между якорем и текстом */
-  }
-
-  .footer-visual {
-    width: auto;
-    display: flex;
-    justify-content: center;
-  }
-
-  .footer-body {
-    /* Чтобы текст не "убегал", ограничиваем его ширину */
-    max-width: 450px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
   /* 2. Твои настройки для слайдов и якоря */
   .slide {
     --devS: 0.78;
     --devY: 60px;
   }
+}
 
-  .anchor-img {
-    max-width: 130px;
+@media (max-width: 768px) {
+  :root {
+    --u: clamp(0.58px, 100vw / 768, 1px) !important;
   }
 
-  /* 3. Гифт-блок: возвращаем твой перенос строки */
-  .gift-chip {
-    flex-wrap: wrap; /* Разрешаем кнопке падать вниз, если текст широкий */
-    justify-content: flex-start;
-    gap: 12px;
+  .slide-title {
+    margin-top: 30px;
   }
 
-  .mobile-br {
-    display: block; /* Включаем твой принудительный разрыв фразы */
+  .slide-title h2 {
+    font-size: 22px;
   }
 
-  .gift-text {
-    white-space: normal;
-    text-align: left;
-    line-height: 1.4;
+  /* 1. В блоке .viewport ПОЛНОСТЬЮ замени свойства на эти: */
+  body.pp main.slider #viewport.viewport {
+    width: 100% !important; /* Никаких vw здесь, только 100% от родителя */
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important; /* Убираем 1000px, пусть тянется контентом */
+    max-height: none !important;
+
+    position: relative !important;
+    display: block !important;
+
+    overflow-y: visible !important; /* убиваем внутренний скролл */
+    overflow-x: hidden !important; /* соседние слайды не светим */
   }
 
-  .gift-btn {
-    white-space: nowrap; /* Кнопка не ломается внутри себя */
+  /* 2. В блоке .track — критически важно: */
+  .track {
+    display: flex !important;
+    height: auto !important;
+    min-height: 0 !important;
   }
 
-  /* 4. Твоя настройка перестроения нижней строки (Название + Слоган) */
-  .footer-bottom-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-    border-top: 1px solid rgba(27, 92, 89, 0.1);
-    padding-top: 10px;
+  /* 3. В блоке .slide ПОЛНОСТЬЮ замени на это: */
+  .slide {
+    display: block !important; /* Уходим от flex на уровне слайда, чтобы не конфликтовать с track */
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+
+    /* Вместо flex-direction юзаем обычный поток */
+    height: auto !important;
+    min-height: 0;
+
+    /* Обнуляем всё, что может раздувать ширину */
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative !important;
+    left: 0 !important;
   }
 
-  .footer-info {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+  /* 2. СБРОС ДЛЯ .STAGE: Чтобы она не была "призраком" */
+  .stage {
+    width: 100% !important;
+    max-width: 100vw !important;
+    margin: 0 auto !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    display: block !important;
+    height: auto !important;
+    min-height: 0 !important;
   }
 
-  .footer-brand {
-    font-size: 16px;
-    margin: 0;
+  .stage-content {
+    --scale: 1 !important;
+    position: relative !important;
+    height: auto !important;
+    min-height: 0 !important;
+    display: block !important;
+    max-width: 100% !important;
+    padding: 0 16px !important;
+    isolation: isolate; /* ключ */
   }
 
-  .footer-role {
-    font-size: 13px;
-    display: block;
+  /* 1. СТЕК ДЕВАЙСОВ: Исправляем "блочок в углу" */
+  .devices-stack {
+    flex-direction: column !important;
+
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    translate: none !important;
+
+    width: 100% !important;
+    height: auto !important;
+
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    grid-template-areas:
+      "desktop desktop"
+      "calloutL laptop"
+      "admin   calloutM"
+      "calloutR   phone" !important;
+
+    gap: 22px 12px !important; /* row-gap / column-gap */
+
+    align-items: start !important;
+    justify-items: center !important;
+    z-index: 1;
+    margin: 24px auto 0 !important;
   }
 
-  .footer-socials {
-    order: 2;
-    margin: 5px 0;
+  /* на всякий — убираем внутренние скроллы у сцены */
+  .slide,
+  .stage,
+  .devices-stack {
+    overflow: visible !important;
   }
 
-  .copyright {
+  /* 4) Выбиваем элементы из абсолютного позиционирования и убираем любые scale/translate */
+  .devices-stack .device,
+  .devices-stack .callout {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    margin: 0 !important;
+  }
+
+  /* 5) Коллауты: назначаем места в сетке */
+  .callout {
+    pointer-events: none !important;
+    position: relative;
+    z-index: 20 !important;
+  }
+
+  .callout h4 {
+    font-size: calc(20 * var(--u)) !important;
+  }
+  .callout p {
+    font-size: calc(20 * var(--u)) !important;
+  }
+
+  .pp .devices-stack .callout--left {
+    grid-area: calloutL !important;
+
+    text-align: right !important;
+    justify-self: center !important;
+    transform: translateY(calc(40 * var(--u))) !important; /* без X */
+    width: min(
+      calc(340 * var(--u)),
+      40vw
+    ) !important; /* чтобы не распирал ячейку */
+    padding-right: 60px;
+    align-self: start !important;
+
+    z-index: 1 !important;
+  }
+
+  .pp .devices-stack .callout--mid {
+    display: block !important;
+    grid-area: calloutM !important;
+    justify-self: center !important;
+    text-align: left !important;
+    width: min(calc(320 * var(--u)), 42vw) !important;
+    max-width: 40ch !important;
+    transform: translateY(calc(18 * var(--u))) !important; /* чуть опустить */
+  }
+
+  .pp .devices-stack .callout--right {
+    grid-area: calloutR !important;
+
+    width: min(calc(400 * var(--u)), 92%) !important; /* уже, чем 420 */
+    max-width: 44ch !important; /* ключ: красивый ритм строк */
+    justify-self: center !important;
+    text-align: right !important; /* оставляем */
+    margin: 0 !important;
+  }
+
+  .device {
+    /* Оставляем их родные размеры, которые заложены в CSS */
+    position: relative !important;
+
+    /* Уменьшаем визуально, сохраняя все пропорции внутри */
+    transform: none !important;
+    /* ТАК КАК SCALE НЕ МЕНЯЕТ МЕСТО В ПОТОКЕ, 
+       мы принудительно уменьшаем высоту блока, чтобы следующий девайс подтянулся выше */
+
+    min-height: 1px; /* Не дает блоку схлопнуться в 0 до применения scale */
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1 !important;
+  }
+
+  .pp .device--desktop {
+    order: 1;
+
+    grid-area: desktop !important;
+    justify-self: center !important;
+    left: auto !important;
+    top: auto !important;
+    --tx: 0 !important;
+    --ty: 0 !important;
+    --base-x-val: 0 !important;
+    width: calc(640 * var(--u) * 0.8) !important;
+    height: calc(360 * var(--u) * 0.8) !important;
+    margin-top: 20px !important;
+  }
+
+  .device--laptop {
     order: 3;
-    margin-top: 0;
+    grid-area: laptop !important;
+    justify-self: end !important;
+    left: auto !important;
+    top: auto !important;
+    --tx: 0 !important;
+    --ty: 0 !important;
+
+    width: calc(500 * var(--u) * 0.8) !important;
+    height: calc(280 * var(--u) * 0.8) !important;
+
+    z-index: 3 !important;
+  }
+
+  .pp .devices-stack .device--laptop {
+    margin-right: 20px !important; /* было -55px → +10px воздуха */
+    margin-top: 20px !important;
+    align-self: start !important;
+  }
+
+  .device--admin {
+    order: 4;
+    grid-area: admin !important;
+    justify-self: end !important;
+    left: auto !important;
+    top: auto !important;
+    --tx: 0 !important;
+    --ty: 0 !important;
+    width: calc(420 * var(--u) * 0.8) !important;
+    height: calc(292 * var(--u) * 0.8) !important;
+    margin: 0 !important;
+  }
+
+  .device--phone {
+    order: 5;
+    grid-area: phone !important;
+    justify-self: start !important;
+    left: auto !important;
+    top: auto !important;
+    --tx: 0 !important;
+    --ty: 0 !important;
+    --base-x-val: 0 !important;
+    width: calc(120 * var(--u) * 0.8) !important;
+    height: calc(268 * var(--u) * 0.8) !important;
+    margin: 0 !important;
+  }
+
+  /* 1) admin + phone: опустить ряд (отодвинуть от лаптопа) */
+  .pp .devices-stack .device--admin,
+  .pp .devices-stack .device--phone {
+    margin-top: calc(26 * var(--u)) !important;
+  }
+
+  .pp .devices-stack .device--phone {
+    grid-area: phone !important;
+    justify-self: center !important;
+    transform: none !important;
+    position: relative !important;
+    isolation: isolate; /* чтобы ::before корректно слоился */
+
+    overflow: visible !important;
+    z-index: 5 !important; /* выше плашки */
+    filter: drop-shadow(
+        0 calc(10 * var(--u)) calc(24 * var(--u)) rgba(0, 0, 0, 0.14)
+      )
+      drop-shadow(0 calc(26 * var(--u)) calc(70 * var(--u)) rgba(0, 0, 0, 0.18)) !important;
+    margin: 0 !important;
+  }
+
+  .pp .devices-stack .device--phone .phone-plaque {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    width: calc(300 * var(--u));
+    height: calc(170 * var(--u));
+    border-radius: calc(26 * var(--u));
+
+    /* тёплая калька + штрихи как у CTA */
+    background: radial-gradient(
+        120% 110% at 20% 12%,
+        rgba(255, 255, 255, 0.35),
+        rgba(255, 255, 255, 0.08) 55%,
+        rgba(255, 255, 255, 0) 78%
+      ),
+      repeating-linear-gradient(
+        45deg,
+        rgba(160, 110, 70, 0.1),
+        rgba(160, 110, 70, 0.1) 1px,
+        transparent 1px,
+        transparent 7px
+      ),
+      rgba(255, 255, 255, 0.2); /* ↓ главная "прокладка" убирается */
+
+    border: 1px solid rgba(160, 110, 70, 0.14); /* ↓ мягче */
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14) !important;
+
+    backdrop-filter: blur(10px) saturate(135%); /* ↑ больше стекла */
+    -webkit-backdrop-filter: blur(10px) saturate(135%);
+
+    pointer-events: none;
+    z-index: 0;
+    opacity: 1;
+  }
+  /* контактная тень между телефоном и плашкой */
+  .pp .devices-stack .device--phone .phone-occlusion {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+
+    /* чуть шире телефона, но уже плашки */
+    width: calc(190 * var(--u)); /* подстрой */
+    height: calc(330 * var(--u)); /* подстрой */
+    border-radius: calc(22 * var(--u));
+
+    pointer-events: none;
+    z-index: 1; /* выше плашки, ниже экрана */
+
+    background:
+    /* ЛЕВАЯ контактная тень (резче) */ radial-gradient(
+        closest-side at 0% 50%,
+        rgba(0, 0, 0, 0.4) 0%,
+        rgba(0, 0, 0, 0.18) 22%,
+        rgba(0, 0, 0, 0) 45%
+      ),
+      /* ПРАВАЯ контактная тень (резче) */
+        radial-gradient(
+          closest-side at 100% 50%,
+          rgba(0, 0, 0, 0.4) 0%,
+          rgba(0, 0, 0, 0.18) 22%,
+          rgba(0, 0, 0, 0) 45%
+        );
+
+    opacity: 0.95; /* ползунок силы */
+    mix-blend-mode: multiply; /* чтобы тень читалась на светлом тумане */
+    z-index: 1;
+  }
+
+  /* сам экран телефона — поверх плашки */
+  .pp .devices-stack .device--phone .screen {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* PHONE CELL WRAPPER (вместо плясок с z-index внутри .device) */
+  .pp .devices-stack .phone-wrap {
+    grid-area: phone !important;
+    position: relative !important;
+    place-self: center !important;
+    display: grid !important;
+    place-items: center !important;
+    overflow: visible !important;
+    isolation: isolate !important;
+  }
+
+  /* сам телефон сверху */
+  .pp .devices-stack .phone-wrap .device--phone {
+    grid-area: 1 / 1 !important;
+    z-index: 3 !important;
+
+    /* более "контактная", менее рассеянная тень */
+    filter: drop-shadow(
+        0 calc(4 * var(--u)) calc(8 * var(--u)) rgba(0, 0, 0, 0.35)
+      )
+      drop-shadow(0 calc(10 * var(--u)) calc(16 * var(--u)) rgba(0, 0, 0, 0.18)) !important;
+  }
+
+  /* плашка — под телефоном */
+  .pp .devices-stack .phone-wrap .phone-plaque {
+    grid-area: 1 / 1 !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+
+    width: calc(300 * var(--u));
+    height: calc(170 * var(--u));
+    border-radius: calc(26 * var(--u));
+
+    /* ОБОИ: только штрихи + еле-блик, без "кальки" */
+    background:
+  /* еле заметный тёплый блик (чтобы штрихи не были плоскими) */ radial-gradient(
+        140% 120% at 22% 10%,
+        rgba(235, 214, 190, 0.18) 0%,
+        rgba(235, 214, 190, 0.06) 44%,
+        rgba(235, 214, 190, 0) 72%
+      ),
+      /* сами штрихи */
+        repeating-linear-gradient(
+          45deg,
+          rgba(160, 110, 70, 0.16),
+          rgba(160, 110, 70, 0.16) 1px,
+          rgba(0, 0, 0, 0) 1px,
+          rgba(0, 0, 0, 0) 9px
+        );
+
+    /* УБИРАЕМ ОБВОДКУ И "ПЛАШКОВЫЕ" ТЕНИ */
+    border: none !important;
+    /*  box-shadow: 0 0 calc(22 * var(--u)) rgba(160, 110, 70, 0.06); /* мягкая подсветка, не контур */
+
+    /* Стекло уже не нужно (это и делало "прокладку") */
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+
+    opacity: 0.7; /* ползунок силы узора */
+  }
+
+  /* контактная тень, чтобы было видно, что плашка - "стенка", а телефон впереди */
+  .pp .devices-stack .phone-wrap .phone-occlusion {
+    grid-area: 1 / 1 !important;
+    z-index: 2 !important;
+    pointer-events: none !important;
+
+    width: calc(200 * var(--u));
+    height: calc(330 * var(--u));
+    border-radius: calc(22 * var(--u));
+
+    /* тень именно по бокам */
+    background: radial-gradient(
+        closest-side at 0% 50%,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.14) 30%,
+        rgba(0, 0, 0, 0) 62%
+      ),
+      radial-gradient(
+        closest-side at 100% 50%,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.14) 30%,
+        rgba(0, 0, 0, 0) 62%
+      );
+
+    opacity: 0.9;
+    mix-blend-mode: multiply;
+  }
+
+  .pp .device-addon--monitor-stand {
+    filter: none !important;
+  }
+
+  /* 5. КНОПКИ CTA (Статичные под слайдером) */
+  .bottom {
+    position: relative !important;
+    z-index: 1000 !important;
+    margin-top: 4px !important;
+    background: var(--bg);
+    padding: 20px 0 !important;
+  }
+  /*
+  .cta-pill {
+    display: flex !important;
+    flex-direction: row !important;
+    --cut: 12px;
+  }
+
+  .cta-pill button {
+    min-width: 140px !important;
+    padding: 12px 18px !important;
+    font-size: 13px !important;
+  }*/
+
+  /* 1) запрещаем любым обёрткам быть вертикальным scroll-контейнером */
+  html,
+  body {
+    height: auto !important;
+    overflow-y: auto !important;
+  }
+  body.pp .wrap {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* 2) main.slider тоже не должен скроллиться */
+  body.pp main.slider {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .services-container {
+    gap: 20px;
+  }
+
+  .services-details {
+    padding-top: 40px;
+  }
+
+  .personal-credo {
+    padding: 60px 20px;
+  }
+
+  .credo-content blockquote {
+    font-size: clamp(16px, calc(24 * var(--u)), 30px);
+  }
+
+  /* Масштабируем только сцену (девайсы+коллауты), не заголовки/тизеры */
+  .pp .devices-stack {
+    /*  transform: scale(var(--sceneS)) !important;*/
+    transform-origin: top center !important;
+    column-gap: 12px !important;
+    align-items: center !important;
+
+    isolation: isolate !important;
+  }
+
+  /* 2) коллауты всегда сверху */
+  .pp .devices-stack .callout {
+    position: relative !important;
+    z-index: 50 !important;
+  }
+
+  /* 3) девайсы ниже коллаутов */
+  .pp .devices-stack .device {
+    position: relative !important;
+    z-index: 20 !important;
+  }
+
+  /* 4) аддоны (ножки/базы) всегда за "спинами" — даже если у них есть filter */
+  .pp .devices-stack .device-addon {
+    position: absolute !important;
+    z-index: -1 !important;
+  }
+
+  /* 5) точечно: чтобы ножка монитора не вылезала поверх других девайсов */
+  .pp .devices-stack .device--desktop {
+    z-index: 10 !important; /* ниже остальных девайсов, если нужно */
+  }
+
+  body.pp .stage {
+    padding-bottom: calc(18 * var(--u)) !important; /* было 50*u */
+  }
+
+  /* ===================================================================== */
+  /* ============== Поджимаем высоту слайдера   ============================*/
+  /* ===================================================================== */
+  .stage::before,
+  .stage::after {
+    display: none;
+  }
+  /* 0) убиваем лишнюю высоту слайдера */
+
+  body.pp main.slider .devices-stack {
+    transform: none !important; /* только тут */
   }
 }
 
@@ -305,105 +673,138 @@
   .mini-links button:not(:last-child) {
     border-bottom: 1px solid rgba(27, 92, 89, 0.05);
   }
+}
 
-  /* ===================================================================== */
-  /* ============== Футер =================================================*/
-  /* ===================================================================== */
-  /* 1. Главный контейнер: превращаем в одну колонку и центрируем */
-  .footer-wide-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Центрируем якорь и блок текста относительно экрана */
-    gap: 30px;
-    padding: 0 20px;
-    max-width: 100%;
+/* Финальная полировка для совсем узких экранов (ниже 480px) */
+@media (max-width: 480px) {
+  .devices-stack {
+    /* Если на 320px будет тесно, уменьшаем общий масштаб */
+    transform: scale(0.9) !important;
+    gap: 20px 10px;
   }
 
-  /* 2. Блок с текстом: тоже колонка, выровненная по центру экрана */
-  .footer-body {
-    align-items: center;
-    width: 100%;
-    padding: 0;
+  .callout--left {
+    font-size: 12px;
   }
 
-  /* 3. ГИФТ-ЧИП: перестраиваем кнопку ПОД текст */
-  .gift-chip {
-    flex-direction: column; /* Кнопка падает под текст */
-    align-items: center;
-    padding: 20px;
-    gap: 15px;
-    width: 100%;
-    max-width: 340px; /* Чтобы чип не растягивался на весь экран */
-    border-radius: 20px;
-    text-align: center; /* Текст подарка лучше центрировать, когда он в стеке */
+  /* чуть плотнее боковые поля */
+  .pp .stage-content {
+    padding: 0 12px !important;
   }
 
-  .gift-text {
-    white-space: normal;
-    font-size: 14px;
-    line-height: 1.4;
+  /* главный стек: вместо grid -> колонка */
+  .pp .devices-stack {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+
+    width: 100% !important;
+    height: auto !important;
+    margin: 18px auto 0 !important;
+    gap: 18px !important;
+
+    /* важно: на узких не масштабируем (и не создаём “фантомную” высоту) */
+    transform: none !important;
   }
 
-  /* Чтобы кнопка не "ломалась" и была удобной для пальца */
-  .gift-btn {
-    width: 100%;
-    white-space: nowrap;
-    display: inline-block;
+  /* общий сброс для элементов внутри стека */
+  .pp .devices-stack .device,
+  .pp .devices-stack .callout,
+  .pp .devices-stack .phone-wrap {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    margin: 0 !important;
   }
 
-  /* 4. НИЖНЯЯ ИНФО-СТРОКА: выравниваем элементы */
-  .footer-bottom-row {
-    flex-direction: column;
-    align-items: center; /* Все тексты и иконки по центру */
-    gap: 15px;
-    width: 100%;
-    border-top: 1px solid rgba(27, 92, 89, 0.1);
-    padding-top: 20px;
-    text-align: center;
+  /* порядок в колонке (DOM-структуру не трогаем) */
+  .pp .devices-stack .device--desktop {
+    order: 1;
   }
-
-  /* Название и роль — в столбик */
-  .footer-info {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .footer-brand {
-    font-size: 18px;
-    margin: 0;
-  }
-
-  /* Иконки соцсетей: делаем чуть крупнее и свободнее */
-  .footer-socials {
+  .pp .devices-stack .callout--left {
     order: 2;
-    gap: 25px;
-    margin: 10px 0;
   }
-
-  .social-link svg {
-    width: 26px;
-    height: 26px;
-  }
-
-  .copyright {
+  .pp .devices-stack .device--laptop {
     order: 3;
-    margin-top: 5px;
-    font-size: 11px;
+  }
+  .pp .devices-stack .device--admin {
+    order: 5;
+  }
+  .pp .devices-stack .callout--mid {
+    order: 4;
+  }
+  .pp .devices-stack .callout--right {
+    order: 6;
+  }
+  .pp .devices-stack .phone-wrap {
+    order: 7;
   }
 
-  /* Якорь: чуть уменьшаем, чтобы не доминировал на мобилке */
-  .anchor-img {
-    max-width: 120px;
-    margin: 0;
+  /* коллауты — центр и адекватная ширина */
+  .pp .devices-stack .callout {
+    width: min(92vw, 520px) !important;
+    max-width: 92vw !important;
+    text-align: center !important;
+    padding: 20px !important;
   }
 
-  .mobile-br {
-    display: block;
+  .pp .devices-stack .callout h4 {
+    font-size: 18px !important;
+  }
+  .pp .devices-stack .callout p {
+    font-size: 18px !important;
   }
 
-  .footer-visual {
-    justify-content: center;
+  /* девайсы — поджать под экран */
+  .pp .devices-stack .device--desktop {
+    width: min(92vw, calc(640 * var(--u) * 0.92)) !important;
+    height: calc(360 * var(--u) * 0.92) !important;
+  }
+
+  .pp .devices-stack .device--laptop {
+    width: min(92vw, calc(500 * var(--u) * 0.92)) !important;
+    height: calc(280 * var(--u) * 0.92) !important;
+    justify-self: center !important;
+
+    align-self: center !important;
+
+    margin: 0 auto !important;
+  }
+
+  .pp .devices-stack .device--admin {
+    width: min(92vw, calc(420 * var(--u) * 0.92)) !important;
+    height: calc(292 * var(--u) * 0.92) !important;
+    justify-self: center !important;
+  }
+
+  /* телефонный блок: центрируем и слегка увеличиваем читабельность */
+  .pp .devices-stack .phone-wrap {
+    place-self: center !important;
+  }
+
+  /* узор за телефоном — ограничиваем по ширине экрана */
+  .pp .devices-stack .phone-wrap .phone-plaque {
+    width: min(92vw, calc(300 * var(--u))) !important;
+    opacity: 0.72 !important;
+  }
+
+  /* 1) общий “воздух” между строками в колонке */
+  .pp .devices-stack {
+    row-gap: 26px !important; /* подстрой: 22–34 */
+  }
+
+  /* 2) резервируем место под НОЖКУ монитора (аддон абсолютный = не даёт высоту) */
+  .pp .devices-stack .device--desktop {
+    margin-bottom: calc(90 * var(--u)) !important; /* подстрой: 90–150 */
+  }
+
+  /* 3) чуть воздуха вокруг коллаутов (чтобы не “липли”) */
+  .pp .devices-stack .callout {
+    margin: 0 !important;
+    padding-top: calc(6 * var(--u)) !important; /* подстрой: 0–10 */
+    padding-bottom: calc(6 * var(--u)) !important;
   }
 }
 
@@ -414,4 +815,25 @@
     --devX: 0px;
     --devY: 80px;
   }
+}
+
+/* ✅ Projects page: header must be above slider and clickable */
+body.pp .topbar {
+  position: sticky; /* или fixed, если у тебя так на других страницах */
+  top: 0;
+  z-index: 9999;
+}
+
+/* сам слайдер ниже шапки */
+body.pp main.slider {
+  position: relative;
+  z-index: 1;
+}
+
+/* ✅ любые декоративные “туманы/плашки” не должны перехватывать клики */
+body.pp .stage::before,
+body.pp .stage::after,
+body.pp .phone-plaque,
+body.pp .phone-occlusion {
+  pointer-events: none;
 }
