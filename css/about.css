@@ -1,5 +1,49 @@
 /* ABOUT PAGE — минималистично, в стилистике Home */
 
+:root {
+  --amber-cta: #ebca6a;
+  --amber-cta-hover: #f7dc88;
+  --amber-cta-active: #d9b752;
+  --cta-text-dark: #0b2b2d; /* можно заменить на твой темно-морской */
+}
+body.page-about {
+  position: relative;
+}
+
+body.page-about::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 44x; /* под высоту твоего хедера */
+  z-index: 5; /* ниже хедера, выше body-фона */
+  pointer-events: none;
+
+  background: rgba(255, 255, 255, 0.99); /* или чуть “стекло” */
+  /* backdrop-filter: blur(8px); /* опционально, красиво */
+  /*  border-bottom: 1px solid rgba(11, 43, 45, 0.08);*/
+}
+
+/* убираем дефолтные отступы браузера */
+.about-why .section-label,
+.about-why .section-title,
+.about-why .section-lead {
+  margin: 0;
+}
+
+/* задаём ритм вручную */
+.about-why .section-label {
+  margin-bottom: 10px;
+}
+.about-why .section-title {
+  margin-bottom: 14px;
+}
+.about-why .section-lead {
+  margin-bottom: 26px;
+}
+
 /* ABOUT — tighter footer spacing (только для about.html) */
 body.about .site-footer {
   margin-top: 24px !important; /* если сверху слишком пусто */
@@ -158,24 +202,40 @@ body.about .site-footer .footer-visual {
 }
 
 .team-item {
-  display: grid;
+  /* display: grid;
   grid-template-columns: 52px 1fr;
   gap: 12px;
-  align-items: center;
+  align-items: center;*/
+
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
 }
 
 .team-avatar {
+  /* width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.05);*/
+
   width: 52px;
   height: 52px;
   border-radius: 14px;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.05);
+  flex: 0 0 auto;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .team-avatar img {
+  /*width: 100%;
+  height: 100%;
+  object-fit: cover;*/
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
 .team-name {
@@ -186,13 +246,14 @@ body.about .site-footer .footer-visual {
   font-size: 13px;
   color: var(--muted);
   margin-top: 2px;
+  opacity: 0.72;
 }
 
 .team-text {
   font-size: 13px;
   color: var(--text);
-  margin-top: 6px;
-  line-height: 1.4;
+  margin-top: 8px;
+  line-height: 1.45;
 }
 
 /* Contact section bits */
@@ -318,7 +379,7 @@ body.about .site-footer .footer-visual {
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  padding: clamp(28px, 5vw, 56px) clamp(16px, 4vw, 28px);
+  padding: 36px clamp(16px, 4vw, 28px);
 }
 
 .about-us,
@@ -456,6 +517,7 @@ body.about .site-footer .footer-visual {
 /* 1) Между секциями: линия + кружок */
 .section-divider {
   position: relative;
+
   height: 1px;
   margin: 16px;
   /* слева линия “нормальная”, вправо растворяется */
@@ -471,13 +533,13 @@ body.about .site-footer .footer-visual {
 .section-divider::before {
   content: "";
   position: absolute;
-  left: 0;
+  left: -5px;
   top: 50%;
   transform: translate(-50%, -50%);
   width: 12px;
   height: 12px;
   border-radius: 999px;
-  background: rgba(137, 170, 168, 0.9);
+  background: rgba(137, 170, 168, 0.4);
   /*  border: 1px solid rgba(27, 92, 89, 0.25);
  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.1), 0 0 0 6px rgba(27, 92, 89, 0.06);*/
 }
@@ -493,6 +555,104 @@ body.about .site-footer .footer-visual {
     rgba(27, 92, 89, 0.18) 86%,
     rgba(27, 92, 89, 0)
   );
+}
+
+.brand-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+.brand-badge {
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 9px;
+  border: 1px solid rgba(190, 188, 188, 0.4);
+  background: rgba(202, 201, 201, 0.2);
+  white-space: nowrap;
+}
+
+.logo-ticker {
+  margin-top: 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+  padding: 14px 18px; /* общий отступ ленты */
+  position: relative;
+}
+
+.logo-ticker::before,
+.logo-ticker::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 90px;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.logo-ticker::before {
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.logo-ticker::after {
+  right: 0;
+  background: linear-gradient(
+    270deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.logo-track {
+  display: flex;
+  width: max-content;
+  animation: ticker-scroll 28s linear infinite;
+  gap: 40px;
+}
+
+/* Тикер: чтобы интервалы были одинаковые */
+.logo-set {
+  display: flex;
+  align-items: center;
+
+  padding: 0;
+
+  gap: 40px;
+}
+
+.logo {
+  height: 28px;
+  width: auto;
+  opacity: 0.9;
+  filter: grayscale(1);
+}
+
+.logo-ticker:hover .logo-track {
+  animation-play-state: paused;
+}
+
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-track {
+    animation: none;
+  }
 }
 
 @media (hover: hover) {
@@ -514,4 +674,221 @@ body.about .site-footer .footer-visual {
   .about-contact {
     grid-template-columns: 1fr;
   }
+}
+
+/* ===== Logo silhouettes (mask-based) ===== */
+.logoMark {
+  /* размер логотипа */
+  width: 92px;
+  height: 60px;
+  display: inline-block;
+
+  /* ваш морской акцент (замени на существующую переменную, если есть) */
+  background: linear-gradient(
+    to bottom,
+    rgba(27, 92, 89, 0.4),
+    rgba(27, 92, 89, 0.2)
+  );
+
+  /* “стеклянность” — чуть приглушаем, чтобы не кричало */
+  opacity: 0.92;
+
+  /* маска */
+  -webkit-mask-image: var(--logo-url);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: var(--ms, contain);
+
+  mask-image: var(--logo-url);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: var(--ms, contain);
+}
+
+/* Тёплый янтарный акцент (точечно, 1–2 логотипа) */
+.logoMark--gold {
+  background: var(--brand-gold, rgba(197, 166, 103, 0.5));
+}
+
+/* Чуть меньше логотипы (если какая-то иконка визуально “жирная”) */
+.logoMark--sm {
+  width: 80px;
+}
+
+/* Чуть больше (если слово короткое и выглядит “пусто”) */
+.logoMark--lg {
+  width: 110px;
+}
+
+.logo-track {
+  display: flex;
+  width: max-content;
+  animation: ticker-scroll 28s linear infinite;
+}
+
+.logo-ticker:hover .logo-track {
+  animation-play-state: paused;
+}
+
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-track {
+    animation: none;
+  }
+}
+
+.logoMark {
+  box-shadow: 0 0 18px rgba(120, 255, 230, 0.1);
+}
+.logoMark--gold {
+  box-shadow: 0 0 18px rgba(253, 215, 138, 0.1);
+}
+
+.about-outcome {
+  margin: 14px 0 0;
+  font-size: 14px;
+  color: rgba(11, 43, 45, 0.78); /* подстрой под свой якорный */
+}
+
+.about-outcome strong {
+  color: rgba(11, 43, 45, 0.92);
+  font-weight: 600;
+}
+
+.section-label {
+  color: rgba(24, 73, 77, 0.78);
+}
+
+.about-toc {
+  display: block; /* важно: не flex */
+  margin-top: 14px;
+  flex-wrap: wrap;
+  gap: 0;
+
+  position: relative;
+  padding-bottom: 6px; /* место под линию */
+
+  /* сдвиг вправо, как у контента ниже */
+  padding-left: 28px; /* поставь ровно как у твоих секций */
+  padding-right: 28px;
+}
+
+.about-toc::after {
+  content: "";
+  position: absolute;
+  left: 20px;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+
+  /* слева видно, справа уходит в туман */
+  background: linear-gradient(
+    to right,
+    rgba(11, 43, 45, 0.18) 0%,
+    rgba(11, 43, 45, 0.14) 45%,
+    rgba(11, 43, 45, 0) 100%
+  );
+}
+
+.about-why:target,
+.about-section:target {
+  scroll-margin-top: 90px; /* если хедер липкий */
+  outline: 1px solid rgba(11, 43, 45, 0.1);
+  border-radius: 22px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.06);
+}
+
+.about-toc-caption {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(11, 43, 45, 0.55);
+
+  margin: 0 0 10px; /* вот этот отступ вниз решает “прилипание” */
+  line-height: 1.1; /* чтобы не было лишней высоты */
+}
+
+.about-toc-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0; /* расстояние между блоками (не дорожкой) */
+  padding: 0;
+  margin: 0;
+  align-items: center;
+}
+
+/* ссылки — просто текст, без бордеров */
+.about-toc-link {
+  color: rgba(11, 43, 45, 0.78);
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 0.2px;
+  padding: 2px 0; /* маленький “клик-лейн”, но без видимой кнопки */
+  position: relative;
+}
+
+.about-toc-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  background: transparent;
+  border-radius: 2px;
+}
+
+.about-toc-link:hover::after {
+  background: rgba(11, 43, 45, 0.16);
+}
+
+.about-toc-link:hover {
+  color: rgba(11, 43, 45, 0.92);
+  /* text-decoration: underline;*/
+  text-underline-offset: 4px;
+}
+
+.about-toc-link:focus-visible {
+  outline: 2px solid rgba(235, 202, 106, 0.55);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+/* дорога: рисуем separator ПОСЛЕ каждого li, кроме последнего */
+.about-toc-list li {
+  display: flex;
+  align-items: center;
+}
+
+.about-toc-list li:not(:last-child)::after {
+  content: "";
+  display: inline-block;
+  width: 26px; /* длина дорожки */
+  height: 12px;
+  margin: 0 4px; /* отступы от слов */
+
+  /* линия + точка-город */
+  /* ВАЖНО: точка — НЕпрозрачная, линия — тонкая и светлее */
+  background: radial-gradient(circle, #b9c8c7 0 3px, transparent 4px)
+      center/12px 12px no-repeat,
+    linear-gradient(
+        to right,
+        transparent 0,
+        rgba(11, 43, 45, 0.18) 18%,
+        rgba(11, 43, 45, 0.18) 82%,
+        transparent 100%
+      )
+      center/100% 1px no-repeat;
+
+  opacity: 0.9;
 }

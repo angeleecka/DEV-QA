@@ -27,8 +27,10 @@
       teaserTitle: "Portfolio + MiniCMS", // ✅ коротко для тизера
 
       links: {
-        demo: "https://portfolio-with-filemanager.onrender.com/",
-        admin: "https://portfolio-with-filemanager.onrender.com/admin",
+        demo: "https://splitmanager.alevito.es/",
+        admin: "https://splitmanager.alevito.es/admin-portfolio.html",
+        laptop: "https://splitmanager.alevito.es/services.html",
+        phone: "https://splitmanager.alevito.es/portfolio.html",
       },
       images: {
         desktop: "assets/mock/desktop.jpg",
@@ -66,29 +68,29 @@
 
       qaDocs: [
         {
-          title: "Test_Summary_Report.en.md",
+          title: "test-summary.md",
           description: "summary report and requirements",
-          url: "docs/qa/test-plan.md",
+          url: "data/QA-projects/split-manager/test-summary.md",
         },
         {
-          title: "RTM.en.md",
+          title: "rtm.md",
           description: "traceability requirements/tests/bugs/status",
-          url: "docs/qa/bug-report-samples.md",
+          url: "data/QA-projects/split-manager/rtm.md",
         },
         {
-          title: "TestCases.en.md",
+          title: "test-cases.md",
           description: "manual test cases + automation plan",
-          url: "docs/qa/evidence-pack.md",
+          url: "data/QA-projects/split-manager/test-cases.md",
         },
         {
-          title: "Security_Report.en.md",
+          title: "security-report.md",
           description: "basic security checks and results",
-          url: "docs/qa/test-plan.md",
+          url: "data/QA-projects/split-manager/security-report.md",
         },
         {
-          title: "Bug_Report_Samples.en.md",
+          title: "bug-report.md",
           description: "bug report samples + real fixed defects",
-          url: "docs/qa/bug-report-samples.md",
+          url: "data/QA-projects/split-manager/bug-report.md",
         },
       ],
     },
@@ -180,10 +182,11 @@
             p.images?.laptop
           )}" alt="Laptop preview" />`;
 
-      // В buildSlides() внутри PROJECTS.forEach(...) замени slide.innerHTML целиком на это:
-
       const demoUrl = safeText(p.links?.demo ?? "#");
       const adminUrl = safeText(p.links?.admin ?? "#");
+      const laptopUrl = safeText(p.links?.laptop ?? demoUrl);
+      const phoneUrl = safeText(p.links?.phone ?? demoUrl);
+
       // считаем "download" включённым, если ключ вообще есть (даже если ссылка пока "#")
       const hasDownloadKey = Object.prototype.hasOwnProperty.call(
         p.links ?? {},
@@ -290,7 +293,7 @@
 
         <button
           class="device device--laptop"
-          data-url="${demoUrl}"
+          data-url="${laptopUrl}"
           type="button"
           data-open="demo"
           aria-label="Open demo (laptop)"
@@ -305,7 +308,7 @@
 
   <button
     class="device device--phone"
-    data-url="${demoUrl}"
+    data-url="${phoneUrl}"
     type="button"
     data-open="demo"
     aria-label="Open demo (phone)"
@@ -616,17 +619,6 @@
       d.classList.toggle("is-active", i === index);
     });
 
-    // prevBtn.disabled = index === 0;
-    //  nextBtn.disabled = index === PROJECTS.length - 1;
-
-    /* const nextIndex = (index + 1) % PROJECTS.length;
-    const nextTitle =
-      PROJECTS[nextIndex]?.teaserTitle || PROJECTS[nextIndex]?.title || "—";
-
-    const activeSlide = track.children[index];
-    const node = activeSlide?.querySelector("[data-next-title]");
-    if (node) node.textContent = nextTitle;*/
-
     const activeSlide = track.children[index];
     if (activeSlide) {
       const prevIndex = mod(index - 1, PROJECTS.length);
@@ -879,9 +871,16 @@
     win.className = "docwin";
     win.style.zIndex = String(++winZ);
 
-    const { left, top } = getDocWindowPlacement(orderIndex);
+    // 1. Устанавливаем стартовые размеры (одинаковые для всех)
+    const winW = 560;
+    const winH = 520;
+    // 2. Получаем позицию (твоя функция getDocWindowPlacement уже учитывает отступы)
+    const { left, top } = getDocWindowPlacement(orderIndex, winW, winH);
+
     win.style.left = `${left}px`;
     win.style.top = `${top}px`;
+    win.style.width = `${winW}px`;
+    win.style.height = `${winH}px`;
 
     win.innerHTML = `
     <div class="docwin-head">
@@ -889,7 +888,7 @@
       <button class="docwin-close" type="button" aria-label="Close">✕</button>
     </div>
     <div class="docwin-body"><div class="muted">Loading…</div></div>
-  `;
+   `;
 
     document.body.appendChild(win);
     openWins.add(win);
@@ -903,8 +902,10 @@
       win.remove();
     });
 
+    // Добавляем возможность перетаскивания (у тебя уже есть эта функция)
     enableDrag(win, win.querySelector(".docwin-head"));
 
+    // Подгружаем контент
     try {
       const res = await fetch(doc.url, { cache: "no-store" });
       const text = await res.text();
@@ -912,9 +913,7 @@
     } catch (err) {
       win.querySelector(
         ".docwin-body"
-      ).innerHTML = `<div class="muted">Failed to load: ${escHtml(
-        String(err)
-      )}</div>`;
+      ).innerHTML = `<div class="muted">Error: ${escHtml(String(err))}</div>`;
     }
   }
 

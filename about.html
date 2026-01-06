@@ -22,7 +22,7 @@
     />
   </head>
 
-  <body class="about">
+  <body class="about page-about">
     <header class="topbar" aria-label="Top navigation">
       <div class="topbar-inner">
         <div class="brand" aria-label="Brand">
@@ -80,8 +80,20 @@
         </div>
       </section>
 
+      <nav class="about-toc" aria-label="On this page">
+        <div class="about-toc-caption">Jump to</div>
+        <ul class="about-toc-list">
+          <li><a class="about-toc-link" href="#why">Why</a></li>
+          <li><a class="about-toc-link" href="#services">Services</a></li>
+          <li><a class="about-toc-link" href="#process">Process</a></li>
+          <li><a class="about-toc-link" href="#tools">Tools</a></li>
+          <li><a class="about-toc-link" href="#about">Team</a></li>
+          <li><a class="about-toc-link" href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
       <!-- VALUE (full version) -->
-      <section class="about-why">
+      <section class="about-why" id="why">
         <p class="section-label">WHY THIS STUDIO</p>
         <h2 class="section-title">What US teams usually hire us for</h2>
         <p class="section-lead">
@@ -92,40 +104,61 @@
 
         <div class="about-why-grid">
           <article class="about-why-card">
-            <p class="about-why-eyebrow">Silicon Valley methodology</p>
+            <p class="about-why-eyebrow">Process-first QA</p>
             <h3 class="about-why-title">Structured, not “clicking around”</h3>
             <p class="about-why-text">
-              Portnov Computer School background means we follow SDLC/STLC
-              principles and app store guidelines. We design test scopes that
-              match your risk areas, instead of randomly clicking through
-              screens.
+              Trained at Portnov Computer School, we follow SDLC/STLC principles
+              and app store guidelines. We define a risk-based scope — what
+              matters most for your release — and test it thoroughly.
+            </p>
+            <p class="about-outcome">
+              <strong>Outcome:</strong> risk-based scope in 24–48h
             </p>
           </article>
 
           <article class="about-why-card">
-            <p class="about-why-eyebrow">The communication bridge</p>
-            <h3 class="about-why-title">US management · EU dev teams</h3>
+            <p class="about-why-eyebrow">Hybrid coverage</p>
+            <h3 class="about-why-title">
+              Manual + automation, correctly balanced
+            </h3>
+            <p class="about-why-text">
+              Manual QA for UX and new features, automation for stable
+              regressions and critical paths. The result: faster feedback
+              without the “100% automation” myth.
+            </p>
+            <p class="about-outcome">
+              <strong>Outcome:</strong> faster feedback cycles with stable
+              regressions.
+            </p>
+          </article>
+
+          <article class="about-why-card">
+            <p class="about-why-eyebrow">Communication bridge</p>
+            <h3 class="about-why-title">US management · EU delivery</h3>
             <p class="about-why-text">
               Based in Spain, fluent in English, Russian, Ukrainian and Spanish.
-              We act as a bridge between US product owners and Eastern European
-              developers, so bugs are reproduced and fixed faster.
+              We help product owners and developers align faster — so issues are
+              reproduced and fixed with less back-and-forth.
             </p>
-          </article>
-
-          <article class="about-why-card">
-            <p class="about-why-eyebrow">Cost-efficiency</p>
-            <h3 class="about-why-title">Senior-level QA at European rates</h3>
-            <p class="about-why-text">
-              Get focused QA support starting at $35/hr.
+            <p class="about-outcome">
+              <strong>Outcome:</strong> less back-and-forth, faster fixes.
             </p>
           </article>
 
           <article class="about-why-card">
             <p class="about-why-eyebrow">Boutique studio</p>
-            <h3 class="about-why-title">Direct access</h3>
+            <h3 class="about-why-title">
+              Direct access & predictable ownership
+            </h3>
             <p class="about-why-text">
-              We are a specialized micro-studio. You work directly with the lead
-              QA engineer and delivery owner, not with anonymous ticket queues.
+              You work directly with the people who test and deliver. Quick
+              onboarding, clean reporting, and no anonymous queues. Lean setup
+              and efficient cycles — senior-quality work without enterprise
+              overhead.
+            </p>
+            <p class="about-outcome">
+              <strong>Outcome:</strong> clear ownership and predictable
+              delivery.
             </p>
           </article>
         </div>
@@ -134,54 +167,163 @@
       <div class="section-divider" aria-hidden="true"></div>
 
       <!-- SERVICES -->
-
       <section class="about-why" id="services" aria-label="Services">
         <p class="section-label">SERVICES</p>
         <h2 class="section-title">What we can help you with</h2>
         <p class="section-lead">
-          We provide manual QA and light development for realistic apps and
-          sites. Bring your own product or ask us to build and test a small demo
-          end-to-end.
+          Cross-platform QA for real products — web, mobile, desktop, APIs, and
+          supporting scripts. Manual where it matters, automation where it saves
+          time.
         </p>
 
         <div class="about-why-grid">
+          <!-- 1) Manual QA -->
           <article class="about-why-card">
-            <p class="about-why-eyebrow">Mobile apps</p>
-            <h3 class="about-why-title">Mobile app testing</h3>
+            <p class="about-why-eyebrow">Core QA</p>
+            <h3 class="about-why-title">Manual testing</h3>
+
+            <div class="brand-row" aria-label="Key areas: Manual QA">
+              <span class="brand-badge">Regression</span>
+              <span class="brand-badge">Smoke</span>
+              <span class="brand-badge">Exploratory</span>
+            </div>
+
             <p class="about-why-text">
-              Manual testing on Android (real devices and emulators), basic iOS
-              simulator checks, UX verification against platform guidelines,
-              crash reporting and log collection for your dev team.
+              Smoke, sanity and regression cycles across key user flows. Edge
+              cases, negative scenarios, UX checks and clear reproduction steps
+              — for web apps, desktop tools and mobile apps.
             </p>
           </article>
 
+          <!-- 2) Automation -->
           <article class="about-why-card">
-            <p class="about-why-eyebrow">Web & SaaS</p>
-            <h3 class="about-why-title">Manual functional testing</h3>
+            <p class="about-why-eyebrow">Automation</p>
+            <h3 class="about-why-title">Test automation</h3>
+
+            <div class="brand-row" aria-label="Key areas: Automation">
+              <span class="brand-badge">Playwright</span>
+              <span class="brand-badge">Cypress</span>
+              <span class="brand-badge">CI</span>
+              <span class="brand-badge">Allure</span>
+            </div>
+
             <p class="about-why-text">
-              Smoke, sanity and regression cycles for web apps, admin panels and
-              SaaS tools. Core flows, edge cases, negative scenarios, state
-              persistence and error handling.
+              Maintainable end-to-end checks for critical paths (login,
+              checkout, admin flows). CI-ready runs for fast regressions, plus
+              readable reports for your team.
             </p>
           </article>
 
+          <!-- 3) API / Integrations -->
           <article class="about-why-card">
-            <p class="about-why-eyebrow">Languages & locales</p>
-            <h3 class="about-why-title">Localization testing (L10n)</h3>
+            <p class="about-why-eyebrow">Backend confidence</p>
+            <h3 class="about-why-title">API & integration testing</h3>
+
+            <div class="brand-row" aria-label="Key areas: API testing">
+              <span class="brand-badge">REST</span>
+              <span class="brand-badge">Postman</span>
+              <span class="brand-badge">Auth</span>
+              <span class="brand-badge">Data checks</span>
+              <span class="brand-badge">Webhooks</span>
+            </div>
+
+            <p class="about-why-text">
+              Verify backend logic and integrations before UI testing:
+              request/response validation, auth flows, data consistency and
+              error handling (Postman-friendly).
+            </p>
+          </article>
+
+          <!-- 4) Mobile & devices -->
+          <article class="about-why-card">
+            <p class="about-why-eyebrow">Device coverage</p>
+            <h3 class="about-why-title">Mobile & responsive testing</h3>
+
+            <div class="brand-row" aria-label="Key areas: Mobile testing">
+              <span class="brand-badge">Android</span>
+              <span class="brand-badge">iOS Simulator</span>
+              <span class="brand-badge">Responsive</span>
+              <span class="brand-badge">Logs</span>
+            </div>
+
+            <p class="about-why-text">
+              Android real devices + emulators, basic iOS simulator checks,
+              layout/keyboard issues, platform guideline alignment, crash notes
+              and log collection.
+            </p>
+          </article>
+
+          <!-- 5) Localization -->
+          <article class="about-why-card">
+            <p class="about-why-eyebrow">Global-ready UI</p>
+            <h3 class="about-why-title">Localization & content QA</h3>
+
+            <div class="brand-row" aria-label="Key areas: Localization testing">
+              <span class="brand-badge">L10n</span>
+              <span class="brand-badge">EN/ES</span>
+              <span class="brand-badge">Cyrillic</span>
+              <span class="brand-badge">Encoding</span>
+            </div>
+
             <p class="about-why-text">
               Visual and functional checks for English, Spanish and Cyrillic
-              locales. Text expansion/truncation, broken layouts, mixed
-              languages and encoding issues.
+              locales: truncation, broken layouts, mixed languages, encoding and
+              formatting issues.
+            </p>
+          </article>
+
+          <!-- 6) Small delivery -->
+          <article class="about-why-card">
+            <p class="about-why-eyebrow">Small delivery</p>
+            <h3 class="about-why-title">Small product delivery + QA</h3>
+
+            <div class="brand-row" aria-label="Key areas: Delivery">
+              <span class="brand-badge">HTML/CSS/JS</span>
+              <span class="brand-badge">UI fixes</span>
+              <span class="brand-badge">Refactor</span>
+              <span class="brand-badge">Release-ready</span>
+            </div>
+
+            <p class="about-why-text">
+              For compact tools and marketing sites we can implement
+              improvements and test them: from prototype to bug fixes, release
+              checklists and handoff-ready notes.
             </p>
           </article>
 
           <article class="about-why-card">
-            <p class="about-why-eyebrow">Small products</p>
-            <h3 class="about-why-title">End-to-end for small apps</h3>
+            <p class="about-why-eyebrow">UX & accessibility</p>
+            <h3 class="about-why-title">Accessibility & UX QA</h3>
+
+            <div class="brand-row" aria-label="Key areas: Accessibility">
+              <span class="brand-badge">A11y</span>
+              <span class="brand-badge">WCAG</span>
+              <span class="brand-badge">Keyboard</span>
+              <span class="brand-badge">Contrast</span>
+            </div>
+
             <p class="about-why-text">
-              For compact tools and marketing sites we can handle both
-              implementation and QA: from prototype to bug reports and
-              release-ready checklists.
+              Practical accessibility and UX checks: keyboard navigation, focus
+              states, contrast, error messaging and consistency across screens —
+              so your product feels stable and polished.
+            </p>
+          </article>
+
+          <article class="about-why-card">
+            <p class="about-why-eyebrow">Release readiness</p>
+            <h3 class="about-why-title">Pre-release checks & acceptance</h3>
+
+            <div class="brand-row" aria-label="Key areas: Release readiness">
+              <span class="brand-badge">Smoke</span>
+              <span class="brand-badge">Go/No-Go</span>
+              <span class="brand-badge">Checklist</span>
+              <span class="brand-badge">Summary</span>
+            </div>
+
+            <p class="about-why-text">
+              Final validation before launch: smoke on critical paths,
+              last-minute UI checks and a short go/no-go summary your team can
+              act on quickly.
             </p>
           </article>
         </div>
@@ -212,8 +354,9 @@
             <p class="about-why-eyebrow">Step 2</p>
             <h3 class="about-why-title">Test plan & estimate</h3>
             <p class="about-why-text">
-              We propose a concrete test scope (what we cover), time estimate
-              and a simple format for bug reports.
+              We define the scope (what we cover / what we don’t), risk areas,
+              and a time estimate. You get clear entry/exit criteria and a
+              simple bug report format.
             </p>
           </article>
 
@@ -221,8 +364,9 @@
             <p class="about-why-eyebrow">Step 3</p>
             <h3 class="about-why-title">Execution & reporting</h3>
             <p class="about-why-text">
-              We run the agreed tests, log issues with clear steps to reproduce
-              and keep you updated on progress.
+              We run the agreed tests, log issues with clear reproduction steps,
+              and keep you updated. If automation is in scope, we add or update
+              CI-ready checks for critical paths.
             </p>
           </article>
 
@@ -230,43 +374,216 @@
             <p class="about-why-eyebrow">Step 4</p>
             <h3 class="about-why-title">Fix verification & summary</h3>
             <p class="about-why-text">
-              After fixes we re-test the changed areas and send a short
-              release-ready summary for your team.
+              We re-test changed areas, run a targeted regression (manual and/or
+              automated), and deliver a short go/no-go summary for release.
             </p>
           </article>
         </div>
       </section>
 
       <div class="section-divider" aria-hidden="true"></div>
-      <!-- TOOLS -->
 
+      <!-- TOOLS -->
       <section class="about-why" id="tools" aria-label="Tools">
         <p class="section-label">TOOLS</p>
         <h2 class="section-title">Tools & workflows</h2>
 
         <p class="section-lead">
-          We quickly adapt to your workflow. If a familiar tool isn't already on
-          our list of daily tools, it will be there tomorrow.
+          Familiar tooling, predictable reporting, and fast onboarding into your
+          team’s workflow.
         </p>
-        <div class="about-us">
+
+        <!-- Logo ticker -->
+        <div class="logo-ticker" aria-label="Toolset logos">
+          <div class="logo-track">
+            <!-- 1st set -->
+            <div class="logo-set" aria-label="Tools we use">
+              <span
+                class="logoMark"
+                style="
+                  --logo-url: url('/assets/logos/playwright-logo.svg');
+                  --ms: 140% 140%;
+                "
+                aria-label="Playwright"
+                role="img"
+              ></span>
+              <span
+                class="logoMark"
+                style="
+                  --logo-url: url('/assets/logos/Cypress_Logomark_Dark-Color.svg');
+                "
+                aria-label="Cypress"
+                role="img"
+              ></span>
+              <span
+                class="logoMark logoMark--gold"
+                style="--logo-url: url('/assets/logos/postman.svg')"
+                aria-label="Postman"
+                role="img"
+              ></span>
+
+              <span
+                class="logoMark logoMark--sm"
+                style="--logo-url: url('/assets/logos/githubactions.svg')"
+                aria-label="GitHub Actions"
+                role="img"
+              ></span>
+              <span
+                class="logoMark logoMark--sm"
+                style="--logo-url: url('/assets/logos/gitlab.svg')"
+                aria-label="GitLab CI"
+                role="img"
+              ></span>
+
+              <span
+                class="logoMark"
+                style="--logo-url: url('/assets/logos/allure-report.svg')"
+                aria-label="Allure Report"
+                role="img"
+              ></span>
+
+              <span
+                class="logoMark"
+                style="--logo-url: url('/assets/logos/androidstudio.svg')"
+                aria-label="Android Studio"
+                role="img"
+              ></span>
+              <span
+                class="logoMark logoMark--gold logoMark--sm"
+                style="--logo-url: url('/assets/logos/googlechrome.svg')"
+                aria-label="Chrome DevTools"
+                role="img"
+              ></span>
+
+              <span
+                class="logoMark logoMark--sm"
+                style="--logo-url: url('/assets/logos/typescript.svg')"
+                aria-label="TypeScript"
+                role="img"
+              ></span>
+              <span
+                class="logoMark logoMark--sm"
+                style="--logo-url: url('/assets/logos/python.svg')"
+                aria-label="Python"
+                role="img"
+              ></span>
+              <span
+                class="logoMark logoMark--sm"
+                style="
+                  --logo-url: url('/assets/logos/jenkins.svg');
+                  --ms: 100% 100%;
+                "
+                aria-label="Jenkins"
+                role="img"
+              ></span>
+            </div>
+
+            <!-- 2nd set (duplicate for seamless loop) -->
+            <div class="logo-set" aria-hidden="true">
+              <span
+                class="logoMark"
+                style="
+                  --logo-url: url('/assets/logos/playwright-logo.svg');
+                  --ms: 140% 140%;
+                "
+              ></span>
+              <span
+                class="logoMark"
+                style="
+                  --logo-url: url('/assets/logos/Cypress_Logomark_Dark-Color.svg');
+                "
+              ></span>
+              <span
+                class="logoMark logoMark--gold"
+                style="--logo-url: url('/assets/logos/postman.svg')"
+              ></span>
+
+              <span
+                class="logoMark logoMark--sm"
+                style="--logo-url: url('/assets/logos/githubactions.svg')"
+              ></span>
+              <span
+                class="logoMark logoMark--sm"
+                style="--logo-url: url('/assets/logos/gitlab.svg')"
+              ></span>
+
+              <span
+                class="logoMark"
+                style="--logo-url: url('/assets/logos/allure-report.svg')"
+              ></span>
+
+              <span
+                class="logoMark"
+                style="--logo-url: url('/assets/logos/androidstudio.svg')"
+              ></span>
+              <span
+                class="logoMarkk logoMark--gold logoMark--sm"
+                style="--logo-url: url('/assets/logos/googlechrome.svg')"
+              ></span>
+
+              <span
+                class="logoMark logoMark--sm"
+                style="--logo-url: url('/assets/logos/typescript.svg')"
+              ></span>
+              <span
+                class="logoMark logoMark--sm"
+                style="--logo-url: url('/assets/logos/python.svg')"
+              ></span>
+              <span
+                class="logoMark logoMark--sm"
+                style="
+                  --logo-url: url('/assets/logos/jenkins.svg');
+                  --ms: 100% 100%;
+                "
+                aria-label="Jenkins"
+                role="img"
+              ></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tool cards -->
+        <div class="about-why-grid">
           <article class="about-why-card">
-            <p class="about-why-eyebrow">DAILY WORK WITH:</p>
+            <p class="about-why-eyebrow">Daily toolkit</p>
+            <h3 class="about-why-title">Fast feedback, clean evidence</h3>
             <p class="about-why-text">
-              Daily work with: Chrome DevTools, Android Studio, Postman, Slack,
-              Notion.
+              DevTools-based investigation, device/emulator checks, reproducible
+              steps, screenshots, videos and logs when needed.
             </p>
           </article>
 
           <article class="about-why-card">
-            <p class="about-why-eyebrow">READY TO ADAPT TO:</p>
+            <p class="about-why-eyebrow">Automation & CI</p>
+            <h3 class="about-why-title">Regression runs on every change</h3>
             <p class="about-why-text">
-              Jira, Linear, TestRail, Xcode or your in-house tools.
+              Playwright/Cypress suites integrated into GitHub/GitLab pipelines
+              so critical flows are validated automatically before releases.
+            </p>
+          </article>
+
+          <article class="about-why-card">
+            <p class="about-why-eyebrow">Reporting</p>
+            <h3 class="about-why-title">Reports your team actually reads</h3>
+            <p class="about-why-text">
+              Actionable bug reports (steps, expected/actual, severity), plus
+              optional Allure/HTML summaries for quick release decisions.
+            </p>
+          </article>
+
+          <article class="about-why-card">
+            <p class="about-why-eyebrow">Workflow fit</p>
+            <h3 class="about-why-title">We adapt to your process</h3>
+            <p class="about-why-text">
+              Jira, Linear, TestRail, Notion, Slack — or your internal tooling.
+              Minimal friction, quick onboarding.
             </p>
           </article>
         </div>
       </section>
 
       <div class="section-divider" aria-hidden="true"></div>
+
       <!-- ABOUT + CONTACT (two-column like in the QA file) -->
       <section
         class="about-why about-section"
@@ -278,18 +595,22 @@
         <div class="about-us">
           <article class="about-card">
             <p>
-              We are a small boutique studio focused on manual QA and small
-              apps. Our lead engineer has a background in digital products and a
-              specialized QA education from Portnov Computer School
-              (California).
+              We are a boutique QA studio focused on cross-platform product
+              quality — web, mobile, desktop, APIs, and automation-ready
+              releases. We bring clear scope, clean reporting, and predictable
+              communication.
+            </p>
+
+            <p>
+              Our lead engineer trained at Portnov Computer School (California)
+              and builds QA workflows around SDLC/STLC practices and release
+              readiness.
             </p>
 
             <ul class="about-list">
+              <li>Risk-based scope, clean reports, and fast onboarding.</li>
               <li>
-                Manual QA for real-world apps, not abstract test examples.
-              </li>
-              <li>
-                Experience with responsive web, admin panels and mobile apps.
+                Hybrid coverage: manual QA + automation for stable regressions.
               </li>
               <li>Comfortable working async across US and EU time zones.</li>
             </ul>
@@ -308,8 +629,8 @@
                   <div class="team-name">Viktoriia Bondarenko</div>
                   <div class="team-role">Head of QA / Lead Engineer</div>
                   <div class="team-text">
-                    Ensures your product is tested realistically and aligned
-                    with app store and platform expectations.
+                    Ensures coverage of critical flows, UX consistency, and
+                    release readiness across platforms.
                   </div>
                 </div>
               </div>
@@ -322,8 +643,8 @@
                   <div class="team-name">Alex Bondarenko</div>
                   <div class="team-role">Account & Delivery Director</div>
                   <div class="team-text">
-                    Keeps your project on time and within budget, and makes sure
-                    communication stays clear and predictable.
+                    Owns delivery and client communication, keeps scope clear,
+                    timelines realistic, and reporting predictable.
                   </div>
                 </div>
               </div>
@@ -393,9 +714,10 @@
 
           <article class="contact-card">
             <div class="section-label">WRITE TO US</div>
-            <h2 class="section-title">DO YOU HAVE OTHER IDEAS?</h2>
-            <p class="section-lead">
-              If you wish, we can simply share ideas and advice as consultants.
+            <h3 class="contact-title">Have something specific in mind?</h3>
+            <p class="contact-text">
+              Tell us what you’re building, your stack, and your release
+              timeline. We’ll reply with next steps and a clear way to start.
             </p>
             <form class="gmodal__form" action="#" method="post">
               <div class="gmodal__field">
@@ -428,7 +750,7 @@
                   class="gmodal__textarea"
                   id="auditMsg"
                   name="message"
-                  placeholder="Short description of your app, tech stack and release timeline"
+                  placeholder="Briefly describe your product, scope and timeline…"
                 ></textarea>
               </div>
 
@@ -439,10 +761,7 @@
                 Send message
               </button>
 
-              <!-- <div class="gmodal__fineprint">
-              This form is a simple demo. For production we can wire it up to
-              your preferred tool (email, ticket system or CRM).
-            </div> -->
+              <p class="contact-audit-note">We reply as soon as possible.</p>
             </form>
           </article>
         </div>
@@ -487,7 +806,11 @@
             </div>
 
             <div class="footer-socials">
-              <a href="#" class="social-link" aria-label="LinkedIn">
+              <a
+                href="https://www.linkedin.com/company/alevito/"
+                class="social-link"
+                aria-label="LinkedIn"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"

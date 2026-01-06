@@ -134,7 +134,7 @@
 }
 
 /* Top right buttons */
-.btn {
+.btn .closeAllWins {
   border: 1px solid var(--line);
   background: #fff;
   border-radius: 8px;
@@ -159,34 +159,70 @@
   background: var(--accent2);
 }
 
+.btn .close-index {
+  background: none;
+  color: rgba(161, 15, 15, 0.3);
+}
+
+/* ============================================= */
+/* ======== Модалки QA-отчетов ================= */
+/* ============================================= */
 /* ==================== 16. DOC WINDOW (draggable) ==================== */
 .docwin {
   position: fixed;
   width: min(560px, calc(100% - 24px));
   height: min(520px, calc(100% - 24px));
   background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 14px;
+  /*border: 1px solid var(--line);
+  border-radius: 14px;*/
   box-shadow: 0 35px 110px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
+
   z-index: 250;
+
+  min-width: 320px;
+  min-height: 200px;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Чтобы тело не вылезало за границы при ресайзе */
+  resize: both; /* РУЧНОЙ РЕСАЙЗ ВКЛЮЧЕН */
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+/* Шапка окна с гребешками */
 .docwin-head {
   height: 46px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding: 0 10px 0 12px;
+
   border-bottom: 1px solid var(--line);
-  cursor: move;
+
   user-select: none;
+
+  flex-shrink: 0;
+  cursor: grab;
+  /* Рисуем полоски-гребешки */
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 5px,
+    rgba(255, 255, 255, 0.05) 5px,
+    rgba(255, 255, 255, 0.05) 10px
+  );
+  background-color: #222; /* Цвет фона шапки */
+  color: white;
+  padding: 8px 12px;
+}
+
+.docwin-head:active {
+  cursor: grabbing;
 }
 
 .docwin-title {
   font-weight: 900;
-  font-size: 13px;
+  font-size: 15px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -199,14 +235,24 @@
   font-size: 18px;
   line-height: 1;
   padding: 6px 8px;
+  color: red;
 }
 
+.docwin-close:hover {
+  color: silver;
+}
+
+/* Тело окна */
 .docwin-body {
-  padding: 12px 14px;
   overflow: auto;
   height: calc(100% - 46px);
   font-size: 13px;
   line-height: 1.45;
+
+  flex-grow: 1;
+  overflow-y: auto; /* Скролл внутри, если текст большой */
+  padding: 15px;
+  /* background: #1a1a1a;*/
 }
 
 .docwin-body pre {
